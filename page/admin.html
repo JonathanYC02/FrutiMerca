@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Admin | FrutiMerca</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-contenedor">
+        <a href="../index.html" class="logo">
+            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>FrutiMerca</strong>
+                <small>Panel Admin</small>
+            </div>
+        </a>
+
+        <a href="carrito.html" class="btn-carrito">
+            🛒 <span id="contador-carrito">0</span>
+            <span class="btn-carrito-texto">Tus pedidos</span>
+        </a>
+
+        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-principal" id="nav-principal">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="carrito.html">Tus Pedidos</a></li>
+                <li><a href="conocenos.html">Conócenos</a></li>
+                <li><a href="terminos.html">Términos</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+
+    <main style="max-width:1100px; margin:40px auto; padding:0 20px;">
+
+        <div class="form-admin">
+            <h2>➕ Agregar / Editar Producto</h2>
+            <form id="form-producto" onsubmit="guardarProductoForm(event)">
+                <input type="hidden" id="prod-id">
+
+                <div class="campo">
+                    <label>Nombre *</label>
+                    <input type="text" id="prod-nombre" required>
+                </div>
+
+                <div class="campo">
+                    <label>Presentación *</label>
+                    <input type="text" id="prod-presentacion"
+                           placeholder="Ej: Balde de 30 libras" required>
+                </div>
+
+                <div class="campo">
+                    <label>Descripción</label>
+                    <textarea id="prod-descripcion" rows="3"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Precio ($) — dejar vacío si es "a confirmar"</label>
+                    <input type="number" id="prod-precio" step="0.01" min="0">
+                </div>
+
+                <div class="campo">
+                    <label>Unidad</label>
+                    <input type="text" id="prod-unidad"
+                           placeholder="Ej: balde 30 lbs">
+                </div>
+
+                <div class="campo">
+                    <label>URL de la imagen</label>
+                    <input type="url" id="prod-imagen">
+                </div>
+
+                <div class="campo">
+                    <label>Categoría</label>
+                    <select id="prod-categoria">
+                        <option value="frutillas">Frutillas</option>
+                        <option value="otros">Otras Frutas</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>
+                        <input type="checkbox" id="prod-stock" checked
+                               style="width:auto; margin-right:8px;">
+                        Disponible en stock
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-guardar">💾 Guardar</button>
+                <button type="button" class="btn-guardar"
+                        style="background:#6b7280; margin-left:10px;"
+                        onclick="limpiarForm()">Cancelar</button>
+            </form>
+        </div>
+
+        <h2 style="color:var(--azul-marino); margin:40px 0 20px;">
+            📋 Productos Actuales
+        </h2>
+        <table class="tabla-carrito">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Presentación</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-admin-productos"></tbody>
+        </table>
+
+        <button onclick="restaurarDefault()"
+                style="margin-top:20px; background:var(--vino); color:white; border:none; padding:12px 25px; border-radius:8px; cursor:pointer; font-weight:700;">
+            🔄 Restaurar productos por defecto
+        </button>
+    </main>
+
+    <script src="../js/productos.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+    function toggleMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.toggle('abierto');
+        btn.classList.toggle('activo');
+        overlay.classList.toggle('activo');
+        document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+    }
+    function cerrarMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.remove('abierto');
+        btn.classList.remove('activo');
+        overlay.classList.remove('activo');
+        document.body.style.overflow = '';
+    }
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) cerrarMenu();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.nav-principal a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) cerrarMenu();
+            });
+        });
+    });
+</script>
+</body>
+</html>

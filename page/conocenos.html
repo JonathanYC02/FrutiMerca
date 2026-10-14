@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conócenos | FrutiMerca</title>
+    <meta name="description" content="Conoce la historia de FrutiMerca, el negocio familiar de los Yumisaca en el Mercado José Mascote. Frutas frescas directo del mercado a tu mesa.">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+<header class="header">
+    <div class="header-contenedor">
+
+        <a href="../index.html" class="logo">
+            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>FrutiMerca</strong>
+                <small>Frutas Frescas</small>
+            </div>
+        </a>
+
+        <a href="carrito.html" class="btn-carrito">
+            🛒 <span id="contador-carrito">0</span>
+            <span class="btn-carrito-texto">Tus pedidos</span>
+        </a>
+
+        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-principal" id="nav-principal">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html#productos">Productos</a></li>
+                <li><a href="../index.html#como-comprar">Cómo Comprar</a></li>
+                <li><a href="conocenos.html" class="activo">Conócenos</a></li>
+                <li><a href="terminos.html">Términos</a></li>
+                <li><a href="admin.html">⚙️ Admin</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Overlay para cerrar el menú en móvil -->
+<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+
+
+    <!-- ============================================================
+         HERO DE LA PÁGINA
+         ============================================================ -->
+    <section class="hero-conocenos">
+        <div class="hero-conocenos-contenido">
+            <p class="hero-subtitulo">UNA HISTORIA FAMILIAR</p>
+            <h1>Conócenos</h1>
+            <p class="hero-descripcion">
+                Somos la familia Yumisaca. Llevamos toda una vida dedicados
+                a llevar las mejores frutas del mercado a tu mesa.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         NUESTRA HISTORIA
+         ============================================================ -->
+    <section class="conocenos-seccion">
+        <div class="conocenos-contenedor">
+            <div class="historia-grid">
+                <div class="historia-texto">
+                    <h2>Nuestra Historia</h2>
+                    <div class="linea-decorativa"></div>
+
+                    <p>
+                        FrutiMerca nace <strong>mucho antes de tener un nombre</strong>.
+                        Empezó como un sueño de nuestros padres, vendiendo frutas
+                        en las calles, puerta a puerta, con el esfuerzo de quienes
+                        creen en el trabajo diario.
+                    </p>
+
+                    <p>
+                        Con el tiempo, ese esfuerzo se transformó en un puesto
+                        dentro del <strong>Mercado José Mascote</strong>, en Guayaquil.
+                        Desde entonces han pasado más de dos décadas acompañando
+                        a nuestros clientes con la misma dedicación del primer día.
+                    </p>
+
+                    <p>
+                        Mi padre, conocido cariñosamente como <strong>"Pequeñeque"</strong>,
+                        fue quien inició este camino en el mundo del comercio.
+                        Mi madre, <strong>Georgina Chicaza</strong>, se unió a la aventura
+                        y juntos construyeron lo que hoy es FrutiMerca.
+                    </p>
+
+                    <p>
+                        Yo, <strong>Jonathan Yumisaca</strong>, crecí viendo este negocio
+                        funcionar. Desde que tengo uso de razón, el mercado ha sido
+                        mi segunda casa. Hoy, junto a mis padres y nuestro equipo,
+                        seguimos trabajando para llevar lo mejor de la fruta
+                        ecuatoriana a tu negocio o a tu hogar.
+                    </p>
+
+                    <p class="frase-destacada">
+                        "Más de 24 años seleccionando las mejores frutas del mercado."
+                    </p>
+                </div>
+
+                <div class="historia-imagen">
+                    <div class="marco-decorativo">
+                        <!-- 
+                            ESPACIO PARA FOTO O VIDEO
+                            
+                            Cuando tengas el video de cómo llegar al puesto:
+                            1. Guárdalo como: img/como-llegar.mp4
+                            2. Descomentá el <video> de abajo
+                            3. Borrá el bloque <div class="placeholder-foto">
+                        -->
+
+                        <!-- VIDEO (opcional, después) -->
+                        <!--
+                        <video controls poster="../img/puesto-portada.jpg" class="video-puesto">
+                            <source src="../img/como-llegar.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                        -->
+
+                        <!-- PLACEHOLDER temporal -->
+                        <div class="placeholder-foto">
+                            <div class="placeholder-emoji">📸</div>
+                            <p><strong>Próximamente:</strong></p>
+                            <p>Video de cómo llegar al puesto</p>
+                            <p class="placeholder-detalle">Mientras tanto, visitanos en:</p>
+                            <p class="placeholder-direccion">
+                                Mercado José Mascote<br>
+                                Puesto 214 · Segundo piso<br>
+                                Sección de frutas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         VALORES
+         ============================================================ -->
+    <section class="valores">
+        <div class="conocenos-contenedor">
+            <h2 class="titulo-centrado">Lo que nos define</h2>
+            <p class="subtitulo-centrado">
+                Estos son los valores que guían cada decisión que tomamos
+            </p>
+
+            <div class="grid-valores">
+                <div class="valor-card">
+                    <div class="valor-icono">🍓</div>
+                    <h3>Frescura</h3>
+                    <p>Frutas del día, directo del productor al mercado.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icono">⭐</div>
+                    <h3>Calidad</h3>
+                    <p>Seleccionamos personalmente cada fruta antes de venderla.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icono">🤝</div>
+                    <h3>Servicio</h3>
+                    <p>Atención cercana, como si fueras parte de la familia.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icono">💰</div>
+                    <h3>Precio Justo</h3>
+                    <p>Precios accesibles sin sacrificar la calidad del producto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ¿POR QUÉ ELEGIRNOS?
+         ============================================================ -->
+    <section class="porque-elegirnos">
+        <div class="conocenos-contenedor">
+            <div class="porque-grid">
+                <div class="porque-texto">
+                    <h2>¿Por qué elegir FrutiMerca?</h2>
+                    <div class="linea-decorativa"></div>
+                    <p class="porque-intro">
+                        Sabemos que tenés muchas opciones para comprar frutas.
+                        Estas son las razones por las que nuestros clientes nos eligen:
+                    </p>
+                </div>
+
+                <div class="porque-lista">
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Compra directa a productores</h4>
+                            <p>Sin intermediarios, garantizando frescura y mejor precio.</p>
+                        </div>
+                    </div>
+
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Más de 24 años de experiencia</h4>
+                            <p>Conocemos cada detalle del negocio de las frutas.</p>
+                        </div>
+                    </div>
+
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Al por menor y por volumen</h4>
+                            <p>Atendemos desde una familia hasta empresas grandes.</p>
+                        </div>
+                    </div>
+
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Atención personalizada</h4>
+                            <p>Cada cliente es tratado como parte de la familia.</p>
+                        </div>
+                    </div>
+
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Proveedores de confianza</h4>
+                            <p>Frutas para fruterías, heladerías, pastelerías y restaurantes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         NUESTRO EQUIPO
+         ============================================================ -->
+    <section class="equipo">
+        <div class="conocenos-contenedor">
+            <h2 class="titulo-centrado">Nuestro Equipo</h2>
+            <p class="subtitulo-centrado">
+                Las personas que hacen posible FrutiMerca todos los días
+            </p>
+
+            <div class="grid-equipo">
+                <div class="miembro-card">
+                    <div class="miembro-avatar">👨</div>
+                    <h3>Papá Yumisaca</h3>
+                    <p class="miembro-rol">Fundador</p>
+                    <p class="miembro-desc">
+                        Conocido cariñosamente como <strong>"Pequeñeque"</strong>.
+                        El que inició este camino hace años.
+                    </p>
+                </div>
+
+                <div class="miembro-card">
+                    <div class="miembro-avatar">👩</div>
+                    <h3>Georgina Chicaza</h3>
+                    <p class="miembro-rol">Cofundadora</p>
+                    <p class="miembro-desc">
+                        El corazón del negocio. Su atención y dedicación
+                        hacen la diferencia cada día.
+                    </p>
+                </div>
+
+                <div class="miembro-card">
+                    <div class="miembro-avatar">👨‍💼</div>
+                    <h3>Jonathan Yumisaca</h3>
+                    <p class="miembro-rol">Hijo y Gestor Digital</p>
+                    <p class="miembro-desc">
+                        Encargado de llevar FrutiMerca al mundo digital
+                        y de la atención al cliente online.
+                    </p>
+                </div>
+
+                <div class="miembro-card">
+                    <div class="miembro-avatar">👷</div>
+                    <h3>Chuto y Wilmer</h3>
+                    <p class="miembro-rol">Colaboradores</p>
+                    <p class="miembro-desc">
+                        El equipo de apoyo que hace que todo funcione
+                        a la perfección en el puesto.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         VISITANOS
+         ============================================================ -->
+    <section class="visitanos">
+        <div class="conocenos-contenedor">
+            <div class="visitanos-grid">
+                <div class="visitanos-info">
+                    <h2>Visitanos en el Mercado</h2>
+                    <p>
+                        Nos encantaría atenderte personalmente. Estamos en pleno
+                        corazón del mercado, listos para servirte las mejores frutas.
+                    </p>
+
+                    <ul class="visitanos-lista">
+                        <li>
+                            <strong>📍 Ubicación:</strong>
+                            Mercado José Mascote, Av. del Ejército
+                        </li>
+                        <li>
+                            <strong>🏪 Puesto:</strong>
+                            #214 · Segundo piso · Sección de frutas
+                        </li>
+                        <li>
+                            <strong>🕐 Horario:</strong>
+                            Atención matutina · Retiro hasta 14:00
+                        </li>
+                        <li>
+                            <strong>📞 Teléfono:</strong>
+                            <a href="tel:0993734939">099-373-4939</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="visitanos-mapa">
+                    <div class="mapa-placeholder">
+                        <div class="mapa-icono">🗺️</div>
+                        <p><strong>Mapa interactivo</strong></p>
+                        <p class="mapa-detalle">
+                            Próximamente agregaremos un mapa
+                            con la ubicación exacta del puesto.
+                        </p>
+                        <a href="https://maps.google.com/?q=Mercado+José+Mascote+Guayaquil"
+                           target="_blank"
+                           class="btn-mapa">
+                            Ver en Google Maps →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CTA FINAL
+         ============================================================ -->
+    <section class="cta-final">
+        <div class="cta-contenedor">
+            <h2>¿Listo para probar nuestras frutas?</h2>
+            <p>Hacé tu pedido ahora y te lo llevamos hasta tu puerta.</p>
+            <div class="cta-botones">
+                <a href="../index.html#productos" class="btn btn-primario">
+                    Ver Productos
+                </a>
+                <a href="https://wa.me/593993734939?text=Hola%20FrutiMerca,%20quiero%20hacer%20un%20pedido"
+                   target="_blank"
+                   class="btn btn-secundario-claro">
+                    Escribir por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h3>🍓 FrutiMerca</h3>
+                <p>
+                    Frutas frescas del Mercado José Mascote directo a tu negocio
+                    o domicilio en Guayaquil.
+                </p>
+                <p class="footer-slogan">"Tu mejor aliado en frutas"</p>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="conocenos.html">Conócenos</a></li>
+                    <li><a href="carrito.html">Tus Pedidos</a></li>
+                    <li><a href="terminos.html">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <ul>
+                    <li>👤 Familia Yumisaca</li>
+                    <li>📞 <a href="tel:0993734939">099-373-4939</a></li>
+                    <li>📧 <a href="mailto:yumisacalorenzo@gmail.com">yumisacalorenzo@gmail.com</a></li>
+                    <li>📍 Mercado José Mascote, Guayaquil</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
+        </div>
+    </footer>
+
+    <script src="../js/carrito.js"></script>
+      <script>
+        function toggleMenu() {
+            const nav = document.getElementById('nav-principal');
+            const btn = document.getElementById('btn-hamburguesa');
+            const overlay = document.getElementById('menu-overlay');
+
+            nav.classList.toggle('abierto');
+            btn.classList.toggle('activo');
+            overlay.classList.toggle('activo');
+
+            document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+        }
+
+        function cerrarMenu() {
+            const nav = document.getElementById('nav-principal');
+            const btn = document.getElementById('btn-hamburguesa');
+            const overlay = document.getElementById('menu-overlay');
+
+            nav.classList.remove('abierto');
+            btn.classList.remove('activo');
+            overlay.classList.remove('activo');
+            document.body.style.overflow = '';
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) cerrarMenu();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-principal a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) cerrarMenu();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrutiMerca | Frutas Frescas Directo del Mercado</title>
+    <meta name="description" content="Frutas frescas directo del mercado. Frutillas, mora, granadilla, claudia, durazno y aguacate. Pedidos por transferencia bancaria en Guayaquil.">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         HEADER STICKY
+         ============================================================ -->
+<header class="header">
+    <div class="header-contenedor">
+        <a href="index.html" class="logo">
+            <img src="img/logo.png" alt="FrutiMerca Logo" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>FrutiMerca</strong>
+                <small>Frutas Frescas</small>
+            </div>
+        </a>
+        <a href="page/carrito.html" class="btn-carrito">
+            🛒 <span id="contador-carrito">0</span>
+            <span class="btn-carrito-texto">Tus pedidos</span>
+        </a>
+        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-principal" id="nav-principal">
+            <ul>
+                <li><a href="index.html" class="activo">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#como-comprar">Cómo Comprar</a></li>
+                <li><a href="page/conocenos.html">Conócenos</a></li>
+                <li><a href="page/terminos.html">Términos</a></li>
+                <li><a href="page/admin.html">⚙️ Admin</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- SOLO UN overlay (borrá el duplicado) -->
+<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero">
+        <div class="hero-contenido">
+            <p class="hero-subtitulo">TU MEJOR ALIADO EN FRUTAS</p>
+            <h1>Frutas Frescas del Mercado a tu Mesa</h1>
+            <p class="hero-descripcion">
+                Frutillas, mora, granadilla, claudia, durazno y aguacate.
+                Directo del Mercado José Mascote a tu local o domicilio en Guayaquil.
+            </p>
+            <div class="hero-botones">
+                <a href="#productos" class="btn btn-primario">Ver Productos</a>
+                <a href="#como-comprar" class="btn btn-secundario">Cómo Comprar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         BENEFICIOS
+         ============================================================ -->
+    <section class="beneficios">
+        <div class="beneficio">
+            <span>🍓</span>
+            <h3>Frescura Garantizada</h3>
+            <p>Directo del mercado el mismo día</p>
+        </div>
+        <div class="beneficio">
+            <span>🚚</span>
+            <h3>Envíos en Guayaquil</h3>
+            <p>Zona central $3 · Extendida $5</p>
+        </div>
+        <div class="beneficio">
+            <span>💳</span>
+            <h3>Transferencia Bancaria</h3>
+            <p>Banco Pichincha · Sube tu voucher</p>
+        </div>
+        <div class="beneficio">
+            <span>📦</span>
+            <h3>Diferentes Presentaciones</h3>
+            <p>Baldes de 30 lbs y cajas de 15 lbs</p>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FILTROS
+         ============================================================ -->
+    <section class="filtros" id="productos">
+        <h2>Nuestros Productos</h2>
+        <p class="filtros-subtitulo">
+            Selecciona la presentación que necesitas: baldes de 30 lbs, cajas de 15 lbs o cartones al granel.
+        </p>
+        <div class="botones-filtro">
+            <button class="btn-filtro activo" data-filtro="todos">Todos</button>
+            <button class="btn-filtro" data-filtro="frutillas">Frutillas</button>
+            <button class="btn-filtro" data-filtro="otros">Otras Frutas</button>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         GRID DE PRODUCTOS (se llena con JS)
+         ============================================================ -->
+    <section class="productos">
+        <div id="lista-productos" class="grid-productos"></div>
+    </section>
+
+    <!-- ============================================================
+         CÓMO COMPRAR
+         ============================================================ -->
+    <section class="como-comprar" id="como-comprar">
+        <h2>¿Cómo Comprar?</h2>
+        <div class="pasos">
+            <div class="paso">
+                <span class="paso-num">1</span>
+                <h3>Elige tus frutas</h3>
+                <p>Agrega al carrito los baldes o cajas que necesitas.</p>
+            </div>
+            <div class="paso">
+                <span class="paso-num">2</span>
+                <h3>Realiza la transferencia</h3>
+                <p>Banco Pichincha · Cta. Ahorros 2206795019</p>
+            </div>
+            <div class="paso">
+                <span class="paso-num">3</span>
+                <h3>Sube tu voucher</h3>
+                <p>Carga la captura del comprobante en la web.</p>
+            </div>
+            <div class="paso">
+                <span class="paso-num">4</span>
+                <h3>Retira o recibe</h3>
+                <p>Mercado José Mascote o envío a domicilio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         NEWSLETTER
+         ============================================================ -->
+    <section class="newsletter">
+        <div class="newsletter-contenido">
+            <h2>Recibe Ofertas y Disponibilidad</h2>
+            <p>Te avisamos cuando lleguen frutillas frescas y promociones por volumen.</p>
+            <form class="form-newsletter" onsubmit="event.preventDefault(); alert('¡Suscrito!');">
+                <input type="email" placeholder="Tu correo electrónico" required>
+                <button type="submit">Suscribirme</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="footer" id="contacto">
+        <div class="footer-grid">
+            <div>
+                <h3>🍓 FrutiMerca</h3>
+                <p>
+                    Frutas frescas del Mercado José Mascote directo a tu negocio
+                    o domicilio en Guayaquil.
+                </p>
+                <p class="footer-slogan">"Tu mejor aliado en frutas"</p>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="page/carrito.html">Tus Pedidos</a></li>
+                    <li><a href="page/terminos.html">Términos y Condiciones</a></li>
+                    <li><a href="page/admin.html">Admin</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <ul>
+                    <li>👤 Lorenzo Yumisaca</li>
+                    <li>📞 <a href="tel:0993734939">099-373-4939</a></li>
+                    <li>📧 <a href="mailto:yumisacalorenzo@gmail.com">yumisacalorenzo@gmail.com</a></li>
+                    <li>📍 Mercado José Mascote, Guayaquil</li>
+                    <li>🕐 Atención matutina · Retiro hasta 14:00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p>© 2026 FrutiMerca — Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/filtros.js"></script>
+        <script>
+        // ============================================================
+        // MENÚ HAMBURGUESA (MÓVIL)
+        // ============================================================
+        function toggleMenu() {
+            const nav = document.getElementById('nav-principal');
+            const btn = document.getElementById('btn-hamburguesa');
+            const overlay = document.getElementById('menu-overlay');
+
+            nav.classList.toggle('abierto');
+            btn.classList.toggle('activo');
+            overlay.classList.toggle('activo');
+
+            document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+        }
+
+        function cerrarMenu() {
+            const nav = document.getElementById('nav-principal');
+            const btn = document.getElementById('btn-hamburguesa');
+            const overlay = document.getElementById('menu-overlay');
+
+            nav.classList.remove('abierto');
+            btn.classList.remove('activo');
+            overlay.classList.remove('activo');
+            document.body.style.overflow = '';
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) cerrarMenu();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-principal a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) cerrarMenu();
+                });
+            });
+        });
+    </script>
+    <script>
+        // ============================================================
+        // INICIALIZACIÓN AL CARGAR LA PÁGINA
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ DOM listo');
+
+            // Renderizar grid de productos
+            if (typeof renderizarProductos === 'function') {
+                renderizarProductos();
+                console.log('✅ Productos renderizados');
+            } else {
+                console.error('❌ renderizarProductos NO está definida');
+            }
+
+            // Actualizar contador del carrito
+            if (typeof actualizarContador === 'function') {
+                actualizarContador();
+            }
+        });
+    </script>
+</body>
+</html>

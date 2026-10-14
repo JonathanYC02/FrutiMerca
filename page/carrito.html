@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Tus Pedidos | FrutiMerca</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-contenedor">
+        <a href="../index.html" class="logo">
+            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>FrutiMerca</strong>
+                <small>Frutas Frescas</small>
+            </div>
+        </a>
+
+        <a href="carrito.html" class="btn-carrito">
+            🛒 <span id="contador-carrito">0</span>
+            <span class="btn-carrito-texto">Tus pedidos</span>
+        </a>
+
+        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-principal" id="nav-principal">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html#productos">Productos</a></li>
+                <li><a href="../index.html#como-comprar">Cómo Comprar</a></li>
+                <li><a href="conocenos.html">Conócenos</a></li>
+                <li><a href="terminos.html">Términos</a></li>
+                <li><a href="admin.html">⚙️ Admin</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Overlay para cerrar el menú en móvil -->
+<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+
+    <main class="carrito-wrapper">
+        <section class="carrito-lista">
+            <h1>
+                🛒 Tus Pedidos
+                <span class="badge-items" id="badge-items">0</span>
+            </h1>
+            <div id="items-carrito-container"></div>
+        </section>
+
+        <aside class="carrito-resumen">
+            <h2>Resumen del Pedido</h2>
+
+            <!-- Selector de envío -->
+            <div class="selector-envio">
+                <h3>🚚 Opción de Entrega</h3>
+                <label class="opcion-envio">
+                    <input type="radio" name="zona-envio" value="retiro" data-precio="0" checked>
+                    <div class="opcion-envio-info">
+                        <strong>🏪 Retiro en Local</strong>
+                        <span>Mercado José Mascote</span>
+                    </div>
+                    <span class="opcion-envio-precio">$0.00</span>
+                </label>
+                <label class="opcion-envio">
+                    <input type="radio" name="zona-envio" value="central" data-precio="3">
+                    <div class="opcion-envio-info">
+                        <strong>📍 Zona Central</strong>
+                        <span>Mercado Flores – José Mascote</span>
+                    </div>
+                    <span class="opcion-envio-precio">$3.00</span>
+                </label>
+                <label class="opcion-envio">
+                    <input type="radio" name="zona-envio" value="extendida" data-precio="5">
+                    <div class="opcion-envio-info">
+                        <strong>🚚 Zona Extendida</strong>
+                        <span>Resto de Guayaquil</span>
+                    </div>
+                    <span class="opcion-envio-precio">$5.00</span>
+                </label>
+            </div>
+
+            <!-- Cálculos -->
+            <div class="resumen-linea">
+                <span>Subtotal</span>
+                <span id="resumen-subtotal">$0.00</span>
+            </div>
+
+            <div class="resumen-linea">
+                <span>Envío</span>
+                <span id="resumen-envio">$0.00</span>
+            </div>
+
+            <div class="resumen-linea total">
+                <span>Total</span>
+                <span id="total-carrito">$0.00</span>
+            </div>
+
+            <!-- Checkbox de términos -->
+            <label class="acepto-terminos">
+                <input type="checkbox" id="acepto-terminos">
+                <span>
+                    He leído y acepto los
+                    <a href="terminos.html" target="_blank">Términos y Condiciones</a>
+                    de retiro y entrega
+                    <span class="info-terminos" title="Incluye horarios de retiro, políticas de productos perecederos, cancelaciones y reembolsos.">i</span>
+                </span>
+            </label>
+
+            <button class="btn-finalizar" id="btn-confirmar" onclick="irAPagar()" disabled>
+                <span class="btn-icono">🏦</span>
+                Confirmar Pedido (Transferencia)
+            </button>
+
+            <a href="../index.html" class="btn-seguir-comprando">
+                ← Seguir comprando
+            </a>
+
+            <div class="resumen-nota">
+                🏦 Pago por <strong>transferencia bancaria</strong><br>
+                📸 Deberás subir el voucher en el siguiente paso
+            </div>
+        </aside>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-copy">
+            <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
+        </div>
+    </footer>
+
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script>
+        function renderizarCarrito() {
+            const contenedor = document.getElementById('items-carrito-container');
+            const badge = document.getElementById('badge-items');
+            if (!contenedor) return;
+
+            const carrito = obtenerCarrito();
+            const totalItems = carrito.reduce((s, i) => s + i.cantidad, 0);
+            if (badge) badge.textContent = totalItems;
+
+            if (carrito.length === 0) {
+                contenedor.innerHTML = `
+                    <div class="carrito-vacio">
+                        <span class="emoji">🛒</span>
+                        <h2>Tu carrito está vacío</h2>
+                        <p>Agrega algunas frutas y vuelve por aquí 🍓</p>
+                        <a href="../index.html" class="btn btn-primario"
+                           style="background:var(--azul-marino); color:white; text-decoration:none;">
+                            Ver productos
+                        </a>
+                    </div>`;
+                actualizarTotales();
+                return;
+            }
+
+            let html = '';
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                html += `
+                    <div class="carrito-item">
+                        <div class="carrito-item-img">
+                            <img src="${item.imagen || ''}" alt="${item.nombre}">
+                        </div>
+                        <div class="carrito-item-info">
+                            <h3>${item.nombre}</h3>
+                            <p class="precio-unitario">$${item.precio.toFixed(2)} c/u</p>
+                        </div>
+                        <div class="carrito-item-controles">
+                            <div class="control-cantidad">
+                                <button onclick="cambiarCantidad(${index}, -1)">−</button>
+                                <span>${item.cantidad}</span>
+                                <button onclick="cambiarCantidad(${index}, 1)">+</button>
+                            </div>
+                            <div class="carrito-item-subtotal">
+                                $${subtotal.toFixed(2)}
+                            </div>
+                            <button class="btn-quitar"
+                                    onclick="eliminarDelCarrito(${index})">
+                                🗑️ Quitar
+                            </button>
+                        </div>
+                    </div>`;
+            });
+            contenedor.innerHTML = html;
+
+            actualizarTotales();
+        }
+
+        function actualizarTotales() {
+            const carrito = obtenerCarrito();
+            const subtotal = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+
+            const radioZona = document.querySelector('input[name="zona-envio"]:checked');
+            const zona = radioZona ? radioZona.value : 'retiro';
+            const costoEnvio = radioZona ? parseFloat(radioZona.dataset.precio) : 0;
+
+            const total = subtotal + costoEnvio;
+
+            document.getElementById('resumen-subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('resumen-envio').textContent =
+                costoEnvio === 0 ? 'GRATIS 🎉' : '$' + costoEnvio.toFixed(2);
+            document.getElementById('total-carrito').textContent = '$' + total.toFixed(2);
+
+            // Guardar zona para usarla en pago.html
+            guardarZonaEntrega(zona);
+        }
+
+        /* ============================================================
+           Validación de términos + botón
+           ============================================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarCarrito();
+
+            const checkTerminos = document.getElementById('acepto-terminos');
+            const btn = document.getElementById('btn-confirmar');
+
+            checkTerminos.addEventListener('change', () => {
+                btn.disabled = !checkTerminos.checked;
+            });
+
+            // Escuchar cambios de zona de envío → recalcular
+            document.querySelectorAll('input[name="zona-envio"]').forEach(radio => {
+                radio.addEventListener('change', actualizarTotales);
+            });
+
+            // Cargar zona previamente elegida
+            const zonaGuardada = obtenerZonaEntrega();
+            const radioGuardado = document.querySelector(`input[name="zona-envio"][value="${zonaGuardada}"]`);
+            if (radioGuardado) radioGuardado.checked = true;
+            actualizarTotales();
+        });
+
+        function irAPagar() {
+            const carrito = obtenerCarrito();
+            if (carrito.length === 0) {
+                alert('Tu carrito está vacío 🍓');
+                return;
+            }
+            const check = document.getElementById('acepto-terminos');
+            if (!check.checked) {
+                alert('Debes aceptar los Términos y Condiciones.');
+                return;
+            }
+            window.location.href = 'pago.html';
+        }
+    </script>
+
+    <script>
+    function toggleMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.toggle('abierto');
+        btn.classList.toggle('activo');
+        overlay.classList.toggle('activo');
+        document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+    }
+    function cerrarMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.remove('abierto');
+        btn.classList.remove('activo');
+        overlay.classList.remove('activo');
+        document.body.style.overflow = '';
+    }
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) cerrarMenu();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.nav-principal a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) cerrarMenu();
+            });
+        });
+    });
+</script>
+</body>
+</html>

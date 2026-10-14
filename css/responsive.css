@@ -1,0 +1,209 @@
+/* ============================================================
+   FRUTIMERCA — RESPONSIVE
+   ============================================================ */
+
+@media (min-width: 1201px) {
+    .hero::before { animation: girarLento 40s linear infinite; }
+    .card-producto:hover { transform: translateY(-10px) rotateX(1deg) rotateY(-1deg); }
+}
+
+@media (max-width: 1200px) {
+    .header-contenedor { padding: 12px 20px; }
+    .nav-principal a { padding: 8px 12px; font-size: 0.9rem; }
+    .hero h1 { font-size: 2.5rem; }
+    .carrito-wrapper { grid-template-columns: 1fr 340px; gap: 20px; }
+}
+
+/* ⚠️ MÓVIL — Todo el header en una sola línea */
+@media (max-width: 900px) {
+
+    .header-contenedor {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 10px 15px !important;
+        gap: 10px !important;
+    }
+
+    .logo {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .logo img { height: 34px !important; }
+    .logo-texto strong { font-size: 0.95rem !important; }
+    .logo-texto small { font-size: 0.55rem !important; letter-spacing: 2px !important; }
+
+    .btn-carrito {
+        display: inline-flex !important;
+        align-items: center !important;
+        padding: 7px 12px !important;
+        font-size: 0.85rem !important;
+        flex-shrink: 0 !important;
+    }
+
+    .btn-carrito-texto { display: none !important; }
+
+    .btn-hamburguesa { display: flex !important; flex-shrink: 0 !important; }
+
+    .nav-principal {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 260px !important;
+        max-width: 78vw !important;
+        height: 100vh !important;
+        background: linear-gradient(180deg, var(--azul-marino), var(--azul-oscuro)) !important;
+        padding: 70px 0 30px !important;
+        transition: right 0.35s ease-out !important;
+        z-index: 1000 !important;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.4) !important;
+        overflow-y: auto !important;
+    }
+
+    .nav-principal.abierto { right: 0 !important; }
+
+    .nav-principal ul {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 0 12px !important;
+        gap: 4px !important;
+    }
+
+    .nav-principal li { width: 100% !important; }
+
+    .nav-principal a {
+        display: block !important;
+        width: 100% !important;
+        padding: 13px 16px !important;
+        font-size: 0.95rem !important;
+        border-radius: 8px !important;
+        text-align: left !important;
+        color: var(--blanco) !important;
+    }
+
+    .nav-principal a.activo { background: var(--vino) !important; }
+    .nav-principal a::after { display: none !important; }
+
+    /* Resto de secciones */
+    .hero { padding: 70px 20px; }
+    .hero h1 { font-size: 2rem; }
+    .hero::before { font-size: 240px; top: -40px; right: -60px; }
+
+    .beneficios { grid-template-columns: repeat(2, 1fr); margin-top: -30px; padding: 0 20px; }
+    .grid-productos { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+    .carrito-wrapper { grid-template-columns: 1fr; padding: 0 20px; margin: 20px auto; }
+    .carrito-resumen { position: static; }
+    .carrito-item { grid-template-columns: 80px 1fr; }
+    .carrito-item-controles {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px dashed var(--azul-suave);
+        padding-top: 15px;
+        margin-top: 5px;
+    }
+
+    .pago-wrapper { padding: 0 20px; }
+    .producto-detalle { grid-template-columns: 1fr; gap: 25px; padding: 25px; }
+    .producto-info h1 { font-size: 1.5rem; }
+
+    .historia-grid, .porque-grid, .visitanos-grid { grid-template-columns: 1fr; gap: 30px; }
+    .hero-conocenos h1 { font-size: 2.2rem; }
+    .historia-texto h2, .porque-texto h2, .visitanos-info h2 { font-size: 1.7rem; }
+}
+
+@media (max-width: 640px) {
+    .hero { padding: 55px 18px; }
+    .hero-subtitulo { font-size: 0.72rem; letter-spacing: 3px; }
+    .hero h1 { font-size: 1.7rem; }
+    .hero-descripcion { font-size: 0.95rem; }
+    .hero::before { font-size: 170px; opacity: 0.04; }
+    .hero-botones { flex-direction: column; align-items: stretch; }
+    .btn { padding: 12px 24px; font-size: 0.95rem; }
+
+    .beneficios { grid-template-columns: 1fr; gap: 12px; padding: 0 15px; margin-top: -20px; }
+    .beneficio { padding: 18px; display: flex; align-items: center; gap: 15px; text-align: left; }
+    .beneficio span { font-size: 2rem; }
+    .beneficio h3 { margin: 0; font-size: 1rem; }
+    .beneficio p { font-size: 0.85rem; }
+
+    .filtros h2 { font-size: 1.5rem; }
+    .filtros-subtitulo { font-size: 0.9rem; }
+    .botones-filtro { gap: 8px; }
+    .btn-filtro { padding: 8px 18px; font-size: 0.85rem; }
+
+    .productos { padding: 20px 15px; }
+    .grid-productos { grid-template-columns: 1fr; gap: 15px; }
+    .card-producto img { height: 180px; }
+
+    .como-comprar { padding: 50px 20px; }
+    .como-comprar h2 { font-size: 1.6rem; }
+    .pasos { grid-template-columns: 1fr; gap: 15px; }
+
+    .newsletter { padding: 50px 20px; }
+    .newsletter h2 { font-size: 1.4rem; }
+    .form-newsletter { flex-direction: column; }
+    .form-newsletter input, .form-newsletter button { width: 100%; }
+
+    .carrito-wrapper { padding: 0 12px; margin: 15px auto; }
+    .carrito-lista, .carrito-resumen { padding: 20px 15px; border-radius: 14px; }
+    .carrito-lista h1 { font-size: 1.3rem; }
+    .carrito-item { grid-template-columns: 70px 1fr; padding: 15px; gap: 12px; }
+    .carrito-item-img { width: 70px; height: 70px; }
+    .carrito-item-info h3 { font-size: 0.95rem; }
+    .control-cantidad button { width: 28px; height: 28px; font-size: 1rem; }
+    .carrito-item-subtotal { font-size: 1rem; }
+    .carrito-resumen h2 { font-size: 1.15rem; }
+    .resumen-linea.total { font-size: 1.2rem; }
+
+    .footer { padding: 40px 20px 15px; }
+    .footer-grid { gap: 20px; }
+
+    .pago-card { padding: 25px 20px; }
+    .zona-drop { padding: 30px 15px; }
+
+    .terminos-card { padding: 25px 20px; }
+    .terminos-card h1 { font-size: 1.6rem; }
+
+    .hero-conocenos { padding: 60px 20px; }
+    .hero-conocenos h1 { font-size: 1.8rem; }
+    .hero-conocenos::before { font-size: 200px; }
+    .conocenos-seccion, .valores, .porque-elegirnos, .equipo, .visitanos { padding: 50px 20px; }
+    .historia-texto h2, .porque-texto h2, .visitanos-info h2, .titulo-centrado { font-size: 1.5rem; }
+    .cta-final h2 { font-size: 1.5rem; }
+    .cta-botones { flex-direction: column; align-items: stretch; }
+    .btn, .btn-secundario-claro { width: 100%; text-align: center; }
+
+    .producto-wrapper { padding: 0 15px; }
+    .producto-detalle { padding: 20px; border-radius: 14px; }
+    .producto-info h1 { font-size: 1.35rem; }
+    .opcion-presentacion { padding: 14px 16px; }
+}
+
+@media (max-width: 400px) {
+    .logo img { height: 30px !important; }
+    .logo-texto strong { font-size: 0.85rem !important; }
+    .btn-carrito { padding: 6px 10px !important; font-size: 0.78rem !important; }
+    .hero h1 { font-size: 1.4rem; }
+    .carrito-item-info h3 { font-size: 0.85rem; }
+    .precio-principal { font-size: 1.15rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

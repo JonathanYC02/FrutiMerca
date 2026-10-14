@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto | FrutiMerca</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+<header class="header">
+    <div class="header-contenedor">
+        <a href="../index.html" class="logo">
+            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>FrutiMerca</strong>
+                <small>Frutas Frescas</small>
+            </div>
+        </a>
+
+        <a href="carrito.html" class="btn-carrito">
+            🛒 <span id="contador-carrito">0</span>
+            <span class="btn-carrito-texto">Tus pedidos</span>
+        </a>
+
+        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-principal" id="nav-principal">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html#productos">Productos</a></li>
+                <li><a href="conocenos.html">Conócenos</a></li>
+                <li><a href="terminos.html">Términos</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+    <!-- CONTENIDO DINÁMICO -->
+    <main class="producto-wrapper" id="producto-wrapper"></main>
+
+    <footer class="footer">
+        <div class="footer-copy">
+            <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
+        </div>
+    </footer>
+
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script>
+        let PRODUCTO_ACTUAL = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) {
+                mostrarNoEncontrado();
+                return;
+            }
+
+            const prod = obtenerProductos().find(p => p.slug === slug);
+            if (!prod) {
+                mostrarNoEncontrado();
+                return;
+            }
+
+            PRODUCTO_ACTUAL = prod;
+            document.title = prod.nombre + ' | FrutiMerca';
+            renderizarProducto(prod);
+        });
+
+        function mostrarNoEncontrado() {
+            document.getElementById('producto-wrapper').innerHTML = `
+                <div class="carrito-vacio">
+                    <span class="emoji">🔍</span>
+                    <h2>Producto no encontrado</h2>
+                    <a href="../index.html" class="btn btn-primario"
+                       style="background:var(--azul-marino); color:white; text-decoration:none;">
+                        Volver al inicio
+                    </a>
+                </div>`;
+        }
+
+        function renderizarProducto(prod) {
+            const wrapper = document.getElementById('producto-wrapper');
+            const primeraPres = prod.presentaciones[0];
+            const imagenInicial = primeraPres.imagen || prod.imagen;
+
+            // Opciones del selector
+            const opcionesHTML = prod.presentaciones.map((p, i) => {
+                const seleccionado = i === 0 ? 'checked' : '';
+                const precioTexto = p.precio !== null
+                    ? `$${p.precio.toFixed(2)}`
+                    : 'Precio a confirmar';
+                const sinPrecio = p.precio === null;
+                const imagenPres = p.imagen || prod.imagen;
+
+                return `
+                    <label class="opcion-presentacion ${seleccionado ? 'seleccionada' : ''}">
+                        <input type="radio" name="presentacion"
+                               value="${p.id}" ${seleccionado}
+                               data-precio="${p.precio !== null ? p.precio : ''}"
+                               data-imagen="${imagenPres}"
+                               onchange="actualizarOpcionSeleccionada()">
+                        <div class="opcion-info">
+                            <strong>${p.nombre}</strong>
+                            <span class="opcion-precio ${sinPrecio ? 'pendiente' : ''}">
+                                ${precioTexto}
+                            </span>
+                        </div>
+                    </label>`;
+            }).join('');
+
+            wrapper.innerHTML = `
+                <a href="../index.html#productos" class="volver-link">
+                    ← Volver a productos
+                </a>
+
+                <div class="producto-detalle">
+                    <div class="producto-imagen">
+                        <img id="imagen-producto"
+                             src="${imagenInicial}"
+                             alt="${prod.nombre}"
+                             onerror="this.src='https://via.placeholder.com/800x600/0f2b5b/ffffff?text=FrutiMerca'">
+                        <span class="producto-badge">
+                            ${prod.categoria === 'frutillas' ? '🍓 Frutilla' : '🍇 Fruta'}
+                        </span>
+                    </div>
+
+                    <div class="producto-info">
+                        <h1>${prod.nombre}</h1>
+                        <p class="producto-descripcion">${prod.descripcion}</p>
+
+                        <div class="producto-separador"></div>
+
+                        <h3 class="selector-titulo">Elige tu presentación:</h3>
+                        <div class="opciones-presentacion">
+                            ${opcionesHTML}
+                        </div>
+
+                        <div class="producto-acciones">
+                            <button class="btn-comprar btn-agregar btn-grande"
+                                    onclick="agregarDesdeDetalle(${prod.id})">
+                                🛒 Agregar al carrito
+                            </button>
+                        </div>
+
+                        <div class="producto-notas">
+                            <p>🚚 Envío Zona Central $3 · Extendida $5</p>
+                            <p>🏪 Retiro gratis en Mercado José Mascote</p>
+                            <p>💳 Pago por transferencia Banco Pichincha</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ============================================================
+           Cambio dinámico de imagen al seleccionar presentación
+           ============================================================ */
+        function actualizarOpcionSeleccionada() {
+            // 1. Marcar visualmente la opción seleccionada
+            document.querySelectorAll('.opcion-presentacion').forEach(el => {
+                const radio = el.querySelector('input');
+                el.classList.toggle('seleccionada', radio.checked);
+            });
+
+            // 2. Cambiar la imagen principal
+            const radio = document.querySelector('input[name="presentacion"]:checked');
+            if (!radio) return;
+
+            const nuevaImagen = radio.dataset.imagen;
+            const imagenEl = document.getElementById('imagen-producto');
+
+            if (imagenEl && nuevaImagen && imagenEl.src !== nuevaImagen) {
+                // Animación de fade al cambiar
+                imagenEl.style.opacity = '0';
+                setTimeout(() => {
+                    imagenEl.src = nuevaImagen;
+                    imagenEl.style.opacity = '1';
+                }, 200);
+            }
+        }
+
+        /* ============================================================
+           Agregar al carrito desde el detalle
+           ============================================================ */
+        function agregarDesdeDetalle(idProducto) {
+            const radio = document.querySelector('input[name="presentacion"]:checked');
+            if (!radio) {
+                alert('Selecciona una presentación');
+                return;
+            }
+
+            const precio = radio.dataset.precio;
+            if (!precio) {
+                alert('Este producto tiene precio a confirmar. Contáctanos por teléfono.');
+                return;
+            }
+
+            const presentacionId = radio.value;
+            const productos = obtenerProductos();
+            const prod = productos.find(p => p.id === idProducto);
+            const pres = prod.presentaciones.find(p => p.id === presentacionId);
+
+            agregarAlCarritoConPresentacion(prod, pres);
+        }
+
+        function agregarAlCarritoConPresentacion(prod, pres) {
+            const carrito = obtenerCarrito();
+            const clave = prod.id + '-' + pres.id;
+            const existente = carrito.find(item => item.clave === clave);
+
+            if (existente) {
+                existente.cantidad += 1;
+            } else {
+                carrito.push({
+                    clave: clave,
+                    id: prod.id,
+                    nombre: prod.nombre + ' — ' + pres.nombre,
+                    precio: pres.precio,
+                    unidad: pres.nombre,
+                    imagen: pres.imagen || prod.imagen,
+                    cantidad: 1
+                });
+            }
+
+            guardarCarrito(carrito);
+            mostrarToast(`✅ ${prod.nombre} (${pres.nombre}) agregado`);
+        }
+    </script>
+    <script>
+    function toggleMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.toggle('abierto');
+        btn.classList.toggle('activo');
+        overlay.classList.toggle('activo');
+        document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+    }
+    function cerrarMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.remove('abierto');
+        btn.classList.remove('activo');
+        overlay.classList.remove('activo');
+        document.body.style.overflow = '';
+    }
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) cerrarMenu();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.nav-principal a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) cerrarMenu();
+            });
+        });
+    });
+</script>
+</body>
+</html>

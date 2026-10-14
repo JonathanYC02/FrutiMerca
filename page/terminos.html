@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📜 Términos y Condiciones | FrutiMerca</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-contenedor">
+        <a href="../index.html" class="logo">
+            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>FrutiMerca</strong>
+                <small>Frutas Frescas</small>
+            </div>
+        </a>
+
+        <a href="carrito.html" class="btn-carrito">
+            🛒 <span id="contador-carrito">0</span>
+            <span class="btn-carrito-texto">Tus pedidos</span>
+        </a>
+
+        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-principal" id="nav-principal">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html#productos">Productos</a></li>
+                <li><a href="carrito.html">Tus Pedidos</a></li>
+                <li><a href="conocenos.html">Conócenos</a></li>
+                <li><a href="terminos.html" class="activo">Términos</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+
+    <main class="terminos-wrapper">
+        <div class="terminos-card">
+            <h1>📜 Términos y Condiciones</h1>
+            <p style="color:var(--gris-suave);">
+                Última actualización: 2026
+            </p>
+
+            <h2>1. Horarios de Atención y Entrega en Puesto Físico</h2>
+            <ul>
+                <li><strong>Horario principal:</strong> el puesto en el Mercado José Mascote opera en jornada matutina.</li>
+                <li><strong>Notificación recomendada:</strong> coordinar cualquier novedad del retiro antes de las <strong>12:00 PM</strong>.</li>
+                <li><strong>Cierre de despachos:</strong> máximo hasta las <strong>14:00 PM (2:00 PM)</strong>. Después de esa hora, el personal solo cumple funciones de resguardo e inventario.</li>
+            </ul>
+
+            <h2>2. Responsabilidad sobre Productos Perecederos</h2>
+            <p>Por la naturaleza altamente perecedera de la fruta fresca, el producto no puede conservarse de un día para otro sin perder su calidad comercial.</p>
+            <ul>
+                <li><strong>Inasistencia sin notificación:</strong> si el cliente no retira ni notifica antes de las 12:00 PM, asume la pérdida total del valor pagado. No se realizan reembolsos por negligencia en el retiro.</li>
+                <li><strong>Casos fortuitos con notificación previa:</strong> si el cliente comunica antes de las 12:00 PM que no podrá retirar antes de las 14:00, se podrá coordinar envío a domicilio expreso con tarifa fija de <strong>$5.00</strong> por flete y despacho urgente.</li>
+            </ul>
+
+            <h2>3. Monto Mínimo de Pedido</h2>
+            <ul>
+                <li>El pedido mínimo es de <strong>1 unidad</strong> (1 balde de 30 lbs, 1 caja de 15 lbs o 1 caja de 5 lbs).</li>
+                <li>Todos los pedidos generados por la web quedan sujetos a la modalidad de <strong>retiro en puesto físico (Mercado José Mascote)</strong>, salvo que el cliente coordine explícitamente envío a domicilio.</li>
+            </ul>
+
+            <h2>4. Políticas de Cancelación y Reembolsos</h2>
+            <p>Si el cliente cancela un pedido pagado y confirmado antes de la preparación o despacho:</p>
+            <ul>
+                <li><strong>Saldo a favor (recomendado):</strong> el cliente mantiene el 100% de su dinero como saldo para una compra futura.</li>
+                <li><strong>Devolución de dinero:</strong> se procesa mediante transferencia bancaria en un lapso de 24 a 48 horas laborables.</li>
+            </ul>
+
+            <h2>5. Disponibilidad de Stock en Tiempo Real</h2>
+            <p>La plataforma web refleja la disponibilidad de productos. Si una categoría o calibre se agota, el sistema deshabilita la opción de compra mostrando el estado <strong>"Agotado"</strong>.</p>
+
+            <h2>6. Verificación de Vouchers de Pago</h2>
+            <p>Ninguna orden se considera reservada ni lista para retiro sin la previa carga y verificación exitosa del comprobante de transferencia bancaria (voucher) a la cuenta autorizada del Banco Pichincha.</p>
+
+            <h2>7. Métodos de Pago Aceptados</h2>
+            <p>Por el momento no se procesan tarjetas de crédito ni débito directamente en el portal. Las compras se confirman mediante <strong>Transferencia Bancaria Directa</strong>:</p>
+            <ul>
+                <li><strong>Titular:</strong> JONATHAN YUMISACA</li>
+                <li><strong>Cédula:</strong> 0953749629</li>
+                <li><strong>Institución:</strong> Banco Pichincha</li>
+                <li><strong>Tipo de Cuenta:</strong> Cuenta de Ahorros</li>
+                <li><strong>Número de Cuenta:</strong> 2206795019</li>
+            </ul>
+            <p>El cliente debe cargar la captura del voucher dentro de la web para verificar y liberar la orden.</p>
+
+            <h2>8. Zonas de Entrega y Tarifas</h2>
+            <ul>
+                <li><strong>Zona Central / Cercanías del Mercado ($3.00):</strong> entregas dentro del radio céntrico entre el Mercado de las Flores y el Mercado José Mascote.</li>
+                <li><strong>Zona Extendida de Guayaquil ($5.00):</strong> entregas fuera del radio central comercial, sujeto a volumen de compra alto o pedidos al por mayor.</li>
+                <li><strong>Retiro en Local (Sin costo):</strong> opción predeterminada previa confirmación del voucher.</li>
+            </ul>
+
+            <h2>9. Inspección del Producto</h2>
+            <p>Es responsabilidad del cliente o de la persona autorizada (repartidor/tercero) inspeccionar el estado del producto al momento exacto de la entrega en el puesto. Una vez retirada la mercadería, no se aceptan reclamos por daños derivados del mal manejo o transporte externo.</p>
+
+            <h2>10. Contacto</h2>
+            <ul>
+                <li><strong>Responsable:</strong> Lorenzo Yumisaca</li>
+                <li><strong>Teléfono:</strong> 099-373-4939</li>
+                <li><strong>Correo:</strong> yumisacalorenzo@gmail.com</li>
+                <li><strong>Ubicación:</strong> Mercado José Mascote, Guayaquil</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-copy">
+            <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
+        </div>
+    </footer>
+
+    <script src="../js/carrito.js"></script>
+    <script>
+    function toggleMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.toggle('abierto');
+        btn.classList.toggle('activo');
+        overlay.classList.toggle('activo');
+        document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+    }
+    function cerrarMenu() {
+        const nav = document.getElementById('nav-principal');
+        const btn = document.getElementById('btn-hamburguesa');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.remove('abierto');
+        btn.classList.remove('activo');
+        overlay.classList.remove('activo');
+        document.body.style.overflow = '';
+    }
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) cerrarMenu();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.nav-principal a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) cerrarMenu();
+            });
+        });
+    });
+</script>
+</body>
+</html>
