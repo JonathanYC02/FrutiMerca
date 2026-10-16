@@ -13,44 +13,41 @@
     <!-- ============================================================
          HEADER
          ============================================================ -->
-<header class="header">
-    <div class="header-contenedor">
+    <header class="header">
+        <div class="header-contenedor">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <strong>FrutiMerca</strong>
+                    <small>Frutas Frescas</small>
+                </div>
+            </a>
 
-        <a href="../index.html" class="logo">
-            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
-            <div class="logo-texto">
-                <strong>FrutiMerca</strong>
-                <small>Frutas Frescas</small>
-            </div>
-        </a>
+            <a href="carrito.html" class="btn-carrito">
+                🛒 <span id="contador-carrito">0</span>
+                <span class="btn-carrito-texto">Tus pedidos</span>
+            </a>
 
-        <a href="carrito.html" class="btn-carrito">
-            🛒 <span id="contador-carrito">0</span>
-            <span class="btn-carrito-texto">Tus pedidos</span>
-        </a>
+            <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+            <nav class="nav-principal" id="nav-principal">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#productos">Productos</a></li>
+                    <li><a href="../index.html#como-comprar">Cómo Comprar</a></li>
+                    <li><a href="conocenos.html" class="activo">Conócenos</a></li>
+                    <li><a href="terminos.html">Términos</a></li>
+                    <li><a href="admin.html">⚙️ Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-        <nav class="nav-principal" id="nav-principal">
-            <ul>
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="../index.html#productos">Productos</a></li>
-                <li><a href="../index.html#como-comprar">Cómo Comprar</a></li>
-                <li><a href="conocenos.html" class="activo">Conócenos</a></li>
-                <li><a href="terminos.html">Términos</a></li>
-                <li><a href="admin.html">⚙️ Admin</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<!-- Overlay para cerrar el menú en móvil -->
-<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
-
+    <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
     <!-- ============================================================
          HERO DE LA PÁGINA
@@ -112,7 +109,7 @@
 
                 <div class="historia-imagen">
                     <div class="marco-decorativo">
-                        <!-- 
+                        <!--
                             ESPACIO PARA FOTO O VIDEO
                             
                             Cuando tengas el video de cómo llegar al puesto:
@@ -320,7 +317,7 @@
                         </li>
                         <li>
                             <strong>🕐 Horario:</strong>
-                            Atención matutina · Retiro hasta 14:00
+                            Lunes a Sábado · 4:00 AM a 2:00 PM
                         </li>
                         <li>
                             <strong>📞 Teléfono:</strong>
@@ -377,7 +374,7 @@
                 <h3>🍓 FrutiMerca</h3>
                 <p>
                     Frutas frescas del Mercado José Mascote directo a tu negocio
-                    o domicilio en Guayaquil.
+                    o domicilio en Guayaquil y Durán.
                 </p>
                 <p class="footer-slogan">"Tu mejor aliado en frutas"</p>
             </div>
@@ -396,7 +393,8 @@
                     <li>👤 Familia Yumisaca</li>
                     <li>📞 <a href="tel:0993734939">099-373-4939</a></li>
                     <li>📧 <a href="mailto:yumisacalorenzo@gmail.com">yumisacalorenzo@gmail.com</a></li>
-                    <li>📍 Mercado José Mascote, Guayaquil</li>
+                    <li>📍 Mercado José Mascote · Puesto #214</li>
+                    <li>🕐 Lunes a Sábado · 4:00 AM a 2:00 PM</li>
                 </ul>
             </div>
         </div>
@@ -404,36 +402,89 @@
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
+    <script>
+    // ============================================================
+    // PANTALLA DE TRANSICIÓN
+    // ============================================================
+    (function() {
+        // 1. Cuando la página termine de cargar, ocultar la pantalla
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const pantalla = document.getElementById('transicion-pantalla');
+                if (pantalla) {
+                    pantalla.classList.add('oculta');
+                    // Eliminar del DOM después de la transición
+                    setTimeout(function() {
+                        pantalla.style.display = 'none';
+                    }, 500);
+                }
+            }, 1200); // 0.3 segundos mínimo visible
+        });
+
+        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const href = link.getAttribute('href');
+
+                    // No mostrar para enlaces internos (#) ni externos (_blank)
+                    if (!href ||
+                        href.startsWith('#') ||
+                        href.startsWith('http') ||
+                        href.startsWith('mailto:') ||
+                        href.startsWith('tel:') ||
+                        link.target === '_blank' ||
+                        link.getAttribute('target') === '_blank') {
+                        return;
+                    }
+
+                    // Mostrar pantalla de transición
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.remove('oculta');
+                        pantalla.style.display = 'flex';
+                    }
+                });
+            });
+        });
+
+        // 3. Cuando el usuario use el botón "atrás" del navegador,
+        //    ocultar la pantalla si quedó visible
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                const pantalla = document.getElementById('transicion-pantalla');
+                if (pantalla) {
+                    pantalla.classList.add('oculta');
+                    pantalla.style.display = 'none';
+                }
+            }
+        });
+    })();
+</script>
 
     <script src="../js/carrito.js"></script>
-      <script>
+    <script>
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
             const overlay = document.getElementById('menu-overlay');
-
             nav.classList.toggle('abierto');
             btn.classList.toggle('activo');
             overlay.classList.toggle('activo');
-
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
-
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
             const overlay = document.getElementById('menu-overlay');
-
             nav.classList.remove('abierto');
             btn.classList.remove('activo');
             overlay.classList.remove('activo');
             document.body.style.overflow = '';
         }
-
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
-
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.nav-principal a').forEach(link => {
                 link.addEventListener('click', () => {
@@ -443,4 +494,18 @@
         });
     </script>
 </body>
+<!-- ============================================================
+     PANTALLA DE TRANSICIÓN
+     ============================================================ -->
+<div id="transicion-pantalla" class="transicion-pantalla">
+    <div class="transicion-contenido">
+        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+        <div class="transicion-nombre">FrutiMerca</div>
+        <div class="transicion-cargando">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
 </html>

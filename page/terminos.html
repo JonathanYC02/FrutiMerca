@@ -3,56 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📜 Términos y Condiciones | FrutiMerca</title>
+    <title>Términos y Condiciones | FrutiMerca</title>
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
-<header class="header">
-    <div class="header-contenedor">
-        <a href="../index.html" class="logo">
-            <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
-            <div class="logo-texto">
-                <strong>FrutiMerca</strong>
-                <small>Frutas Frescas</small>
-            </div>
-        </a>
 
-        <a href="carrito.html" class="btn-carrito">
-            🛒 <span id="contador-carrito">0</span>
-            <span class="btn-carrito-texto">Tus pedidos</span>
-        </a>
+    <header class="header">
+        <div class="header-contenedor">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <strong>FrutiMerca</strong>
+                    <small>Frutas Frescas</small>
+                </div>
+            </a>
 
-        <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+            <a href="carrito.html" class="btn-carrito">
+                🛒 <span id="contador-carrito">0</span>
+                <span class="btn-carrito-texto">Tus pedidos</span>
+            </a>
 
-        <nav class="nav-principal" id="nav-principal">
-            <ul>
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="../index.html#productos">Productos</a></li>
-                <li><a href="carrito.html">Tus Pedidos</a></li>
-                <li><a href="conocenos.html">Conócenos</a></li>
-                <li><a href="terminos.html" class="activo">Términos</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+            <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-<div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+            <nav class="nav-principal" id="nav-principal">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#productos">Productos</a></li>
+                    <li><a href="conocenos.html">Conócenos</a></li>
+                    <li><a href="terminos.html" class="activo">Términos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
     <main class="terminos-wrapper">
         <div class="terminos-card">
-            <h1>📜 Términos y Condiciones</h1>
+            <h1>Términos y Condiciones</h1>
             <p style="color:var(--gris-suave);">
                 Última actualización: 2026
             </p>
 
             <h2>1. Horarios de Atención y Entrega en Puesto Físico</h2>
             <ul>
-                <li><strong>Horario principal:</strong> el puesto en el Mercado José Mascote opera en jornada matutina.</li>
+                <li><strong>Ubicación:</strong> Mercado José Mascote, Puesto #214, Segundo piso, sección de frutas.</li>
+                <li><strong>Horario principal:</strong> Lunes a Domingo de <strong>4:00 AM a 2:00 PM</strong>.</li>
+                <li><strong>Atención de dueños:</strong> 4:00 AM a 12:00 PM (mediodía).</li>
+                <li><strong>Atención de trabajadores:</strong> 12:00 PM a 1:30/2:00 PM (solo retiro de pedidos).</li>
                 <li><strong>Notificación recomendada:</strong> coordinar cualquier novedad del retiro antes de las <strong>12:00 PM</strong>.</li>
                 <li><strong>Cierre de despachos:</strong> máximo hasta las <strong>14:00 PM (2:00 PM)</strong>. Después de esa hora, el personal solo cumple funciones de resguardo e inventario.</li>
             </ul>
@@ -66,8 +69,8 @@
 
             <h2>3. Monto Mínimo de Pedido</h2>
             <ul>
-                <li>El pedido mínimo es de <strong>1 unidad</strong> (1 balde de 30 lbs, 1 caja de 15 lbs o 1 caja de 5 lbs).</li>
-                <li>Todos los pedidos generados por la web quedan sujetos a la modalidad de <strong>retiro en puesto físico (Mercado José Mascote)</strong>, salvo que el cliente coordine explícitamente envío a domicilio.</li>
+                <li>El pedido mínimo es de <strong>1 unidad</strong> (1 balde de 30 lbs, 1 caja de 15 lbs o 1 cartón al granel).</li>
+                <li>Todos los pedidos generados por la web quedan sujetos a la modalidad de <strong>retiro en puesto físico (Mercado José Mascote #214)</strong>, salvo que el cliente coordine explícitamente envío a domicilio.</li>
             </ul>
 
             <h2>4. Políticas de Cancelación y Reembolsos</h2>
@@ -96,9 +99,9 @@
 
             <h2>8. Zonas de Entrega y Tarifas</h2>
             <ul>
-                <li><strong>Zona Central / Cercanías del Mercado ($3.00):</strong> entregas dentro del radio céntrico entre el Mercado de las Flores y el Mercado José Mascote.</li>
-                <li><strong>Zona Extendida de Guayaquil ($5.00):</strong> entregas fuera del radio central comercial, sujeto a volumen de compra alto o pedidos al por mayor.</li>
-                <li><strong>Retiro en Local (Sin costo):</strong> opción predeterminada previa confirmación del voucher.</li>
+                <li><strong>Retiro en Puesto Físico ($0.00):</strong> Mercado José Mascote, Puesto #214, Segundo piso, sección de frutas.</li>
+                <li><strong>Envío Zona Central ($3.00):</strong> entregas dentro del radio céntrico entre el Mercado de las Flores y el Mercado José Mascote.</li>
+                <li><strong>Entrega en Durán ($1.00):</strong> en nuestra ruta diaria de regreso a casa. Sujeto a confirmación previa por WhatsApp.</li>
             </ul>
 
             <h2>9. Inspección del Producto</h2>
@@ -106,10 +109,10 @@
 
             <h2>10. Contacto</h2>
             <ul>
-                <li><strong>Responsable:</strong> Lorenzo Yumisaca</li>
+                <li><strong>Responsable:</strong> Familia Yumisaca</li>
                 <li><strong>Teléfono:</strong> 099-373-4939</li>
                 <li><strong>Correo:</strong> yumisacalorenzo@gmail.com</li>
-                <li><strong>Ubicación:</strong> Mercado José Mascote, Guayaquil</li>
+                <li><strong>Ubicación:</strong> Mercado José Mascote, Puesto #214, Segundo piso — Guayaquil, Ecuador</li>
             </ul>
         </div>
     </main>
@@ -119,37 +122,110 @@
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
+    <script>
+    // ============================================================
+    // PANTALLA DE TRANSICIÓN
+    // ============================================================
+    (function() {
+        // 1. Cuando la página termine de cargar, ocultar la pantalla
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const pantalla = document.getElementById('transicion-pantalla');
+                if (pantalla) {
+                    pantalla.classList.add('oculta');
+                    // Eliminar del DOM después de la transición
+                    setTimeout(function() {
+                        pantalla.style.display = 'none';
+                    }, 500);
+                }
+            }, 1200); // 0.3 segundos mínimo visible
+        });
+
+        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const href = link.getAttribute('href');
+
+                    // No mostrar para enlaces internos (#) ni externos (_blank)
+                    if (!href ||
+                        href.startsWith('#') ||
+                        href.startsWith('http') ||
+                        href.startsWith('mailto:') ||
+                        href.startsWith('tel:') ||
+                        link.target === '_blank' ||
+                        link.getAttribute('target') === '_blank') {
+                        return;
+                    }
+
+                    // Mostrar pantalla de transición
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.remove('oculta');
+                        pantalla.style.display = 'flex';
+                    }
+                });
+            });
+        });
+
+        // 3. Cuando el usuario use el botón "atrás" del navegador,
+        //    ocultar la pantalla si quedó visible
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                const pantalla = document.getElementById('transicion-pantalla');
+                if (pantalla) {
+                    pantalla.classList.add('oculta');
+                    pantalla.style.display = 'none';
+                }
+            }
+        });
+    })();
+</script>
 
     <script src="../js/carrito.js"></script>
     <script>
-    function toggleMenu() {
-        const nav = document.getElementById('nav-principal');
-        const btn = document.getElementById('btn-hamburguesa');
-        const overlay = document.getElementById('menu-overlay');
-        nav.classList.toggle('abierto');
-        btn.classList.toggle('activo');
-        overlay.classList.toggle('activo');
-        document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
-    }
-    function cerrarMenu() {
-        const nav = document.getElementById('nav-principal');
-        const btn = document.getElementById('btn-hamburguesa');
-        const overlay = document.getElementById('menu-overlay');
-        nav.classList.remove('abierto');
-        btn.classList.remove('activo');
-        overlay.classList.remove('activo');
-        document.body.style.overflow = '';
-    }
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 900) cerrarMenu();
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.nav-principal a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 900) cerrarMenu();
+        function toggleMenu() {
+            const nav = document.getElementById('nav-principal');
+            const btn = document.getElementById('btn-hamburguesa');
+            const overlay = document.getElementById('menu-overlay');
+            nav.classList.toggle('abierto');
+            btn.classList.toggle('activo');
+            overlay.classList.toggle('activo');
+            document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
+        }
+        function cerrarMenu() {
+            const nav = document.getElementById('nav-principal');
+            const btn = document.getElementById('btn-hamburguesa');
+            const overlay = document.getElementById('menu-overlay');
+            nav.classList.remove('abierto');
+            btn.classList.remove('activo');
+            overlay.classList.remove('activo');
+            document.body.style.overflow = '';
+        }
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) cerrarMenu();
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-principal a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) cerrarMenu();
+                });
             });
         });
-    });
-</script>
+    </script>
 </body>
+<!-- ============================================================
+     PANTALLA DE TRANSICIÓN
+     ============================================================ -->
+<div id="transicion-pantalla" class="transicion-pantalla">
+    <div class="transicion-contenido">
+        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+        <div class="transicion-nombre">FrutiMerca</div>
+        <div class="transicion-cargando">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
 </html>
