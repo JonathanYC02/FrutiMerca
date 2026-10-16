@@ -10,10 +10,26 @@
 <body>
 
     <!-- ============================================================
+         PANTALLA DE TRANSICIÓN
+         ============================================================ -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
          HEADER
          ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
+
             <a href="../index.html" class="logo">
                 <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
                 <div class="logo-texto">
@@ -48,11 +64,12 @@
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
     <!-- ============================================================
-         CONTENIDO
+         CONTENIDO PRINCIPAL
+         Se llena dinámicamente con JavaScript según el pedido guardado.
          ============================================================ -->
     <main class="confirmacion-wrapper">
         <div id="contenido-confirmacion">
-            <!-- Se llena con JS -->
+            <!-- Contenido dinámico -->
         </div>
     </main>
 
@@ -96,72 +113,64 @@
     <!-- ============================================================
          SCRIPTS
          ============================================================ -->
-    
+
+    <!-- 1) Scripts base del sistema -->
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
+
+    <!-- 2) Script: Pantalla de transición -->
     <script>
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
-    (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
-                }
-            }, 300); // 0.3 segundos mínimo visible
-        });
-
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    const href = link.getAttribute('href');
-
-                    // No mostrar para enlaces internos (#) ni externos (_blank)
-                    if (!href ||
-                        href.startsWith('#') ||
-                        href.startsWith('http') ||
-                        href.startsWith('mailto:') ||
-                        href.startsWith('tel:') ||
-                        link.target === '_blank' ||
-                        link.getAttribute('target') === '_blank') {
-                        return;
-                    }
-
-                    // Mostrar pantalla de transición
+        (function() {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
                     const pantalla = document.getElementById('transicion-pantalla');
                     if (pantalla) {
-                        pantalla.classList.remove('oculta');
-                        pantalla.style.display = 'flex';
+                        pantalla.classList.add('oculta');
+                        setTimeout(function() {
+                            pantalla.style.display = 'none';
+                        }, 500);
                     }
+                }, 1200);
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function(e) {
+                        const href = link.getAttribute('href');
+                        if (!href ||
+                            href.startsWith('#') ||
+                            href.startsWith('http') ||
+                            href.startsWith('mailto:') ||
+                            href.startsWith('tel:') ||
+                            link.target === '_blank') {
+                            return;
+                        }
+                        const pantalla = document.getElementById('transicion-pantalla');
+                        if (pantalla) {
+                            pantalla.classList.remove('oculta');
+                            pantalla.style.display = 'flex';
+                        }
+                    });
                 });
             });
-        });
 
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    pantalla.style.display = 'none';
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        pantalla.style.display = 'none';
+                    }
                 }
-            }
-        });
-    })();
-</script>
-         <script src="../js/productos.js"></script>
-    <script src="../js/carrito.js"></script>
+            });
+        })();
+    </script>
+
+    <!-- 3) Script: Confirmación del pedido + Menú -->
     <script>
-        // ============================================================
-        // MENÚ HAMBURGUESA
-        // ============================================================
+        /* ============================================================
+           MENÚ HAMBURGUESA (MÓVIL)
+           ============================================================ */
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -171,6 +180,7 @@
             overlay.classList.toggle('activo');
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
+
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -181,14 +191,22 @@
             document.body.style.overflow = '';
         }
 
-        // ============================================================
-        // MOSTRAR CONFIRMACIÓN DEL PEDIDO
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Actualizar contador del carrito (debería ser 0)
-            if (typeof actualizarContador === 'function') actualizarContador();
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) cerrarMenu();
+        });
 
-            // 2. Obtener el pedido guardado temporalmente
+        /* ============================================================
+           CARGAR CONFIRMACIÓN DEL PEDIDO
+           Se ejecuta al cargar la página (desde DOMContentLoaded)
+           y también al volver con el botón "atrás" (desde pageshow).
+           ============================================================ */
+        function cargarConfirmacion() {
+            // 1. Actualizar contador del carrito (debería estar en 0)
+            if (typeof actualizarContador === 'function') {
+                actualizarContador();
+            }
+
+            // 2. Obtener el pedido guardado en localStorage
             const pedidoGuardado = localStorage.getItem('frutimerca_ultimo_pedido');
 
             if (!pedidoGuardado) {
@@ -196,6 +214,7 @@
                 return;
             }
 
+            // 3. Parsear el pedido (con protección por si está corrupto)
             let pedido;
             try {
                 pedido = JSON.parse(pedidoGuardado);
@@ -204,9 +223,44 @@
                 return;
             }
 
+            // 4. Renderizar la confirmación
             renderizarConfirmacion(pedido);
+        }
+
+        /* ============================================================
+           INICIALIZACIÓN
+           ============================================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarConfirmacion();
+
+            // Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('.nav-principal a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) cerrarMenu();
+                });
+            });
         });
 
+        /* ============================================================
+           🔧 SOLUCIÓN PARA EL BOTÓN "ATRÁS" (bfcache)
+           ------------------------------------------------------------
+           Cuando el usuario vuelve con el botón "atrás" del navegador,
+           la página NO se recarga desde cero: se restaura "congelada"
+           desde el bfcache. En ese caso, DOMContentLoaded NO se dispara.
+
+           El evento 'pageshow' SÍ se dispara siempre.
+           ============================================================ */
+        window.addEventListener('pageshow', function(event) {
+            // Solo si volvió desde bfcache
+            if (event.persisted) {
+                cargarConfirmacion();
+            }
+        });
+
+        /* ============================================================
+           MOSTRAR PANTALLA "SIN PEDIDO"
+           Se muestra si no hay un pedido reciente guardado.
+           ============================================================ */
         function mostrarSinPedido() {
             document.getElementById('contenido-confirmacion').innerHTML = `
                 <div class="confirmacion-card">
@@ -223,9 +277,26 @@
             `;
         }
 
+        /* ============================================================
+           RENDERIZAR CONFIRMACIÓN DEL PEDIDO
+           Muestra todo el resumen del pedido con opciones de acción.
+           ============================================================ */
         function renderizarConfirmacion(pedido) {
-            const { idPedido, productos, subtotal, costoEnvio, total, zonaTexto,
-                    direccion, notas, cliente, telefono, urlVoucher, mensajeWA } = pedido;
+            // Extraer datos del pedido
+            const {
+                idPedido,
+                productos,
+                subtotal,
+                costoEnvio,
+                total,
+                zonaTexto,
+                direccion,
+                notas,
+                cliente,
+                telefono,
+                urlVoucher,
+                mensajeWA
+            } = pedido;
 
             // --- Lista de productos ---
             const listaProductos = productos.map(p => `
@@ -241,13 +312,32 @@
                 : `<p class="conf-voucher-pendiente">Voucher pendiente de subida</p>`;
 
             // --- Botón WhatsApp ---
-            // Si tenemos el mensaje, generamos el link; si no, mostramos WhatsApp genérico
             const numeroPrincipal = '593993734939';
             const linkWA = mensajeWA
                 ? `https://wa.me/${numeroPrincipal}?text=${encodeURIComponent(mensajeWA)}`
                 : `https://wa.me/${numeroPrincipal}`;
 
+            // --- HTML completo ---
             document.getElementById('contenido-confirmacion').innerHTML = `
+
+                <!-- INDICADOR DE PASOS (todos completados) -->
+                <div class="indicador-pasos" style="margin-bottom: 25px;">
+                    <div class="paso-indicador completado">
+                        <div class="paso-numero"><span>1</span></div>
+                        <span class="paso-texto">Carrito</span>
+                    </div>
+                    <div class="paso-flecha">→</div>
+                    <div class="paso-indicador completado">
+                        <div class="paso-numero"><span>2</span></div>
+                        <span class="paso-texto">Pago</span>
+                    </div>
+                    <div class="paso-flecha">→</div>
+                    <div class="paso-indicador completado">
+                    <div class="paso-numero"><span>3</span></div>
+                    <span class="paso-texto">Confirmación</span>
+                    </div>
+                </div>
+
                 <!-- ENCABEZADO DE ÉXITO -->
                 <div class="confirmacion-card confirmacion-exito">
                     <div class="confirmacion-icono">✅</div>
@@ -274,7 +364,7 @@
                         <div class="conf-item">
                             <div class="conf-item-nombre">${zonaTexto}</div>
                         </div>
-                        ${direccion && direccion !== 'Retiro en local' ? `
+                        ${direccion && direccion !== 'Retiro en local' && direccion !== 'Retiro en puesto fisico' ? `
                             <div class="conf-item">
                                 <div class="conf-item-nombre">Dirección:</div>
                                 <div class="conf-item-precio">${direccion}</div>
@@ -348,9 +438,7 @@
                 <!-- CONTACTO -->
                 <div class="confirmacion-card confirmacion-contacto">
                     <h2>📞 ¿Alguna duda?</h2>
-                    <p>
-                        Contactate con nosotros:
-                    </p>
+                    <p>Contactate con nosotros:</p>
                     <ul class="conf-contacto-lista">
                         <li>📞 <a href="tel:0993734939">099-373-4939</a></li>
                         <li>📧 <a href="mailto:yumisacalorenzo@gmail.com">yumisacalorenzo@gmail.com</a></li>
@@ -359,19 +447,6 @@
             `;
         }
     </script>
+
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>

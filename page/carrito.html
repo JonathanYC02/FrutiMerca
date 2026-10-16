@@ -9,8 +9,27 @@
 </head>
 <body>
 
+    <!-- ============================================================
+         PANTALLA DE TRANSICIÓN
+         ============================================================ -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
+
             <a href="../index.html" class="logo">
                 <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
                 <div class="logo-texto">
@@ -44,7 +63,30 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
+    <!-- ============================================================
+         CONTENIDO PRINCIPAL: CARRITO
+         ============================================================ -->
     <main class="carrito-wrapper">
+
+        <!-- INDICADOR DE PASOS -->
+        <div class="indicador-pasos" style="grid-column: 1 / -1;">
+            <div class="paso-indicador activo">
+                <div class="paso-numero"><span>1</span></div>
+                <span class="paso-texto">Carrito</span>
+            </div>
+            <div class="paso-flecha">→</div>
+            <div class="paso-indicador">
+                <div class="paso-numero"><span>2</span></div>
+                <span class="paso-texto">Pago</span>
+            </div>
+            <div class="paso-flecha">→</div>
+            <div class="paso-indicador">
+                <div class="paso-numero"><span>3</span></div>
+                <span class="paso-texto">Confirmación</span>
+            </div>
+        </div>
+
+        <!-- COLUMNA IZQUIERDA: Lista de productos -->
         <section class="carrito-lista">
             <h1>
                 🛒 Tus Pedidos
@@ -53,12 +95,14 @@
             <div id="items-carrito-container"></div>
         </section>
 
+        <!-- COLUMNA DERECHA: Resumen del pedido -->
         <aside class="carrito-resumen">
             <h2>Resumen del Pedido</h2>
 
-            <!-- Selector de envío -->
+            <!-- SELECTOR DE ENVÍO -->
             <div class="selector-envio">
                 <h3>🚚 Opción de Entrega</h3>
+
                 <label class="opcion-envio">
                     <input type="radio" name="zona-envio" value="retiro" data-precio="0" checked>
                     <div class="opcion-envio-info">
@@ -67,6 +111,7 @@
                     </div>
                     <span class="opcion-envio-precio">$0.00</span>
                 </label>
+
                 <label class="opcion-envio">
                     <input type="radio" name="zona-envio" value="central" data-precio="3">
                     <div class="opcion-envio-info">
@@ -75,6 +120,7 @@
                     </div>
                     <span class="opcion-envio-precio">$3.00</span>
                 </label>
+
                 <label class="opcion-envio">
                     <input type="radio" name="zona-envio" value="duran" data-precio="1">
                     <div class="opcion-envio-info">
@@ -85,7 +131,7 @@
                 </label>
             </div>
 
-            <!-- Cálculos -->
+            <!-- CÁLCULOS -->
             <div class="resumen-linea">
                 <span>Subtotal</span>
                 <span id="resumen-subtotal">$0.00</span>
@@ -101,7 +147,7 @@
                 <span id="total-carrito">$0.00</span>
             </div>
 
-            <!-- Checkbox de términos -->
+            <!-- CHECKBOX DE TÉRMINOS -->
             <label class="acepto-terminos">
                 <input type="checkbox" id="acepto-terminos">
                 <span>
@@ -112,6 +158,7 @@
                 </span>
             </label>
 
+            <!-- BOTÓN DE CONFIRMAR -->
             <button class="btn-finalizar" id="btn-confirmar" onclick="irAPagar()" disabled>
                 <span class="btn-icono">🏦</span>
                 Confirmar Pedido (Transferencia)
@@ -128,74 +175,78 @@
         </aside>
     </main>
 
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
     <footer class="footer">
         <div class="footer-copy">
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
-    <script>
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
-    (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
-                }
-            }, 300); // 0.3 segundos mínimo visible
-        });
 
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    const href = link.getAttribute('href');
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
 
-                    // No mostrar para enlaces internos (#) ni externos (_blank)
-                    if (!href ||
-                        href.startsWith('#') ||
-                        href.startsWith('http') ||
-                        href.startsWith('mailto:') ||
-                        href.startsWith('tel:') ||
-                        link.target === '_blank' ||
-                        link.getAttribute('target') === '_blank') {
-                        return;
-                    }
-
-                    // Mostrar pantalla de transición
-                    const pantalla = document.getElementById('transicion-pantalla');
-                    if (pantalla) {
-                        pantalla.classList.remove('oculta');
-                        pantalla.style.display = 'flex';
-                    }
-                });
-            });
-        });
-
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    pantalla.style.display = 'none';
-                }
-            }
-        });
-    })();
-</script>
-
+    <!-- 1) Scripts base del sistema -->
     <script src="../js/productos.js"></script>
     <script src="../js/carrito.js"></script>
+
+    <!-- 2) Script: Pantalla de transición -->
     <script>
+        (function() {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        setTimeout(function() {
+                            pantalla.style.display = 'none';
+                        }, 500);
+                    }
+                }, 1200);
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function(e) {
+                        const href = link.getAttribute('href');
+                        if (!href ||
+                            href.startsWith('#') ||
+                            href.startsWith('http') ||
+                            href.startsWith('mailto:') ||
+                            href.startsWith('tel:') ||
+                            link.target === '_blank') {
+                            return;
+                        }
+                        const pantalla = document.getElementById('transicion-pantalla');
+                        if (pantalla) {
+                            pantalla.classList.remove('oculta');
+                            pantalla.style.display = 'flex';
+                        }
+                    });
+                });
+            });
+
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        pantalla.style.display = 'none';
+                    }
+                }
+            });
+        })();
+    </script>
+
+    <!-- 3) Script: Lógica del carrito -->
+    <script>
+        /* ============================================================
+           RENDERIZAR CARRITO
+           Dibuja la lista de productos en el contenedor.
+           Si está vacío, muestra un mensaje bonito.
+           ============================================================ */
         function renderizarCarrito() {
             const contenedor = document.getElementById('items-carrito-container');
             const badge = document.getElementById('badge-items');
@@ -205,6 +256,7 @@
             const totalItems = carrito.reduce((s, i) => s + i.cantidad, 0);
             if (badge) badge.textContent = totalItems;
 
+            // ----- Carrito vacío -----
             if (carrito.length === 0) {
                 contenedor.innerHTML = `
                     <div class="carrito-vacio">
@@ -220,6 +272,7 @@
                 return;
             }
 
+            // ----- Items del carrito -----
             let html = '';
             carrito.forEach((item, index) => {
                 const subtotal = item.precio * item.cantidad;
@@ -253,6 +306,11 @@
             actualizarTotales();
         }
 
+        /* ============================================================
+           ACTUALIZAR TOTALES
+           Calcula el subtotal, envío y total. Guarda la zona de
+           envío en localStorage para usarla en pago.html.
+           ============================================================ */
         function actualizarTotales() {
             const carrito = obtenerCarrito();
             const subtotal = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
@@ -268,22 +326,30 @@
                 costoEnvio === 0 ? 'GRATIS' : '$' + costoEnvio.toFixed(2);
             document.getElementById('total-carrito').textContent = '$' + total.toFixed(2);
 
-            // Guardar zona para usarla en pago.html
+            // Guardar zona para pago.html
             guardarZonaEntrega(zona);
         }
 
         /* ============================================================
-           Validación de términos + botón
+           CONFIGURAR EVENTOS DEL CARRITO
+           Se llama al cargar Y al volver con el botón "atrás".
            ============================================================ */
-        document.addEventListener('DOMContentLoaded', () => {
-            renderizarCarrito();
-
+        function configurarEventosCarrito() {
             const checkTerminos = document.getElementById('acepto-terminos');
             const btn = document.getElementById('btn-confirmar');
 
-            checkTerminos.addEventListener('change', () => {
+            if (!checkTerminos || !btn) return;
+
+            // 🔧 Función para actualizar el estado del botón
+            function actualizarBotonConfirmar() {
                 btn.disabled = !checkTerminos.checked;
-            });
+            }
+
+            // Escuchar cambios en el checkbox
+            checkTerminos.addEventListener('change', actualizarBotonConfirmar);
+
+            // Verificar estado INICIAL (importante cuando se restaura del bfcache)
+            actualizarBotonConfirmar();
 
             // Escuchar cambios de zona de envío → recalcular
             document.querySelectorAll('input[name="zona-envio"]').forEach(radio => {
@@ -294,26 +360,65 @@
             const zonaGuardada = obtenerZonaEntrega();
             const radioGuardado = document.querySelector(`input[name="zona-envio"][value="${zonaGuardada}"]`);
             if (radioGuardado) radioGuardado.checked = true;
+
             actualizarTotales();
+        }
+
+        /* ============================================================
+           INICIALIZACIÓN DEL CARRITO
+           ============================================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarCarrito();
+            configurarEventosCarrito();
         });
 
+        /* ============================================================
+           🔧 SOLUCIÓN PARA EL BOTÓN "ATRÁS" (bfcache)
+           ------------------------------------------------------------
+           Cuando el usuario vuelve con el botón "atrás" del navegador,
+           la página NO se recarga desde cero: se restaura "congelada"
+           desde el bfcache. En ese caso, DOMContentLoaded NO se dispara.
+
+           El evento 'pageshow' SÍ se dispara siempre, tanto si la página
+           se carga normal como si se restaura desde bfcache.
+           ============================================================ */
+        window.addEventListener('pageshow', function(event) {
+            // Re-verificar el estado del checkbox y habilitar el botón si corresponde
+            const checkTerminos = document.getElementById('acepto-terminos');
+            const btn = document.getElementById('btn-confirmar');
+
+            if (checkTerminos && btn) {
+                btn.disabled = !checkTerminos.checked;
+            }
+
+            // Re-calcular totales por si algo cambió
+            if (typeof actualizarTotales === 'function') {
+                actualizarTotales();
+            }
+        });
+
+        /* ============================================================
+           IR A PAGAR
+           ============================================================ */
         function irAPagar() {
             const carrito = obtenerCarrito();
             if (carrito.length === 0) {
                 alert('Tu carrito está vacío 🍓');
                 return;
             }
+
             const check = document.getElementById('acepto-terminos');
             if (!check.checked) {
                 alert('Debes aceptar los Términos y Condiciones.');
                 return;
             }
+
             window.location.href = 'pago.html';
         }
 
-        // ============================================================
-        // MENÚ HAMBURGUESA
-        // ============================================================
+        /* ============================================================
+           MENÚ HAMBURGUESA
+           ============================================================ */
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -323,6 +428,7 @@
             overlay.classList.toggle('activo');
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
+
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -332,9 +438,11 @@
             overlay.classList.remove('activo');
             document.body.style.overflow = '';
         }
+
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
+
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.nav-principal a').forEach(link => {
                 link.addEventListener('click', () => {
@@ -343,19 +451,6 @@
             });
         });
     </script>
+
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>

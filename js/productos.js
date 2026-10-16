@@ -1,13 +1,10 @@
 /* ============================================================
    FRUTIMERCA — Base de datos de productos
-   
-   - imagen (principal)  → se muestra en el index (tarjetas)
-   - imagen (presentación) → se muestra en el detalle del producto
-   - empaque → cómo se entrega al cliente (informativo)
+   Cada presentación tiene su propia imagen.
+   Las imágenes se guardan en: img/productos/
    ============================================================ */
 
 const PRODUCTOS_DEFAULT = [
-    /* ==================== FRUTILLAS ==================== */
     {
         id: 1,
         slug: "frutilla-primera",
@@ -18,8 +15,8 @@ const PRODUCTOS_DEFAULT = [
         stock: true,
         empaque: "La fruta se entrega en caja de cartón. El balde es solo para transporte interno.",
         presentaciones: [
-            { id: "30lbs", nombre: "Balde de 30 libras", precio: 28.00, imagen: "img/productos/primera-balde.jpg" },
-            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 14.00, imagen: "img/productos/primera-caja.jpg" }
+            { id: "30lbs", nombre: "Balde de 30 libras", precio: 28, imagen: "img/productos/primera-balde.jpg" },
+            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 14, imagen: "img/productos/primera-caja.jpg" }
         ]
     },
     {
@@ -32,8 +29,8 @@ const PRODUCTOS_DEFAULT = [
         stock: true,
         empaque: "La fruta se entrega en caja de cartón. El balde es solo para transporte interno.",
         presentaciones: [
-            { id: "30lbs", nombre: "Balde de 30 libras", precio: 25.00, imagen: "img/productos/segunda-balde.jpg" },
-            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 12.50, imagen: "img/productos/segunda-caja.jpg" }
+            { id: "30lbs", nombre: "Balde de 30 libras", precio: 25, imagen: "img/productos/segunda-balde.jpg" },
+            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 12.5, imagen: "img/productos/segunda-caja.jpg" }
         ]
     },
     {
@@ -46,8 +43,8 @@ const PRODUCTOS_DEFAULT = [
         stock: true,
         empaque: "La fruta se entrega en caja de cartón. El balde es solo para transporte interno.",
         presentaciones: [
-            { id: "30lbs", nombre: "Balde de 30 libras", precio: 15.00, imagen: "img/productos/tercera-balde.jpg" },
-            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 7.50, imagen: "img/productos/tercera-caja.jpg" }
+            { id: "30lbs", nombre: "Balde de 30 libras", precio: 15, imagen: "img/productos/tercera-balde.jpg" },
+            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 7.5, imagen: "img/productos/tercera-caja.jpg" }
         ]
     },
     {
@@ -60,12 +57,10 @@ const PRODUCTOS_DEFAULT = [
         stock: true,
         empaque: "La fruta se entrega en caja de cartón. El balde es solo para transporte interno.",
         presentaciones: [
-            { id: "30lbs", nombre: "Balde de 30 libras", precio: 10.00, imagen: "img/productos/cuarta-balde.jpg" },
-            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 5.00, imagen: "img/productos/cuarta-caja.jpg" }
+            { id: "30lbs", nombre: "Balde de 30 libras", precio: 10, imagen: "img/productos/cuarta-balde.jpg" },
+            { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 5, imagen: "img/productos/cuarta-caja.jpg" }
         ]
     },
-
-    /* ==================== OTRAS FRUTAS ==================== */
     {
         id: 5,
         slug: "mora-ambateña",
@@ -76,7 +71,7 @@ const PRODUCTOS_DEFAULT = [
         stock: true,
         empaque: "Se entrega en balde.",
         presentaciones: [
-            { id: "16lbs", nombre: "Balde de 16-18 libras", precio: 15.00, imagen: "img/productos/m.jpg" }
+            { id: "16lbs", nombre: "Balde de 16-18 libras", precio: 15, imagen: "img/productos/m.jpg" }
         ]
     },
     {
@@ -105,7 +100,7 @@ const PRODUCTOS_DEFAULT = [
             { id: "primera", nombre: "Claudia Primera (caja por calibre)", precio: null, imagen: "img/productos/cl.jpg" },
             { id: "segunda", nombre: "Claudia Segunda (caja por calibre)", precio: null, imagen: "img/productos/cl.jpg" },
             { id: "tercera", nombre: "Claudia Tercera (caja por calibre)", precio: null, imagen: "img/productos/cl.jpg" },
-            { id: "cuarta",  nombre: "Claudia Cuarta (caja por calibre)",  precio: null, imagen: "img/productos/cl.jpg" }
+            { id: "cuarta", nombre: "Claudia Cuarta (caja por calibre)", precio: null, imagen: "img/productos/cl.jpg" }
         ]
     },
     {
@@ -136,7 +131,7 @@ const PRODUCTOS_DEFAULT = [
             { id: "primera", nombre: "Aguacate Primera (caja por calibre)", precio: null, imagen: "img/productos/a.jpg" },
             { id: "segunda", nombre: "Aguacate Segunda (caja por calibre)", precio: null, imagen: "img/productos/a.jpg" },
             { id: "tercera", nombre: "Aguacate Tercera (caja por calibre)", precio: null, imagen: "img/productos/a.jpg" },
-            { id: "cuarta",  nombre: "Aguacate Cuarta (caja por calibre)",  precio: null, imagen: "img/productos/a.jpg" }
+            { id: "cuarta", nombre: "Aguacate Cuarta (caja por calibre)", precio: null, imagen: "img/productos/a.jpg" }
         ]
     }
 ];
@@ -146,16 +141,13 @@ const PRODUCTOS_DEFAULT = [
    ============================================================ */
 function resolverRuta(ruta) {
     if (!ruta) return ruta;
-
     if (ruta.startsWith('http://') ||
         ruta.startsWith('https://') ||
         ruta.startsWith('data:')) {
         return ruta;
     }
-
     const enPage = window.location.pathname.includes('/page/');
     const limpia = ruta.replace(/^\.\.\//, '').replace(/^\.\//, '');
-
     return enPage ? '../' + limpia : limpia;
 }
 
@@ -163,32 +155,33 @@ function resolverRuta(ruta) {
    localStorage — CON VERIFICACIÓN DE COMPATIBILIDAD
    ============================================================ */
 const VERSION_PRODUCTOS = 8;
-/* ============================================================
-   OBTENER PRODUCTOS (SÍNCRONO — instantáneo, sin consultas)
-   ============================================================ */
+
 function obtenerProductos() {
-    if (window._PRODUCTOS_CARGADOS) {
-        return window._PRODUCTOS_CARGADOS;
+    const versionGuardada = localStorage.getItem('frutimerca_version');
+    const raw = localStorage.getItem('frutimerca_productos');
+
+    if (versionGuardada !== String(VERSION_PRODUCTOS)) {
+        localStorage.removeItem('frutimerca_productos');
+        localStorage.setItem('frutimerca_version', String(VERSION_PRODUCTOS));
     }
 
-    // Cargar productos base del código (con precios actualizados cuando
-    // subas VERSION_PRODUCTOS nueva)
-    const productos = JSON.parse(JSON.stringify(PRODUCTOS_DEFAULT));
-    window._PRODUCTOS_CARGADOS = productos;
-    return productos;
+    if (raw) {
+        try {
+            const lista = JSON.parse(raw);
+            const validos = Array.isArray(lista)
+                && lista.length > 0
+                && lista.every(p => Array.isArray(p.presentaciones) && p.slug);
+            if (validos) return lista;
+        } catch (e) {}
+    }
+
+    localStorage.setItem('frutimerca_productos', JSON.stringify(PRODUCTOS_DEFAULT));
+    return PRODUCTOS_DEFAULT;
 }
 
-/* ============================================================
-   INICIALIZACIÓN (sin llamadas externas)
-   ============================================================ */
-function inicializarProductos() {
-    // Solo cargar los productos en memoria
-    const productos = obtenerProductos();
-
-    // Avisar que están listos
-    window.dispatchEvent(new CustomEvent('productosListos'));
-
-    return productos;
+function guardarProductos(lista) {
+    localStorage.setItem('frutimerca_productos', JSON.stringify(lista));
+    localStorage.setItem('frutimerca_version', String(VERSION_PRODUCTOS));
 }
 
 /* ============================================================

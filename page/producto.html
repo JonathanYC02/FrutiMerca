@@ -10,10 +10,26 @@
 <body>
 
     <!-- ============================================================
+         PANTALLA DE TRANSICIÓN
+         ============================================================ -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
          HEADER
          ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
+
             <a href="../index.html" class="logo">
                 <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
                 <div class="logo-texto">
@@ -46,104 +62,125 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
-    <!-- CONTENIDO DINÁMICO -->
-    <main class="producto-wrapper" id="producto-wrapper"></main>
+    <!-- ============================================================
+         CONTENIDO PRINCIPAL
+         Se llena dinámicamente con JavaScript según el slug de la URL.
+         ============================================================ -->
+    <main class="producto-wrapper" id="producto-wrapper">
+        <!-- Contenido dinámico -->
+    </main>
 
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
     <footer class="footer">
         <div class="footer-copy">
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
-    
-<script>
-    let _CLIENTE_INTERACTO = false;
-document.addEventListener('click', () => { _CLIENTE_INTERACTO = true; }, { once: true });
-document.addEventListener('input', () => { _CLIENTE_INTERACTO = true; }, { once: true });
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
-    (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
-                }
-            }, 1200); // 0.3 segundos mínimo visible
-        });
 
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    const href = link.getAttribute('href');
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
 
-                    // No mostrar para enlaces internos (#) ni externos (_blank)
-                    if (!href ||
-                        href.startsWith('#') ||
-                        href.startsWith('http') ||
-                        href.startsWith('mailto:') ||
-                        href.startsWith('tel:') ||
-                        link.target === '_blank' ||
-                        link.getAttribute('target') === '_blank') {
-                        return;
-                    }
+    <!-- 1) Scripts base del sistema -->
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
 
-                    // Mostrar pantalla de transición
+    <!-- 2) Script: Pantalla de transición -->
+    <script>
+        (function() {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
                     const pantalla = document.getElementById('transicion-pantalla');
                     if (pantalla) {
-                        pantalla.classList.remove('oculta');
-                        pantalla.style.display = 'flex';
+                        pantalla.classList.add('oculta');
+                        setTimeout(function() {
+                            pantalla.style.display = 'none';
+                        }, 500);
                     }
+                }, 1200);
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function(e) {
+                        const href = link.getAttribute('href');
+                        if (!href ||
+                            href.startsWith('#') ||
+                            href.startsWith('http') ||
+                            href.startsWith('mailto:') ||
+                            href.startsWith('tel:') ||
+                            link.target === '_blank') {
+                            return;
+                        }
+                        const pantalla = document.getElementById('transicion-pantalla');
+                        if (pantalla) {
+                            pantalla.classList.remove('oculta');
+                            pantalla.style.display = 'flex';
+                        }
+                    });
+                });
+            });
+
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        pantalla.style.display = 'none';
+                    }
+                }
+            });
+        })();
+    </script>
+
+    <!-- 3) Script: Lógica del producto -->
+    <script>
+        /* ============================================================
+           VARIABLE GLOBAL
+           Guarda el producto actual cargado.
+           ============================================================ */
+        let PRODUCTO_ACTUAL = null;
+
+        /* ============================================================
+           INICIALIZACIÓN AL CARGAR LA PÁGINA
+           ============================================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Obtener el slug de la URL (?slug=frutilla-primera)
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) {
+                mostrarNoEncontrado();
+                return;
+            }
+
+            // 2. Buscar el producto
+            const productos = obtenerProductos();
+            const prod = productos.find(p => p.slug === slug);
+
+            if (!prod) {
+                mostrarNoEncontrado();
+                return;
+            }
+
+            // 3. Guardar y renderizar
+            PRODUCTO_ACTUAL = prod;
+            document.title = prod.nombre + ' | FrutiMerca';
+            renderizarProducto(prod);
+
+            // 4. Cerrar menú al hacer clic en un enlace
+            document.querySelectorAll('.nav-principal a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) cerrarMenu();
                 });
             });
         });
 
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    pantalla.style.display = 'none';
-                }
-            }
-        });
-    })();
-</script>
-    <script src="../js/productos.js"></script>
-    <script src="../js/carrito.js"></script>
-    <script>
-        let PRODUCTO_ACTUAL = null;
-
-document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
-
-    if (!slug) {
-        mostrarNoEncontrado();
-        return;
-    }
-
-    // Cargar productos (instantáneo)
-    const productos = obtenerProductos();
-    const prod = productos.find(p => p.slug === slug);
-
-    if (!prod) {
-        mostrarNoEncontrado();
-        return;
-    }
-
-    PRODUCTO_ACTUAL = prod;
-    document.title = prod.nombre + ' | FrutiMerca';
-    renderizarProducto(prod);
-});
+        /* ============================================================
+           MOSTRAR PANTALLA "PRODUCTO NO ENCONTRADO"
+           ============================================================ */
         function mostrarNoEncontrado() {
             document.getElementById('producto-wrapper').innerHTML = `
                 <div class="carrito-vacio">
@@ -156,14 +193,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`;
         }
 
+        /* ============================================================
+           RENDERIZAR PRODUCTO
+           Dibuja el detalle del producto con:
+           - Imagen principal (con cambio dinámico por presentación)
+           - Nombre y descripción
+           - Selector de presentaciones
+           - Botón de agregar al carrito
+           - Notas de envío, empaque y pago
+           ============================================================ */
         function renderizarProducto(prod) {
             const wrapper = document.getElementById('producto-wrapper');
             const primeraPres = prod.presentaciones[0];
 
-            // ✅ Resolver ruta con la función auxiliar
+            // Resolver la ruta de la imagen inicial
             const imagenInicial = resolverRuta(primeraPres.imagen || prod.imagen);
 
-            // Opciones del selector
+            // Construir las opciones del selector de presentaciones
             const opcionesHTML = prod.presentaciones.map((p, i) => {
                 const seleccionado = i === 0 ? 'checked' : '';
                 const precioTexto = p.precio !== null
@@ -188,12 +234,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     </label>`;
             }).join('');
 
+            // Armar el HTML completo
             wrapper.innerHTML = `
+                <!-- Botón de volver -->
                 <a href="../index.html#productos" class="volver-link">
                     ← Volver a productos
                 </a>
 
+                <!-- Detalle del producto (2 columnas en desktop) -->
                 <div class="producto-detalle">
+
+                    <!-- Columna izquierda: Imagen -->
                     <div class="producto-imagen">
                         <img id="imagen-producto"
                              src="${imagenInicial}"
@@ -204,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </span>
                     </div>
 
+                    <!-- Columna derecha: Info y acciones -->
                     <div class="producto-info">
                         <h1>${prod.nombre}</h1>
                         <p class="producto-descripcion">${prod.descripcion}</p>
@@ -222,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                         </div>
 
+                        <!-- Notas informativas -->
                         <div class="producto-notas">
                             <p>📦 ${prod.empaque || 'Consulta el empaque de entrega'}</p>
                             <p>🚚 Envío: Central $3 · Durán $1</p>
@@ -234,30 +287,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /* ============================================================
-           Cambio dinámico de imagen al seleccionar presentación
+           ACTUALIZAR OPCIÓN SELECCIONADA
+           - Marca visualmente la opción elegida
+           - Cambia la imagen principal SIN parpadeo
            ============================================================ */
-function actualizarOpcionSeleccionada() {
-    // 1. Marcar visualmente la opción seleccionada
-    document.querySelectorAll('.opcion-presentacion').forEach(el => {
-        const radio = el.querySelector('input');
-        el.classList.toggle('seleccionada', radio.checked);
-    });
+        function actualizarOpcionSeleccionada() {
+            // 1. Marcar visualmente la opción seleccionada
+            document.querySelectorAll('.opcion-presentacion').forEach(el => {
+                const radio = el.querySelector('input');
+                el.classList.toggle('seleccionada', radio.checked);
+            });
 
-    // 2. Cambiar la imagen SIN parpadeo
-    const radio = document.querySelector('input[name="presentacion"]:checked');
-    if (!radio) return;
+            // 2. Cambiar la imagen SIN parpadeo
+            const radio = document.querySelector('input[name="presentacion"]:checked');
+            if (!radio) return;
 
-    const nuevaImagen = radio.dataset.imagen;
-    const imagenEl = document.getElementById('imagen-producto');
+            const nuevaImagen = radio.dataset.imagen;
+            const imagenEl = document.getElementById('imagen-producto');
 
-    if (imagenEl && nuevaImagen && imagenEl.src !== nuevaImagen) {
-        // Cambio directo, sin opacidad ni timeout
-        imagenEl.src = nuevaImagen;
-    }
-}
+            if (imagenEl && nuevaImagen && imagenEl.src !== nuevaImagen) {
+                imagenEl.src = nuevaImagen;
+            }
+        }
 
         /* ============================================================
-           Agregar al carrito desde el detalle
+           AGREGAR AL CARRITO DESDE EL DETALLE
            ============================================================ */
         function agregarDesdeDetalle(idProducto) {
             const radio = document.querySelector('input[name="presentacion"]:checked');
@@ -280,6 +334,10 @@ function actualizarOpcionSeleccionada() {
             agregarAlCarritoConPresentacion(prod, pres);
         }
 
+        /* ============================================================
+           AGREGAR AL CARRITO CON PRESENTACIÓN
+           Guarda el producto con su presentación específica.
+           ============================================================ */
         function agregarAlCarritoConPresentacion(prod, pres) {
             const carrito = obtenerCarrito();
             const clave = prod.id + '-' + pres.id;
@@ -304,7 +362,7 @@ function actualizarOpcionSeleccionada() {
         }
 
         /* ============================================================
-           MENÚ HAMBURGUESA
+           MENÚ HAMBURGUESA (MÓVIL)
            ============================================================ */
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
@@ -315,6 +373,7 @@ function actualizarOpcionSeleccionada() {
             overlay.classList.toggle('activo');
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
+
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -324,30 +383,11 @@ function actualizarOpcionSeleccionada() {
             overlay.classList.remove('activo');
             document.body.style.overflow = '';
         }
+
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.nav-principal a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 900) cerrarMenu();
-                });
-            });
-        });
     </script>
+
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>

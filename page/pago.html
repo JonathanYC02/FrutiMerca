@@ -9,8 +9,27 @@
 </head>
 <body>
 
+    <!-- ============================================================
+         PANTALLA DE TRANSICIÓN
+         ============================================================ -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
+
             <a href="../index.html" class="logo">
                 <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
                 <div class="logo-texto">
@@ -43,7 +62,29 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
+    <!-- ============================================================
+         CONTENIDO PRINCIPAL
+         ============================================================ -->
     <main class="pago-wrapper">
+
+        <!-- INDICADOR DE PASOS -->
+        <div class="indicador-pasos">
+            <div class="paso-indicador completado">
+                <div class="paso-numero"><span>1</span></div>
+                <span class="paso-texto">Carrito</span>
+            </div>
+            <div class="paso-flecha">→</div>
+            <div class="paso-indicador activo">
+                <div class="paso-numero"><span>2</span></div>
+                <span class="paso-texto">Pago</span>
+            </div>
+            <div class="paso-flecha">→</div>
+            <div class="paso-indicador">
+                <div class="paso-numero"><span>3</span></div>
+                <span class="paso-texto">Confirmación</span>
+            </div>
+        </div>
+
         <h1 style="color:var(--azul-marino); margin-bottom:20px;">
             Confirmar Pedido
         </h1>
@@ -54,24 +95,52 @@
             <strong>El pedido no se reserva sin el voucher.</strong>
         </div>
 
-        <!-- PASO 1: Datos bancarios -->
+        <!-- ============================================================
+             PASO 1: DATOS BANCARIOS
+             ============================================================ -->
         <div class="pago-card">
             <h2>1. Datos para Transferencia</h2>
+
             <div class="datos-banco">
-                <p><strong>Titular:</strong> JONATHAN YUMISACA</p>
-                <p><strong>Cédula:</strong> 0953749629</p>
-                <p><strong>Institución:</strong> Banco Pichincha</p>
-                <p><strong>Tipo de Cuenta:</strong> Cuenta de Ahorros</p>
-                <p><strong>Número de Cuenta:</strong> 2206795019</p>
-                <p><strong>Total a transferir:</strong>
+                <p>
+                    <strong>Titular:</strong> JONATHAN YUMISACA
+                    <button class="btn-copiar-dato" onclick="copiarDato('JONATHAN YUMISACA', this)">
+                        📋 Copiar
+                    </button>
+                </p>
+                <p>
+                    <strong>Cédula:</strong> 0953749629
+                    <button class="btn-copiar-dato" onclick="copiarDato('0953749629', this)">
+                        📋 Copiar
+                    </button>
+                </p>
+                <p>
+                    <strong>Institución:</strong> Banco Pichincha
+                </p>
+                <p>
+                    <strong>Tipo de Cuenta:</strong> Cuenta de Ahorros
+                </p>
+                <p>
+                    <strong>Número de Cuenta:</strong> <span id="num-cuenta">2206795019</span>
+                    <button class="btn-copiar-dato" onclick="copiarDato('2206795019', this)">
+                        📋 Copiar
+                    </button>
+                </p>
+                <p>
+                    <strong>Total a transferir:</strong>
                     <span id="monto-transferir" style="color:var(--vino); font-size:1.3rem; font-weight:800;">
                         $0.00
                     </span>
+                    <button class="btn-copiar-dato" onclick="copiarMontoTransferir(this)">
+                        📋 Copiar
+                    </button>
                 </p>
             </div>
         </div>
 
-        <!-- PASO 2: Resumen de entrega -->
+        <!-- ============================================================
+             PASO 2: ENTREGA SELECCIONADA
+             ============================================================ -->
         <div class="pago-card">
             <h2>2. Entrega Seleccionada</h2>
             <div class="resumen-entrega" id="resumen-entrega"></div>
@@ -87,26 +156,33 @@
             </div>
         </div>
 
-        <!-- PASO 3: Datos del cliente -->
+        <!-- ============================================================
+             PASO 3: DATOS DEL CLIENTE
+             ============================================================ -->
         <div class="pago-card">
             <h2>3. Tus Datos</h2>
+
             <div class="campo">
                 <label>Nombre completo *</label>
                 <input type="text" id="cli-nombre" required>
             </div>
+
             <div class="campo">
                 <label>Teléfono / WhatsApp *</label>
                 <input type="tel" id="cli-tel" placeholder="0999999999" required>
             </div>
+
             <div class="campo">
                 <label>Correo electrónico (opcional)</label>
                 <input type="email" id="cli-email">
             </div>
+
             <div class="campo" id="campo-direccion" style="display:none;">
                 <label>Dirección de entrega *</label>
                 <input type="text" id="cli-direccion"
                        placeholder="Calle, número, referencia">
             </div>
+
             <div class="campo">
                 <label>Notas del pedido (opcional)</label>
                 <textarea id="cli-notas" rows="2"
@@ -114,7 +190,9 @@
             </div>
         </div>
 
-        <!-- PASO 4: Voucher -->
+        <!-- ============================================================
+             PASO 4: VOUCHER
+             ============================================================ -->
         <div class="pago-card">
             <h2>4. Sube tu Voucher <span style="color:var(--vino);">*</span></h2>
             <p style="color:var(--gris-suave); font-size:0.9rem; margin-bottom:15px;">
@@ -134,17 +212,22 @@
             <div class="preview-voucher" id="preview-voucher"></div>
         </div>
 
-        <!-- RESUMEN FINAL -->
+        <!-- ============================================================
+             PASO 5: RESUMEN FINAL
+             ============================================================ -->
         <div class="pago-card">
             <h2>5. Resumen Final</h2>
+
             <div class="resumen-linea">
                 <span>Subtotal productos</span>
                 <span id="pago-subtotal">$0.00</span>
             </div>
+
             <div class="resumen-linea">
                 <span>Envío</span>
                 <span id="pago-envio">$0.00</span>
             </div>
+
             <div class="resumen-linea total">
                 <span>TOTAL A TRANSFERIR</span>
                 <span id="pago-total">$0.00</span>
@@ -155,100 +238,113 @@
                 Enviar Pedido
             </button>
 
+            <!-- 🔔 Aviso de validación -->
+            <div id="aviso-validacion" class="aviso-validacion">
+                <div class="aviso-validacion-titulo">⚠️ Para enviar tu pedido falta:</div>
+                <ul class="aviso-validacion-lista" id="aviso-validacion-lista"></ul>
+            </div>
+
             <p class="resumen-nota" style="margin-top:15px;">
                 Al enviar, confirmas que realizaste la transferencia y aceptas
                 nuestros <a href="terminos.html" target="_blank"
                 style="color:var(--vino); font-weight:700;">Términos y Condiciones</a>.
             </p>
         </div>
+
     </main>
 
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
     <footer class="footer">
         <div class="footer-copy">
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
-    <script>
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
-    (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
-                }
-            }, 300); // 0.3 segundos mínimo visible
-        });
 
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    const href = link.getAttribute('href');
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
 
-                    // No mostrar para enlaces internos (#) ni externos (_blank)
-                    if (!href ||
-                        href.startsWith('#') ||
-                        href.startsWith('http') ||
-                        href.startsWith('mailto:') ||
-                        href.startsWith('tel:') ||
-                        link.target === '_blank' ||
-                        link.getAttribute('target') === '_blank') {
-                        return;
-                    }
-
-                    // Mostrar pantalla de transición
-                    const pantalla = document.getElementById('transicion-pantalla');
-                    if (pantalla) {
-                        pantalla.classList.remove('oculta');
-                        pantalla.style.display = 'flex';
-                    }
-                });
-            });
-        });
-
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    pantalla.style.display = 'none';
-                }
-            }
-        });
-    })();
-</script>
-
+    <!-- 1) Scripts base -->
     <script src="../js/productos.js"></script>
     <script src="../js/carrito.js"></script>
+
+    <!-- 2) Script: Pantalla de transición -->
     <script>
-        // ============================================================
-        // VARIABLES GLOBALES
-        // ============================================================
+        (function() {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        setTimeout(function() {
+                            pantalla.style.display = 'none';
+                        }, 500);
+                    }
+                }, 1200);
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function(e) {
+                        const href = link.getAttribute('href');
+                        if (!href ||
+                            href.startsWith('#') ||
+                            href.startsWith('http') ||
+                            href.startsWith('mailto:') ||
+                            href.startsWith('tel:') ||
+                            link.target === '_blank') {
+                            return;
+                        }
+                        const pantalla = document.getElementById('transicion-pantalla');
+                        if (pantalla) {
+                            pantalla.classList.remove('oculta');
+                            pantalla.style.display = 'flex';
+                        }
+                    });
+                });
+            });
+
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        pantalla.style.display = 'none';
+                    }
+                }
+            });
+        })();
+    </script>
+
+    <!-- 3) Script: Lógica del pago -->
+    <script>
+        /* ============================================================
+           VARIABLES GLOBALES
+           ============================================================ */
         let voucherCargado = false;
         let zonaActual = 'retiro';
         let costoEnvioActual = 0;
-
-        // ============================================================
-        // CLOUDINARY
-        // ============================================================
-        const CLOUDINARY_CLOUD_NAME = 'd0zz7ag1';
-        const CLOUDINARY_PRESET = 'frutimerca_vouchers';
         let urlVoucher = '';
 
-        // ============================================================
-        // INICIALIZACIÓN
-        // ============================================================
+        /* ============================================================
+           CONFIGURACIÓN
+           ============================================================ */
+        const CLOUDINARY_CLOUD_NAME = 'd0zz7ag1';
+        const CLOUDINARY_PRESET = 'frutimerca_vouchers';
+
+        const URL_SHEETS = 'https://script.google.com/macros/s/AKfycbzxiegz1fuNV_SslAF3lkDUEceBw_S21McAw5RMQC3vkgyVgEpPQT8SZP8PYss4LiM/exec';
+
+        /* ============================================================
+           INICIALIZACIÓN AL CARGAR LA PÁGINA
+           ============================================================ */
         document.addEventListener('DOMContentLoaded', () => {
+            inicializarPago();
+        });
+
+        function inicializarPago() {
+            // 1. Verificar carrito
             const carrito = obtenerCarrito();
             if (carrito.length === 0) {
                 alert('Tu carrito está vacío. Agrega productos primero.');
@@ -256,6 +352,7 @@
                 return;
             }
 
+            // 2. Obtener zona de entrega
             zonaActual = obtenerZonaEntrega();
             const mapa = {
                 retiro:  { texto: 'Retiro en Puesto Físico - Mercado José Mascote #214', costo: 0 },
@@ -265,6 +362,7 @@
             const info = mapa[zonaActual] || mapa.retiro;
             costoEnvioActual = info.costo;
 
+            // 3. Mostrar resumen de entrega
             document.getElementById('resumen-entrega').innerHTML = `
                 <div class="resumen-linea">
                     <span><strong>Modalidad:</strong></span>
@@ -276,13 +374,13 @@
                 </div>
             `;
 
-            // Mostrar campo de dirección si no es retiro
+            // 4. Mostrar dirección si no es retiro
             if (zonaActual !== 'retiro') {
                 document.getElementById('campo-direccion').style.display = 'block';
                 document.getElementById('aviso-retiro').style.display = 'none';
             }
 
-            // Aviso especial para Durán
+            // 5. Aviso especial para Durán
             if (zonaActual === 'duran') {
                 const avisoDuran = document.createElement('div');
                 avisoDuran.className = 'alerta-info';
@@ -296,14 +394,16 @@
                 document.getElementById('resumen-entrega').appendChild(avisoDuran);
             }
 
+            // 6. Configurar funcionalidades
             actualizarResumen();
             configurarDragDrop();
             configurarValidacion();
-        });
+            cargarDatosGuardados();
+        }
 
-        // ============================================================
-        // ACTUALIZAR RESUMEN DE TOTALES
-        // ============================================================
+        /* ============================================================
+           ACTUALIZAR RESUMEN DE TOTALES
+           ============================================================ */
         function actualizarResumen() {
             const subtotal = calcularTotal();
             const total = subtotal + costoEnvioActual;
@@ -315,9 +415,9 @@
             document.getElementById('monto-transferir').textContent = '$' + total.toFixed(2);
         }
 
-        // ============================================================
-        // PREVIEW + SUBIDA A CLOUDINARY
-        // ============================================================
+        /* ============================================================
+           VOUCHER: PREVIEW + SUBIDA A CLOUDINARY
+           ============================================================ */
         async function mostrarPreview(event) {
             const archivo = event.target.files[0];
             if (!archivo) return;
@@ -333,15 +433,14 @@
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = e => {
-                document.getElementById('preview-voucher').innerHTML =
-                    `<img src="${e.target.result}" alt="Voucher">
-                     <p style="margin-top:10px; color:var(--azul-marino); font-weight:700;">
-                         Subiendo voucher a la nube...
-                     </p>`;
-            };
-            reader.readAsDataURL(archivo);
+            // Mostrar spinner
+            document.getElementById('preview-voucher').innerHTML = `
+                <div class="spinner-voucher">
+                    <div class="spinner"></div>
+                    <div class="spinner-texto">Subiendo voucher...</div>
+                    <div class="spinner-subtexto">Esto toma 2-3 segundos</div>
+                </div>
+            `;
 
             try {
                 const url = await subirVoucherACloudinary(archivo);
@@ -351,7 +450,7 @@
                 document.getElementById('preview-voucher').innerHTML =
                     `<img src="${url}" alt="Voucher">
                      <p style="margin-top:10px; color:var(--verde-exito); font-weight:700;">
-                         Voucher subido correctamente
+                         ✅ Voucher subido correctamente
                      </p>`;
 
                 validarFormulario();
@@ -359,9 +458,9 @@
                 console.error('Error subiendo a Cloudinary:', error);
                 document.getElementById('preview-voucher').innerHTML =
                     `<p style="color:var(--vino); font-weight:700;">
-                         Error al subir el voucher. Intenta de nuevo.
+                         ❌ Error al subir el voucher. Intenta de nuevo.
                      </p>`;
-                alert('No pudimos subir el voucher. Verifica tu conexion e intenta de nuevo.');
+                alert('No pudimos subir el voucher. Verifica tu conexión e intenta de nuevo.');
                 event.target.value = '';
                 voucherCargado = false;
                 urlVoucher = '';
@@ -390,23 +489,26 @@
             return datos.secure_url;
         }
 
-        // ============================================================
-        // DRAG & DROP
-        // ============================================================
+        /* ============================================================
+           DRAG & DROP DEL VOUCHER
+           ============================================================ */
         function configurarDragDrop() {
             const zona = document.getElementById('zona-drop');
+
             ['dragenter', 'dragover'].forEach(ev =>
                 zona.addEventListener(ev, e => {
                     e.preventDefault();
                     zona.classList.add('arrastrando');
                 })
             );
+
             ['dragleave', 'drop'].forEach(ev =>
                 zona.addEventListener(ev, e => {
                     e.preventDefault();
                     zona.classList.remove('arrastrando');
                 })
             );
+
             zona.addEventListener('drop', e => {
                 const archivo = e.dataTransfer.files[0];
                 if (archivo) {
@@ -416,32 +518,100 @@
             });
         }
 
-        // ============================================================
-        // VALIDACIÓN
-        // ============================================================
+        /* ============================================================
+           VALIDACIÓN DEL FORMULARIO
+           ------------------------------------------------------------
+           Habilita el botón solo si TODO está completo.
+           Muestra un aviso con la lista de lo que falta.
+           ============================================================ */
         function configurarValidacion() {
+            // Escuchar cambios en los campos del formulario
             const campos = ['cli-nombre', 'cli-tel', 'cli-direccion'];
             campos.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.addEventListener('input', validarFormulario);
+                if (el) {
+                    el.addEventListener('input', validarFormulario);
+                    el.addEventListener('keyup', validarFormulario);
+                    el.addEventListener('change', validarFormulario);
+                    el.addEventListener('blur', validarFormulario);
+                }
             });
+
+            // Ejecutar validación inicial
+            validarFormulario();
         }
 
         function validarFormulario() {
+            // Obtener los valores actuales de los campos
             const nombre = document.getElementById('cli-nombre').value.trim();
             const tel = document.getElementById('cli-tel').value.trim();
             const direccion = document.getElementById('cli-direccion').value.trim();
 
-            let ok = nombre.length >= 3 && tel.length >= 7 && voucherCargado;
-            if (zonaActual !== 'retiro' && direccion.length < 5) ok = false;
+            // Detectar qué falta
+            const faltaNombre = nombre.length < 3;
+            const faltaTel = tel.length < 7;
+            const faltaVoucher = !voucherCargado;
+            const faltaDireccion = zonaActual !== 'retiro' && direccion.length < 5;
 
-            document.getElementById('btn-enviar').disabled = !ok;
+            // El botón se habilita solo si NO falta nada
+            const todoOk = !faltaNombre && !faltaTel && !faltaVoucher && !faltaDireccion;
+
+            // Actualizar el estado del botón
+            document.getElementById('btn-enviar').disabled = !todoOk;
+
+            // Actualizar el aviso visual
+            const aviso = document.getElementById('aviso-validacion');
+            const lista = document.getElementById('aviso-validacion-lista');
+
+            if (!aviso || !lista) return;
+
+            if (todoOk) {
+                // Todo listo → ocultar el aviso
+                aviso.style.display = 'none';
+            } else {
+                // Mostrar aviso con la lista de faltantes
+                aviso.style.display = 'block';
+
+                let html = '';
+                if (faltaNombre) {
+                    html += '<li>Nombre completo (mínimo 3 caracteres)</li>';
+                }
+                if (faltaTel) {
+                    html += '<li>Teléfono válido (mínimo 7 dígitos)</li>';
+                }
+                if (faltaVoucher) {
+                    html += '<li>Subir el voucher de transferencia</li>';
+                }
+                if (faltaDireccion) {
+                    html += '<li>Dirección de entrega</li>';
+                }
+
+                lista.innerHTML = html;
+            }
         }
 
-        // ============================================================
-        // CONFIRMAR PEDIDO
-        // ============================================================
+        /* ============================================================
+           TRADUCCIÓN DE PRESENTACIÓN A LENGUAJE FAMILIAR
+           ============================================================ */
+        function nombrePresentacionAmigable(presentacionId) {
+            const mapa = {
+                '30lbs':   'carton de 30 libras',
+                '15lbs':   'carton medio de 15 libras',
+                '16lbs':   'balde de 16 a 18 libras',
+                'carton':  'carton al granel',
+                'primera': 'primera',
+                'segunda': 'segunda',
+                'tercera': 'tercera',
+                'cuarta':  'cuarta'
+            };
+            return mapa[presentacionId] || presentacionId;
+        }
+
+        /* ============================================================
+           CONFIRMAR PEDIDO
+           ============================================================ */
         function confirmarPedido() {
+            // ---------- 1. Obtener datos ----------
             const nombre     = document.getElementById('cli-nombre').value.trim();
             const telefono   = document.getElementById('cli-tel').value.trim();
             const email      = document.getElementById('cli-email').value.trim();
@@ -449,6 +619,7 @@
             const notas      = document.getElementById('cli-notas').value.trim();
             const carrito    = obtenerCarrito();
 
+            // ---------- 2. Validar ----------
             if (!nombre || nombre.length < 3) {
                 alert('Por favor ingresa tu nombre completo.');
                 return;
@@ -471,7 +642,7 @@
                 return;
             }
 
-            // ID único
+            // ---------- 3. Generar ID único ----------
             const ahora = new Date();
             const year  = ahora.getFullYear();
             const mes   = String(ahora.getMonth() + 1).padStart(2, '0');
@@ -482,10 +653,11 @@
             const idPedido = `FM-${year}${mes}${dia}-${hora}${min}`;
             const fechaLegible = `${dia}/${mes}/${year} ${hora}:${min}`;
 
+            // ---------- 4. Calcular totales ----------
             const subtotal = calcularTotal();
             const total    = subtotal + costoEnvioActual;
 
-            // Mapa de zonas
+            // ---------- 5. Mapa de zonas ----------
             const mapaZonas = {
                 'retiro':  'Retiro en Puesto Fisico - Mercado Jose Mascote #214',
                 'central': 'Envio Zona Central (Guayaquil) - $3.00',
@@ -493,60 +665,93 @@
             };
             const zonaTexto = mapaZonas[zonaActual] || 'A confirmar';
 
-            // Lista de productos
-            let listaProductos = '';
-            carrito.forEach(item => {
-                const subItem = item.precio * item.cantidad;
-                listaProductos += `  * ${item.cantidad}x ${item.nombre}\n`;
-                listaProductos += `    $${item.precio.toFixed(2)} c/u = $${subItem.toFixed(2)}\n\n`;
-            });
-
-            // Mensaje WhatsApp
+            // ---------- 6. Construir mensaje WhatsApp ----------
             const sep = '----------------------------------------';
-
             let mensaje = '';
+
+            // Encabezado
             mensaje += 'PEDIDO NUEVO - FrutiMerca\n';
             mensaje += 'Fecha: ' + fechaLegible + '\n';
             mensaje += sep + '\n';
+
+            // Cliente
             mensaje += 'CLIENTE: ' + nombre + '\n';
-            mensaje += 'Celular: ' + telefono + '\n';
-            if (email) mensaje += 'Correo: ' + email + '\n';
-            mensaje += '\n';
+            mensaje += 'Celular: ' + telefono + '\n\n';
+
+            // Pedido
             mensaje += 'PEDIDO:\n';
-            mensaje += listaProductos;
+            carrito.forEach(item => {
+                const subtotalItem = item.precio * item.cantidad;
+
+                const clave = item.clave || '';
+                const partes = clave.split('-');
+                const presId = partes.length > 1 ? partes[1] : '';
+                const nombrePres = nombrePresentacionAmigable(presId);
+                const nombreProducto = item.nombre.split(' — ')[0];
+
+                mensaje += `${item.cantidad} ${nombrePres} de ${nombreProducto} ($${subtotalItem.toFixed(2)})\n`;
+            });
+            mensaje += '\n';
+
+            // Entrega
             mensaje += 'ENTREGA:\n';
-            mensaje += zonaTexto + '\n';
-            if (zonaActual !== 'retiro') {
+            if (zonaActual === 'retiro') {
+                mensaje += 'Retira en el mercado (Mercado Jose Mascote #214)\n';
+                mensaje += 'Horario: 4:00 AM a 2:00 PM (Lunes a Sabado)\n';
+            } else if (zonaActual === 'central') {
+                mensaje += 'Envio Zona Central (Guayaquil)\n';
+                mensaje += 'Direccion: ' + direccion + '\n';
+            } else if (zonaActual === 'duran') {
+                mensaje += 'Entrega en Duran (ruta diaria de regreso)\n';
                 mensaje += 'Direccion: ' + direccion + '\n';
             }
-            mensaje += '\n';
+
+            // Línea antes del pago
             mensaje += sep + '\n';
+
+            // Pago
             mensaje += 'PAGO:\n';
             mensaje += 'Subtotal: $' + subtotal.toFixed(2) + '\n';
             if (costoEnvioActual > 0) {
                 mensaje += 'Envio: $' + costoEnvioActual.toFixed(2) + '\n';
             }
-            mensaje += 'TOTAL A COBRAR: $' + total.toFixed(2) + '\n';
-            mensaje += '\n';
+            mensaje += 'TOTAL A COBRAR: $' + total.toFixed(2) + '\n\n';
+
+            // Nota
             if (notas) {
                 mensaje += 'NOTA DEL CLIENTE:\n';
                 mensaje += notas + '\n\n';
             }
+
+            // ID
             mensaje += 'ID del pedido: ' + idPedido + '\n';
             mensaje += sep + '\n';
+
+            // Comprobante
             if (urlVoucher) {
                 mensaje += 'COMPROBANTE DE PAGO:\n';
                 mensaje += urlVoucher + '\n\n';
                 mensaje += 'Revisar el comprobante antes de confirmar el pedido.\n';
             }
 
-            // Guardar en localStorage
+            // ---------- 7. Guardar en localStorage ----------
             const pedidoCompleto = {
-                idPedido, fecha: ahora.toISOString(), cliente: nombre,
-                telefono, email, zona: zonaActual, zonaTexto,
-                costoEnvio: costoEnvioActual, direccion: direccion || 'Retiro en puesto fisico',
-                notas, productos: carrito, subtotal, total,
-                urlVoucher, mensajeWA: mensaje, voucherCargado: true
+                idPedido: idPedido,
+                fecha: ahora.toISOString(),
+                cliente: nombre,
+                telefono: telefono,
+                email: email,
+                zona: zonaActual,
+                zonaTexto: zonaTexto,
+                costoEnvio: costoEnvioActual,
+                direccion: direccion || 'Retiro en puesto fisico',
+                notas: notas,
+                productos: carrito,
+                subtotal: subtotal,
+                total: total,
+                urlVoucher: urlVoucher,
+                mensajeWA: mensaje,
+                voucherCargado: true
             };
 
             const pedidosAnteriores = JSON.parse(
@@ -556,47 +761,176 @@
             localStorage.setItem('frutimerca_pedidos', JSON.stringify(pedidosAnteriores));
             localStorage.setItem('frutimerca_ultimo_pedido', JSON.stringify(pedidoCompleto));
 
-            // Enviar a Google Sheets
+            // ---------- 8. Enviar a Google Sheets ----------
             const productosTexto = carrito.map(item =>
                 `${item.cantidad}x ${item.nombre} ($${item.precio.toFixed(2)} c/u)`
             ).join(' | ');
 
             const datosParaSheets = {
-                idPedido, fecha: fechaLegible, cliente: nombre, telefono, email,
-                zona: zonaTexto, direccion: direccion || 'Retiro en puesto fisico',
-                productos: productosTexto, subtotal, costoEnvio: costoEnvioActual,
-                total, notas, estado: 'Pendiente', voucher: urlVoucher || 'pendiente'
+                idPedido: idPedido,
+                fecha: fechaLegible,
+                cliente: nombre,
+                telefono: telefono,
+                email: email,
+                zona: zonaTexto,
+                direccion: direccion || 'Retiro en puesto fisico',
+                productos: productosTexto,
+                subtotal: subtotal,
+                costoEnvio: costoEnvioActual,
+                total: total,
+                notas: notas,
+                estado: 'Pendiente',
+                voucher: urlVoucher || 'pendiente'
             };
 
-            const URL_SHEETS = 'https://script.google.com/macros/s/AKfycbzxiegz1fuNV_SslAF3lkDUEceBw_S21McAw5RMQC3vkgyVgEpPQT8SZP8PYss4LiM/exec';
-
             fetch(URL_SHEETS, {
-                method: 'POST', mode: 'no-cors',
+                method: 'POST',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(datosParaSheets)
             })
             .then(() => console.log('✅ Pedido enviado a Google Sheets'))
             .catch(err => console.error('❌ Error enviando a Sheets:', err));
 
-            // Abrir WhatsApp
+            // ---------- 9. Abrir WhatsApp ----------
             const numeroPrincipal = '593993734939';
             const mensajeCodificado = encodeURIComponent(mensaje);
             const urlWhatsApp = `https://wa.me/${numeroPrincipal}?text=${mensajeCodificado}`;
             window.open(urlWhatsApp, '_blank');
 
-            // Limpiar
+            // ---------- 10. Guardar datos del cliente ----------
+            guardarDatosCliente(nombre, telefono, email);
+
+            // ---------- 11. Limpiar ----------
             localStorage.removeItem('frutimerca_carrito');
             localStorage.removeItem('frutimerca_zona_entrega');
 
-            // Redirigir
+            // ---------- 12. Redirigir ----------
             setTimeout(() => {
                 window.location.href = `pedido-confirmado.html?id=${idPedido}`;
             }, 800);
         }
 
-        // ============================================================
-        // MENÚ HAMBURGUESA
-        // ============================================================
+        /* ============================================================
+           COPIAR DATOS AL PORTAPAPELES
+           ============================================================ */
+        function copiarDato(texto, boton) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(texto).then(() => {
+                    mostrarCopiado(boton);
+                }).catch(() => {
+                    copiarConFallback(texto, boton);
+                });
+            } else {
+                copiarConFallback(texto, boton);
+            }
+        }
+
+        function copiarMontoTransferir(boton) {
+            const monto = document.getElementById('monto-transferir').textContent
+                .replace('$', '')
+                .trim();
+            copiarDato(monto, boton);
+        }
+
+        function copiarConFallback(texto, boton) {
+            const textarea = document.createElement('textarea');
+            textarea.value = texto;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                mostrarCopiado(boton);
+            } catch (e) {
+                alert('No se pudo copiar. Copialo manualmente: ' + texto);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function mostrarCopiado(boton) {
+            const textoOriginal = boton.innerHTML;
+            boton.classList.add('copiado');
+            boton.innerHTML = '✅ Copiado';
+
+            setTimeout(() => {
+                boton.classList.remove('copiado');
+                boton.innerHTML = textoOriginal;
+            }, 1800);
+        }
+
+        /* ============================================================
+           AUTOCOMPLETAR DATOS DEL CLIENTE
+           ============================================================ */
+        function cargarDatosGuardados() {
+            try {
+                const datos = localStorage.getItem('frutimerca_datos_cliente');
+                if (!datos) return;
+
+                const { nombre, telefono, email } = JSON.parse(datos);
+
+                const inputNombre = document.getElementById('cli-nombre');
+                const inputTel = document.getElementById('cli-tel');
+                const inputEmail = document.getElementById('cli-email');
+
+                // Mostrar aviso de autocompletado
+                if (nombre || telefono) {
+                    const aviso = document.createElement('div');
+                    aviso.className = 'aviso-autocompletado';
+                    aviso.innerHTML = `
+                        <span>✨</span>
+                        <span>Autocompletamos tus datos de tu último pedido</span>
+                        <button onclick="limpiarDatosGuardados()">Borrar</button>
+                    `;
+                    document.getElementById('campo-direccion').parentNode
+                        .insertBefore(aviso, document.getElementById('campo-direccion'));
+                }
+
+                if (nombre && inputNombre) {
+                    inputNombre.value = nombre;
+                    inputNombre.classList.add('autocompletado');
+                }
+                if (telefono && inputTel) {
+                    inputTel.value = telefono;
+                    inputTel.classList.add('autocompletado');
+                }
+                if (email && inputEmail) {
+                    inputEmail.value = email;
+                    inputEmail.classList.add('autocompletado');
+                }
+
+                validarFormulario();
+            } catch (e) {
+                console.warn('No se pudieron cargar los datos guardados');
+            }
+        }
+
+        function limpiarDatosGuardados() {
+            localStorage.removeItem('frutimerca_datos_cliente');
+            document.getElementById('cli-nombre').value = '';
+            document.getElementById('cli-tel').value = '';
+            document.getElementById('cli-email').value = '';
+            document.getElementById('cli-nombre').classList.remove('autocompletado');
+            document.getElementById('cli-tel').classList.remove('autocompletado');
+            document.getElementById('cli-email').classList.remove('autocompletado');
+            const aviso = document.querySelector('.aviso-autocompletado');
+            if (aviso) aviso.remove();
+        }
+
+        function guardarDatosCliente(nombre, telefono, email) {
+            try {
+                localStorage.setItem('frutimerca_datos_cliente', JSON.stringify({
+                    nombre: nombre,
+                    telefono: telefono,
+                    email: email || ''
+                }));
+            } catch (e) {}
+        }
+
+        /* ============================================================
+           MENÚ HAMBURGUESA
+           ============================================================ */
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -606,6 +940,7 @@
             overlay.classList.toggle('activo');
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
+
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -615,9 +950,11 @@
             overlay.classList.remove('activo');
             document.body.style.overflow = '';
         }
+
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
+
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.nav-principal a').forEach(link => {
                 link.addEventListener('click', () => {
@@ -625,20 +962,28 @@
                 });
             });
         });
+
+        /* ============================================================
+           🔧 SOLUCIÓN PARA EL BOTÓN "ATRÁS" (bfcache)
+           ------------------------------------------------------------
+           Cuando el usuario vuelve con el botón "atrás" del navegador,
+           la página NO se recarga desde cero: se restaura "congelada"
+           desde el bfcache. En ese caso, DOMContentLoaded NO se dispara.
+
+           El evento 'pageshow' SÍ se dispara siempre.
+           ============================================================ */
+        window.addEventListener('pageshow', function(event) {
+            // Re-validar el formulario cuando se vuelve con "atrás"
+            if (typeof validarFormulario === 'function') {
+                validarFormulario();
+            }
+
+            // Recalcular totales por si algo cambió
+            if (typeof actualizarResumen === 'function') {
+                actualizarResumen();
+            }
+        });
     </script>
+
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>

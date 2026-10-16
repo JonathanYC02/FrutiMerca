@@ -6,10 +6,26 @@
     <meta name="google-site-verification" content="rCODcnM_6Szus8RJcnf-8vTEiFsSA8FBfN0894FTSGU" />
     <title>FrutiMerca | Frutas Frescas Directo del Mercado</title>
     <meta name="description" content="Frutas frescas directo del Mercado José Mascote. Frutillas, mora, granadilla, claudia, durazno y aguacate. Pedidos por transferencia bancaria en Guayaquil y Durán.">
+    <link rel="icon" href="img/logo.png" type="image/png">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+
+    <!-- ============================================================
+         PANTALLA DE TRANSICIÓN (debe ir al inicio del body)
+         ============================================================ -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================================
          HEADER STICKY
@@ -29,7 +45,9 @@
                 <span class="btn-carrito-texto">Tus pedidos</span>
             </a>
 
-            <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
+            <button class="btn-hamburguesa" id="btn-hamburguesa" type="button"
+                    onclick="toggleMenu()" aria-label="Abrir menú"
+                    aria-controls="nav-principal" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -103,9 +121,9 @@
             Selecciona la presentación que necesitas: baldes de 30 lbs, cajas de 15 lbs o cartones al granel.
         </p>
         <div class="botones-filtro">
-            <button class="btn-filtro activo" data-filtro="todos">Todos</button>
-            <button class="btn-filtro" data-filtro="frutillas">Frutillas</button>
-            <button class="btn-filtro" data-filtro="otros">Otras Frutas</button>
+            <button class="btn-filtro activo" type="button" data-filtro="todos">Todos</button>
+            <button class="btn-filtro" type="button" data-filtro="frutillas">Frutillas</button>
+            <button class="btn-filtro" type="button" data-filtro="otros">Otras Frutas</button>
         </div>
     </section>
 
@@ -199,129 +217,188 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-     <script>
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
-    (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
-                }
-            }, 1200); // 0.3 segundos mínimo visible
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="js/productos.js" onerror="console.error('No se pudo cargar js/productos.js');"></script>
+    <script src="js/carrito.js" onerror="console.error('No se pudo cargar js/carrito.js');"></script>
+    <script src="js/filtros.js" onerror="console.error('No se pudo cargar js/filtros.js');"></script>
+
+    <script>
+    (function () {
+        'use strict';
+
+        /* ============================================================
+           UTILIDADES
+           ============================================================ */
+        function cuandoDOMListo(fn) {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fn, { once: true });
+            } else {
+                fn();
+            }
+        }
+
+        /* ============================================================
+           PANTALLA DE TRANSICIÓN
+           ============================================================ */
+        var pantallaTransicion = document.getElementById('transicion-pantalla');
+
+        function ocultarTransicion() {
+            if (!pantallaTransicion || pantallaTransicion.classList.contains('oculta')) return;
+            pantallaTransicion.classList.add('oculta');
+            setTimeout(function () {
+                pantallaTransicion.style.display = 'none';
+            }, 500);
+        }
+
+        function mostrarTransicion() {
+            if (!pantallaTransicion) return;
+            pantallaTransicion.style.display = '';
+            // Forzar reflow para que la transición CSS se aplique correctamente
+            void pantallaTransicion.offsetWidth;
+            pantallaTransicion.classList.remove('oculta');
+        }
+
+        // Ocultar al terminar la carga (con un mínimo visible de 0.6 s)
+        if (document.readyState === 'complete') {
+            setTimeout(ocultarTransicion, 600);
+        } else {
+            window.addEventListener('load', function () {
+                setTimeout(ocultarTransicion, 600);
+            });
+        }
+
+        // Red de seguridad: si 'load' nunca dispara (imagen rota, red lenta, etc.)
+        setTimeout(ocultarTransicion, 4000);
+
+        // Mostrar al navegar a otra página interna
+        document.addEventListener('click', function (e) {
+            var enlace = e.target.closest ? e.target.closest('a') : null;
+            if (!enlace) return;
+
+            var href = enlace.getAttribute('href') || '';
+            if (
+                href === '' ||
+                href.charAt(0) === '#' ||
+                /^(https?:)?\/\//i.test(href) ||
+                /^(mailto:|tel:|whatsapp:)/i.test(href) ||
+                enlace.target === '_blank' ||
+                enlace.hasAttribute('download')
+            ) {
+                return;
+            }
+
+            mostrarTransicion();
         });
 
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
-        document.addEventListener('DOMContentLoaded', async () => {
-    if (typeof actualizarContador === 'function') {
-        actualizarContador();
-    }
+        // Al volver con el botón "atrás" del navegador
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) ocultarTransicion();
+        });
 
-    // 1. Renderizar INMEDIATAMENTE (con precios guardados)
-    if (typeof obtenerProductos === 'function' &&
-        typeof renderizarProductos === 'function') {
-        renderizarProductos();
-    }
+        /* ============================================================
+           INICIALIZACIÓN DE LA TIENDA
+           ============================================================ */
+        cuandoDOMListo(function () {
+            if (typeof actualizarContador === 'function') {
+                actualizarContador();
+            }
 
-    // 2. Cargar productos (instantáneo con precios guardados)
-    if (typeof inicializarProductos === 'function') {
-        await inicializarProductos();
-    }
-});
+            // 1. Render inmediato (usa precios guardados en caché)
+            if (typeof renderizarProductos === 'function') {
+                renderizarProductos();
+            }
 
-// Escuchar cuando lleguen precios nuevos de Sheets
-window.addEventListener('preciosListos', () => {
-    if (typeof renderizarProductos === 'function' &&
-        document.getElementById('lista-productos')) {
-        renderizarProductos();
-    }
-});
+            // 2. Carga de productos (asíncrona, no bloquea el render)
+            if (typeof inicializarProductos === 'function') {
+                Promise.resolve()
+                    .then(inicializarProductos)
+                    .then(function () {
+                        if (typeof renderizarProductos === 'function') {
+                            renderizarProductos();
+                        }
+                    })
+                    .catch(function (err) {
+                        console.error('Error al inicializar productos:', err);
+                    });
+            }
 
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    pantalla.style.display = 'none';
+            // 3. Aviso si la lista sigue vacía (script no cargado o sin datos)
+            setTimeout(function () {
+                var cont = document.getElementById('lista-productos');
+                if (cont && cont.children.length === 0) {
+                    cont.innerHTML =
+                        '<p class="productos-vacio">No se pudieron cargar los productos. ' +
+                        'Revisa tu conexión y recarga la página.</p>';
                 }
+            }, 4000);
+        });
+
+        // Precios nuevos desde Google Sheets
+        window.addEventListener('preciosListos', function () {
+            if (
+                typeof renderizarProductos === 'function' &&
+                document.getElementById('lista-productos')
+            ) {
+                renderizarProductos();
             }
         });
-    })();
-</script>
-    <script src="js/productos.js"></script>
-    <script src="js/carrito.js"></script>
-    <script src="js/filtros.js"></script>
-    <script>
-        // ============================================================
-        // INICIALIZACIÓN
-        // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-    // Actualizar contador
-    if (typeof actualizarContador === 'function') {
-        actualizarContador();
-    }
 
-    // Renderizar productos (instantáneo)
-    if (typeof renderizarProductos === 'function') {
-        renderizarProductos();
-    }
-});
+        /* ============================================================
+           MENÚ HAMBURGUESA
+           ============================================================ */
+        window.toggleMenu = function () {
+            var nav = document.getElementById('nav-principal');
+            var btn = document.getElementById('btn-hamburguesa');
+            var overlay = document.getElementById('menu-overlay');
+            if (!nav || !btn || !overlay) return;
 
-        // ============================================================
-        // MENÚ HAMBURGUESA
-        // ============================================================
-        function toggleMenu() {
-            const nav = document.getElementById('nav-principal');
-            const btn = document.getElementById('btn-hamburguesa');
-            const overlay = document.getElementById('menu-overlay');
-            nav.classList.toggle('abierto');
-            btn.classList.toggle('activo');
-            overlay.classList.toggle('activo');
-            document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
-        }
-        function cerrarMenu() {
-            const nav = document.getElementById('nav-principal');
-            const btn = document.getElementById('btn-hamburguesa');
-            const overlay = document.getElementById('menu-overlay');
+            var abierto = nav.classList.toggle('abierto');
+            btn.classList.toggle('activo', abierto);
+            overlay.classList.toggle('activo', abierto);
+            btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+            btn.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+            document.body.style.overflow = abierto ? 'hidden' : '';
+        };
+
+        window.cerrarMenu = function () {
+            var nav = document.getElementById('nav-principal');
+            var btn = document.getElementById('btn-hamburguesa');
+            var overlay = document.getElementById('menu-overlay');
+            if (!nav || !btn || !overlay) return;
+
             nav.classList.remove('abierto');
             btn.classList.remove('activo');
             overlay.classList.remove('activo');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Abrir menú');
             document.body.style.overflow = '';
-        }
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 900) cerrarMenu();
+        };
+
+        // Cerrar al agrandar la ventana
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                if (window.innerWidth > 900) window.cerrarMenu();
+            }, 150);
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.nav-principal a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 900) cerrarMenu();
+
+        // Cerrar al pulsar una opción del menú (móvil)
+        cuandoDOMListo(function () {
+            document.querySelectorAll('.nav-principal a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (window.innerWidth <= 900) window.cerrarMenu();
                 });
             });
+
+            // Cerrar con la tecla Escape
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') window.cerrarMenu();
+            });
         });
+    })();
     </script>
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>
