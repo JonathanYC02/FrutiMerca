@@ -246,7 +246,7 @@ function resolverRuta(ruta) {
 /* ============================================================
    CONFIGURACIÓN
    ============================================================ */
-const VERSION_PRODUCTOS = 12;
+const VERSION_PRODUCTOS = 13;
 
 const HORARIO_PEDIDOS = { apertura: 22, cierre: 13 };
 const STOCK_KEY_PRODUCTO     = 'frutimerca_stock_producto';
