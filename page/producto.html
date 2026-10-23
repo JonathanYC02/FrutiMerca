@@ -9,9 +9,6 @@
 </head>
 <body>
 
-    <!-- ============================================================
-         PANTALLA DE TRANSICIÓN
-         ============================================================ -->
     <div id="transicion-pantalla" class="transicion-pantalla">
         <div class="transicion-contenido">
             <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
@@ -24,12 +21,8 @@
         </div>
     </div>
 
-    <!-- ============================================================
-         HEADER
-         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
-
             <a href="../index.html" class="logo">
                 <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
                 <div class="logo-texto">
@@ -37,18 +30,13 @@
                     <small>Frutas Frescas</small>
                 </div>
             </a>
-
             <a href="carrito.html" class="btn-carrito">
                 🛒 <span id="contador-carrito">0</span>
                 <span class="btn-carrito-texto">Tus pedidos</span>
             </a>
-
             <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
-
             <nav class="nav-principal" id="nav-principal">
                 <ul>
                     <li><a href="../index.html">Inicio</a></li>
@@ -62,32 +50,17 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
-    <!-- ============================================================
-         CONTENIDO PRINCIPAL
-         Se llena dinámicamente con JavaScript según el slug de la URL.
-         ============================================================ -->
-    <main class="producto-wrapper" id="producto-wrapper">
-        <!-- Contenido dinámico -->
-    </main>
+    <main class="producto-wrapper" id="producto-wrapper"></main>
 
-    <!-- ============================================================
-         FOOTER
-         ============================================================ -->
     <footer class="footer">
         <div class="footer-copy">
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
 
-    <!-- ============================================================
-         SCRIPTS
-         ============================================================ -->
-
-    <!-- 1) Scripts base del sistema -->
     <script src="../js/productos.js"></script>
     <script src="../js/carrito.js"></script>
 
-    <!-- 2) Script: Pantalla de transición -->
     <script>
         (function() {
             window.addEventListener('load', function() {
@@ -95,25 +68,17 @@
                     const pantalla = document.getElementById('transicion-pantalla');
                     if (pantalla) {
                         pantalla.classList.add('oculta');
-                        setTimeout(function() {
-                            pantalla.style.display = 'none';
-                        }, 500);
+                        setTimeout(function() { pantalla.style.display = 'none'; }, 500);
                     }
                 }, 1200);
             });
-
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('a').forEach(function(link) {
-                    link.addEventListener('click', function(e) {
+                    link.addEventListener('click', function() {
                         const href = link.getAttribute('href');
-                        if (!href ||
-                            href.startsWith('#') ||
-                            href.startsWith('http') ||
-                            href.startsWith('mailto:') ||
-                            href.startsWith('tel:') ||
-                            link.target === '_blank') {
-                            return;
-                        }
+                        if (!href || href.startsWith('#') || href.startsWith('http') ||
+                            href.startsWith('mailto:') || href.startsWith('tel:') ||
+                            link.target === '_blank') return;
                         const pantalla = document.getElementById('transicion-pantalla');
                         if (pantalla) {
                             pantalla.classList.remove('oculta');
@@ -122,7 +87,6 @@
                     });
                 });
             });
-
             window.addEventListener('pageshow', function(event) {
                 if (event.persisted) {
                     const pantalla = document.getElementById('transicion-pantalla');
@@ -135,42 +99,24 @@
         })();
     </script>
 
-    <!-- 3) Script: Lógica del producto -->
     <script>
-        /* ============================================================
-           VARIABLE GLOBAL
-           Guarda el producto actual cargado.
-           ============================================================ */
         let PRODUCTO_ACTUAL = null;
 
-        /* ============================================================
-           INICIALIZACIÓN AL CARGAR LA PÁGINA
-           ============================================================ */
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Obtener el slug de la URL (?slug=frutilla-primera)
+            verificarResetDiario();
+
             const params = new URLSearchParams(window.location.search);
             const slug = params.get('slug');
+            if (!slug) { mostrarNoEncontrado(); return; }
 
-            if (!slug) {
-                mostrarNoEncontrado();
-                return;
-            }
-
-            // 2. Buscar el producto
             const productos = obtenerProductos();
             const prod = productos.find(p => p.slug === slug);
+            if (!prod) { mostrarNoEncontrado(); return; }
 
-            if (!prod) {
-                mostrarNoEncontrado();
-                return;
-            }
-
-            // 3. Guardar y renderizar
             PRODUCTO_ACTUAL = prod;
             document.title = prod.nombre + ' | FrutiMerca';
             renderizarProducto(prod);
 
-            // 4. Cerrar menú al hacer clic en un enlace
             document.querySelectorAll('.nav-principal a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 900) cerrarMenu();
@@ -178,9 +124,6 @@
             });
         });
 
-        /* ============================================================
-           MOSTRAR PANTALLA "PRODUCTO NO ENCONTRADO"
-           ============================================================ */
         function mostrarNoEncontrado() {
             document.getElementById('producto-wrapper').innerHTML = `
                 <div class="carrito-vacio">
@@ -193,69 +136,100 @@
                 </div>`;
         }
 
-        /* ============================================================
-           RENDERIZAR PRODUCTO
-           Dibuja el detalle del producto con:
-           - Imagen principal (con cambio dinámico por presentación)
-           - Nombre y descripción
-           - Selector de presentaciones
-           - Botón de agregar al carrito
-           - Notas de envío, empaque y pago
-           ============================================================ */
         function renderizarProducto(prod) {
             const wrapper = document.getElementById('producto-wrapper');
-            const primeraPres = prod.presentaciones[0];
 
-            // Resolver la ruta de la imagen inicial
-            const imagenInicial = resolverRuta(primeraPres.imagen || prod.imagen);
+            // 1) Stock por presentación
+            const presentacionesConStock = prod.presentaciones.map(pres => ({
+                ...pres,
+                disponible: obtenerStockPresentacion(prod.id, pres.id, true)
+            }));
 
-            // Construir las opciones del selector de presentaciones
-            const opcionesHTML = prod.presentaciones.map((p, i) => {
-                const seleccionado = i === 0 ? 'checked' : '';
-                const precioTexto = p.precio !== null
-                    ? `$${p.precio.toFixed(2)}`
-                    : 'Precio a confirmar';
+            const algunaDisponible = presentacionesConStock.some(p => p.disponible);
+            const productoGlobalmenteDisponible = obtenerStockProducto(prod.id, prod.stock) && algunaDisponible;
+
+            // 2) Primera disponible (para imagen inicial)
+            const primeraDisponible = presentacionesConStock.find(p => p.disponible) || presentacionesConStock[0];
+            const imagenInicial = resolverRuta(primeraDisponible.imagen || prod.imagen);
+
+            // 3) ¿Está abierta la tienda?
+            const abierto = estaAbiertoTienda();
+
+            // 4) Selector de presentaciones
+            const opcionesHTML = presentacionesConStock.map((p, i) => {
+                const seleccionado = (p === primeraDisponible && p.disponible) ? 'checked' : '';
+                const precioTexto = p.precio !== null ? `$${p.precio.toFixed(2)}` : 'Precio a confirmar';
                 const sinPrecio = p.precio === null;
                 const imagenPres = p.imagen || prod.imagen;
+                const disabled = !p.disponible ? 'disabled' : '';
 
                 return `
-                    <label class="opcion-presentacion ${seleccionado ? 'seleccionada' : ''}">
+                    <label class="opcion-presentacion ${seleccionado ? 'seleccionada' : ''} ${!p.disponible ? 'agotada' : ''}">
                         <input type="radio" name="presentacion"
-                               value="${p.id}" ${seleccionado}
+                               value="${p.id}" ${seleccionado} ${disabled}
                                data-precio="${p.precio !== null ? p.precio : ''}"
                                data-imagen="${resolverRuta(imagenPres)}"
+                               data-disponible="${p.disponible}"
                                onchange="actualizarOpcionSeleccionada()">
                         <div class="opcion-info">
                             <strong>${p.nombre}</strong>
                             <span class="opcion-precio ${sinPrecio ? 'pendiente' : ''}">
                                 ${precioTexto}
+                                ${!p.disponible ? ' · <em style="color:#a02020;">Agotado</em>' : ''}
                             </span>
                         </div>
                     </label>`;
             }).join('');
 
-            // Armar el HTML completo
+            // 5) Estado del botón
+            let botonHTML = '';
+            if (!productoGlobalmenteDisponible) {
+                botonHTML = `<button class="btn-comprar btn-grande" disabled
+                                     style="background:#94a3b8;color:white;">
+                                ❌ Producto agotado
+                             </button>`;
+            } else if (!abierto) {
+                botonHTML = `<button class="btn-comprar btn-grande" disabled
+                                     style="background:#94a3b8;color:white;">
+                                🌙 Pedidos cerrados (abre 10:00 PM)
+                             </button>`;
+            } else {
+                botonHTML = `<button class="btn-comprar btn-agregar btn-grande"
+                                     onclick="agregarDesdeDetalle(${prod.id})">
+                                🛒 Agregar al carrito
+                             </button>`;
+            }
+
+            // 6) Aviso de horario cerrado
+            const avisoHorario = !abierto ? `
+                <div class="aviso-horario-cerrado">
+                    🌙 <strong>Pedidos cerrados por hoy.</strong>
+                    El sistema de pedidos en línea abre hoy a las <strong>10:00 PM</strong>.
+                </div>` : '';
+
+            // 7) Marca de agua si agotado
+            const marcaAgua = !productoGlobalmenteDisponible ? `
+                <div class="marca-agua-agotado"><span>AGOTADO</span></div>` : '';
+
             wrapper.innerHTML = `
-                <!-- Botón de volver -->
                 <a href="../index.html#productos" class="volver-link">
                     ← Volver a productos
                 </a>
 
-                <!-- Detalle del producto (2 columnas en desktop) -->
-                <div class="producto-detalle">
+                ${avisoHorario}
 
-                    <!-- Columna izquierda: Imagen -->
-                    <div class="producto-imagen">
+                <div class="producto-detalle">
+                    <div class="producto-imagen ${!productoGlobalmenteDisponible ? 'agotado' : ''}">
+                        ${marcaAgua}
                         <img id="imagen-producto"
                              src="${imagenInicial}"
                              alt="${prod.nombre}"
                              onerror="this.src='https://via.placeholder.com/800x600/0f2b5b/ffffff?text=FrutiMerca'">
                         <span class="producto-badge">
-                            ${prod.categoria === 'frutillas' ? '🍓 Frutilla' : '🍇 Fruta'}
+                            ${prod.categoria.indexOf('frutilla') !== -1 ? '🍓 Frutilla' : '🍇 Fruta'}
                         </span>
                     </div>
 
-                    <!-- Columna derecha: Info y acciones -->
                     <div class="producto-info">
                         <h1>${prod.nombre}</h1>
                         <p class="producto-descripcion">${prod.descripcion}</p>
@@ -268,13 +242,9 @@
                         </div>
 
                         <div class="producto-acciones">
-                            <button class="btn-comprar btn-agregar btn-grande"
-                                    onclick="agregarDesdeDetalle(${prod.id})">
-                                🛒 Agregar al carrito
-                            </button>
+                            ${botonHTML}
                         </div>
 
-                        <!-- Notas informativas -->
                         <div class="producto-notas">
                             <p>📦 ${prod.empaque || 'Consulta el empaque de entrega'}</p>
                             <p>🚚 Envío: Central $3 · Durán $1</p>
@@ -286,37 +256,36 @@
             `;
         }
 
-        /* ============================================================
-           ACTUALIZAR OPCIÓN SELECCIONADA
-           - Marca visualmente la opción elegida
-           - Cambia la imagen principal SIN parpadeo
-           ============================================================ */
         function actualizarOpcionSeleccionada() {
-            // 1. Marcar visualmente la opción seleccionada
             document.querySelectorAll('.opcion-presentacion').forEach(el => {
                 const radio = el.querySelector('input');
                 el.classList.toggle('seleccionada', radio.checked);
             });
 
-            // 2. Cambiar la imagen SIN parpadeo
             const radio = document.querySelector('input[name="presentacion"]:checked');
             if (!radio) return;
 
             const nuevaImagen = radio.dataset.imagen;
             const imagenEl = document.getElementById('imagen-producto');
-
             if (imagenEl && nuevaImagen && imagenEl.src !== nuevaImagen) {
                 imagenEl.src = nuevaImagen;
             }
         }
 
-        /* ============================================================
-           AGREGAR AL CARRITO DESDE EL DETALLE
-           ============================================================ */
         function agregarDesdeDetalle(idProducto) {
+            if (!estaAbiertoTienda()) {
+                alert('🌙 Los pedidos en línea están cerrados.\nAbrimos hoy a las 10:00 PM.');
+                return;
+            }
+
             const radio = document.querySelector('input[name="presentacion"]:checked');
             if (!radio) {
                 alert('Selecciona una presentación');
+                return;
+            }
+
+            if (radio.dataset.disponible === 'false' || radio.disabled) {
+                alert('Esta presentación está agotada.');
                 return;
             }
 
@@ -334,10 +303,6 @@
             agregarAlCarritoConPresentacion(prod, pres);
         }
 
-        /* ============================================================
-           AGREGAR AL CARRITO CON PRESENTACIÓN
-           Guarda el producto con su presentación específica.
-           ============================================================ */
         function agregarAlCarritoConPresentacion(prod, pres) {
             const carrito = obtenerCarrito();
             const clave = prod.id + '-' + pres.id;
@@ -361,9 +326,6 @@
             mostrarToast(`✅ ${prod.nombre} (${pres.nombre}) agregado`);
         }
 
-        /* ============================================================
-           MENÚ HAMBURGUESA (MÓVIL)
-           ============================================================ */
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -388,6 +350,5 @@
             if (window.innerWidth > 900) cerrarMenu();
         });
     </script>
-
 </body>
 </html>

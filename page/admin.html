@@ -7,12 +7,90 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .admin-barra {
+            display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+            margin: 20px 0; padding: 14px; background: #f7f9fc;
+            border-radius: 10px; border: 1px solid #e0e6ed;
+        }
+        .filtro-admin {
+            background: #fff; border: 1px solid #c9d3e0; padding: 8px 14px;
+            border-radius: 20px; cursor: pointer; font-weight: 500; font-size: 14px;
+        }
+        .filtro-admin.activo {
+            background: var(--azul-marino, #0f2b5b); color: #fff;
+            border-color: var(--azul-marino, #0f2b5b);
+        }
+        #admin-buscador {
+            flex: 1; min-width: 180px; padding: 8px 12px;
+            border: 1px solid #c9d3e0; border-radius: 8px; font-size: 14px;
+        }
+        .btn-guardar-todo {
+            background: #0f7a2e; color: #fff; border: none;
+            padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600;
+        }
+        .btn-guardar-todo:disabled { background: #b8c5b9; cursor: not-allowed; }
+        .contador-filas { font-size: 13px; color: #5a6b7c; margin-left: auto; }
+
+        .estado-tienda {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px;
+        }
+        .estado-tienda.abierto { background: #dcfce7; color: #15803d; }
+        .estado-tienda.cerrado { background: #fee2e2; color: #991b1b; }
+
+        .producto-admin-card {
+            border: 1px solid #e0e6ed; border-radius: 10px; padding: 16px;
+            margin-bottom: 16px; background: #fff;
+        }
+        .producto-admin-card.producto-agotado { border-left: 4px solid #a02020; background: #fef2f2; }
+
+        .producto-admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; padding-bottom: 10px;
+            border-bottom: 1px solid #eef1f5; flex-wrap: wrap; gap: 8px;
+        }
+        .producto-admin-header h3 {
+            margin: 0; font-size: 16px; color: var(--azul-marino, #0f2b5b);
+        }
+        .producto-categoria-badge {
+            font-size: 11px; background: #e8f0fe; color: #0f2b5b;
+            padding: 3px 8px; border-radius: 10px; font-weight: 600;
+        }
+
+        .toggle-stock {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 12px; border-radius: 20px; cursor: pointer;
+            font-weight: 700; font-size: 12px; border: none; transition: all .2s;
+        }
+        .toggle-stock.disponible { background: #dcfce7; color: #15803d; }
+        .toggle-stock.agotado    { background: #fee2e2; color: #991b1b; }
+        .toggle-stock:hover { transform: scale(1.05); }
+
+        .presentacion-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 12px; background: #fafbfc; border-radius: 8px;
+            margin-bottom: 8px; gap: 10px; flex-wrap: wrap;
+        }
+        .presentacion-row.agotada { background: #fef2f2; }
+        .presentacion-nombre { flex: 1; font-size: 14px; color: #333; min-width: 180px; }
+
+        .presentacion-precio { display: flex; align-items: center; gap: 6px; }
+        .presentacion-precio input {
+            width: 100px; padding: 6px 8px; border: 1px solid #c9d3e0;
+            border-radius: 6px; font-size: 14px; text-align: right;
+        }
+
+        .grupo-categoria-titulo {
+            font-size: 18px; color: var(--azul-marino, #0f2b5b);
+            margin: 28px 0 12px; padding-bottom: 6px;
+            border-bottom: 2px solid var(--azul-marino, #0f2b5b);
+        }
+        .grupo-categoria-titulo:first-child { margin-top: 0; }
+    </style>
 </head>
 <body>
 
-    <!-- ============================================================
-         HEADER
-         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
             <a href="../index.html" class="logo">
@@ -22,17 +100,12 @@
                     <small>Panel Admin</small>
                 </div>
             </a>
-
             <a href="../index.html" class="btn-carrito">
                 🏠 <span class="btn-carrito-texto">Ir a la tienda</span>
             </a>
-
             <button class="btn-hamburguesa" id="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
-
             <nav class="nav-principal" id="nav-principal">
                 <ul>
                     <li><a href="../index.html">Inicio</a></li>
@@ -46,56 +119,56 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
-    <!-- ============================================================
-         CONTENIDO
-         ============================================================ -->
     <main class="admin-wrapper">
-
-        <!-- ============== LOGIN ============== -->
         <div id="login-screen" class="login-card">
             <div class="login-icono">🔒</div>
             <h1>Panel de Administración</h1>
             <p class="login-subtitulo">FrutiMerca - Acceso Restringido</p>
-
             <form id="login-form" onsubmit="intentarLogin(event)">
                 <div class="campo">
                     <label>Contraseña</label>
                     <input type="password" id="admin-pass"
-                           placeholder="Ingresa la contraseña" required
-                           autocomplete="off">
+                           placeholder="Ingresa la contraseña" required autocomplete="off">
                 </div>
-
                 <div id="login-error" class="login-error" style="display:none;">
                     ❌ Contraseña incorrecta. Intenta de nuevo.
                 </div>
-
-                <button type="submit" class="btn-guardar" style="width:100%;">
-                    🔓 Ingresar
-                </button>
+                <button type="submit" class="btn-guardar" style="width:100%;">🔓 Ingresar</button>
             </form>
-
-            <p class="login-nota">
-                Solo el desarrollador puede acceder a este panel.
-            </p>
+            <p class="login-nota">Solo el desarrollador puede acceder a este panel.</p>
         </div>
 
-        <!-- ============== PANEL (oculto hasta login) ============== -->
         <div id="panel-screen" style="display:none;">
-
             <div class="admin-header">
                 <h1>⚙️ Panel de Administración</h1>
-                <button onclick="cerrarSesion()" class="btn-logout">
-                    🚪 Cerrar Sesión
-                </button>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                    <span id="estado-tienda" class="estado-tienda"></span>
+                    <button onclick="cerrarSesion()" class="btn-logout">🚪 Cerrar Sesión</button>
+                </div>
             </div>
 
             <div class="admin-alerta">
                 <strong>ℹ️ Cómo funciona:</strong>
-                Editá los precios que necesites y después copiá el código generado
-                para pegarlo en <code>js/productos.js</code> y subirlo a GitHub.
+                Marcá <strong>AGOTADO</strong> los productos o presentaciones que se acabaron.
+                A las <strong>10:00 PM</strong> el sistema resetea todo automáticamente para el día siguiente.
+                Cuando termines, pulsá <strong>📋 Copiar Código Actualizado</strong> y pegá
+                el resultado en <code>js/productos.js</code>.
             </div>
 
             <h2 class="admin-seccion-titulo">📋 Lista de Productos</h2>
+
+            <div class="admin-barra">
+                <button class="filtro-admin activo" data-filtro="todos" type="button">Todas</button>
+                <button class="filtro-admin" data-filtro="frutillas-ambatena" type="button">🍓 Ambateñas</button>
+                <button class="filtro-admin" data-filtro="frutillas-riobamba" type="button">🍓 Riobamba</button>
+                <button class="filtro-admin" data-filtro="otros" type="button">🍇 Otras</button>
+                <input type="search" id="admin-buscador" placeholder="🔎 Buscar producto…">
+                <button class="btn-guardar-todo" id="btn-guardar-todo"
+                        onclick="guardarTodosLosCambios()" disabled>
+                    💾 Guardar cambios
+                </button>
+                <span class="contador-filas" id="contador-filas"></span>
+            </div>
 
             <div id="lista-productos-admin"></div>
 
@@ -103,75 +176,61 @@
                 <button onclick="generarCodigo()" class="btn-guardar">
                     📋 Copiar Código Actualizado
                 </button>
-                <button onclick="restaurarPrecios()" class="btn-restaurar">
-                    🔄 Restaurar Precios Originales
+                <button onclick="resetStockManual()" class="btn-restaurar">
+                    🔄 Reset manual de stock ahora
                 </button>
             </div>
 
             <div id="codigo-generado" class="codigo-box" style="display:none;">
                 <h3>✅ Código para pegar en <code>js/productos.js</code>:</h3>
+                <p id="version-info" style="display:none;background:#e8f0fe;padding:10px 14px;
+                   border-radius:8px;margin-bottom:12px;color:#0f2b5b;"></p>
                 <p class="codigo-instrucciones">
                     Copiá este código y reemplazá <strong>todo</strong> el contenido
                     de <code>js/productos.js</code>. Después subilo a GitHub.
                 </p>
                 <textarea id="textarea-codigo" readonly></textarea>
-                <button onclick="copiarCodigo()" class="btn-copiar">
-                    📋 Copiar al Portapapeles
-                </button>
-                <p id="copy-feedback" class="copy-feedback" style="display:none;">
-                    ✅ ¡Copiado!
-                </p>
+                <button onclick="copiarCodigo()" class="btn-copiar">📋 Copiar al Portapapeles</button>
+                <p id="copy-feedback" class="copy-feedback" style="display:none;">✅ ¡Copiado!</p>
             </div>
-
         </div>
-
     </main>
 
-    <!-- ============================================================
-         FOOTER
-         ============================================================ -->
     <footer class="footer">
         <div class="footer-copy">
             <p>© 2026 FrutiMerca — Panel de Administración</p>
         </div>
     </footer>
+
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando"><span></span><span></span><span></span></div>
+        </div>
+    </div>
+
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
+
     <script>
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
     (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const pantalla = document.getElementById('transicion-pantalla');
                 if (pantalla) {
                     pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
+                    setTimeout(function() { pantalla.style.display = 'none'; }, 500);
                 }
-            }, 1200); // 0.3 segundos mínimo visible
+            }, 1200);
         });
-
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function() {
                     const href = link.getAttribute('href');
-
-                    // No mostrar para enlaces internos (#) ni externos (_blank)
-                    if (!href ||
-                        href.startsWith('#') ||
-                        href.startsWith('http') ||
-                        href.startsWith('mailto:') ||
-                        href.startsWith('tel:') ||
-                        link.target === '_blank' ||
-                        link.getAttribute('target') === '_blank') {
-                        return;
-                    }
-
-                    // Mostrar pantalla de transición
+                    if (!href || href.startsWith('#') || href.startsWith('http') ||
+                        href.startsWith('mailto:') || href.startsWith('tel:') ||
+                        link.target === '_blank') return;
                     const pantalla = document.getElementById('transicion-pantalla');
                     if (pantalla) {
                         pantalla.classList.remove('oculta');
@@ -180,9 +239,6 @@
                 });
             });
         });
-
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
         window.addEventListener('pageshow', function(event) {
             if (event.persisted) {
                 const pantalla = document.getElementById('transicion-pantalla');
@@ -193,39 +249,63 @@
             }
         });
     })();
-</script>
+    </script>
 
-    <!-- ============================================================
-         SCRIPTS
-         ============================================================ -->
-    <script src="../js/productos.js"></script>
-    <script src="../js/carrito.js"></script>
     <script>
-        // ============================================================
-        // CONFIGURACIÓN DE SEGURIDAD
-        // ============================================================
         const ADMIN_PASSWORD = 'frutimerca2026';
         const SESSION_KEY = 'frutimerca_admin_logged';
         const PRECIOS_KEY = 'frutimerca_precios_editados';
 
-        // ============================================================
-        // INICIALIZACIÓN
-        // ============================================================
+        let FILTRO_ACTUAL = 'todos';
+        let BUSQUEDA_ACTUAL = '';
+        const CAMBIOS_PENDIENTES = {};
+
+        const CALIBRES = {
+            primera: 1, segunda: 2, segundo: 2, tercera: 3, tercero: 3,
+            cuarta: 4, cuarto: 4, quinta: 5, quinto: 5, sexta: 6, sexto: 6
+        };
+        const ORDEN_CATEGORIAS = {
+            'frutillas-ambatena': 1, 'frutillas-riobamba': 2, 'otros': 3
+        };
+        const ETIQUETAS_CATEGORIA = {
+            'frutillas-ambatena': '🍓 Frutilla Ambateña',
+            'frutillas-riobamba': '🍓 Frutilla Riobamba',
+            'otros': '🍇 Otras Frutas'
+        };
+
+        function obtenerCalibre(prod) {
+            const texto = ((prod.nombre || '') + ' ' + (prod.slug || '')).toLowerCase();
+            for (const key in CALIBRES) {
+                if (texto.indexOf(key) !== -1) return CALIBRES[key];
+            }
+            return 99;
+        }
+
+        function ordenarProductos(lista) {
+            return lista.slice().sort(function (a, b) {
+                const catA = ORDEN_CATEGORIAS[a.categoria] || 99;
+                const catB = ORDEN_CATEGORIAS[b.categoria] || 99;
+                if (catA !== catB) return catA - catB;
+                const calA = obtenerCalibre(a);
+                const calB = obtenerCalibre(b);
+                if (calA !== calB) return calA - calB;
+                return (a.nombre || '').localeCompare(b.nombre || '');
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Si ya está logueado, mostrar panel
+            verificarResetDiario();
             if (localStorage.getItem(SESSION_KEY) === 'true') {
                 mostrarPanel();
             }
+            configurarFiltros();
+            configurarBuscador();
         });
 
-        // ============================================================
-        // LOGIN
-        // ============================================================
         function intentarLogin(event) {
             event.preventDefault();
             const input = document.getElementById('admin-pass');
             const error = document.getElementById('login-error');
-
             if (input.value === ADMIN_PASSWORD) {
                 localStorage.setItem(SESSION_KEY, 'true');
                 error.style.display = 'none';
@@ -246,169 +326,257 @@
             document.getElementById('admin-pass').focus();
         }
 
-        // ============================================================
-        // MOSTRAR PANEL
-        // ============================================================
         function mostrarPanel() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('panel-screen').style.display = 'block';
+            actualizarEstadoTienda();
             renderizarListaAdmin();
+            setInterval(actualizarEstadoTienda, 60000);
         }
 
-        // ============================================================
-        // LISTA DE PRODUCTOS EN EL ADMIN
-        // ============================================================
-        function renderizarListaAdmin() {
-            const contenedor = document.getElementById('lista-productos-admin');
-            const productos = obtenerProductosConPreciosEditados();
+        function actualizarEstadoTienda() {
+            const el = document.getElementById('estado-tienda');
+            if (!el) return;
+            if (estaAbiertoTienda()) {
+                el.className = 'estado-tienda abierto';
+                el.textContent = '🟢 Tienda ABIERTA (pedidos permitidos)';
+            } else {
+                el.className = 'estado-tienda cerrado';
+                el.textContent = '🔴 Tienda CERRADA (abre 10:00 PM)';
+            }
+        }
 
-            contenedor.innerHTML = '';
-
-            productos.forEach(prod => {
-                const card = document.createElement('div');
-                card.className = 'producto-admin-card';
-
-                // Header del producto
-                let html = `
-                    <div class="producto-admin-header">
-                        <h3>${prod.nombre}</h3>
-                        <span class="producto-categoria-badge">${prod.categoria}</span>
-                    </div>
-                    <div class="presentaciones-lista">
-                `;
-
-                // Cada presentación con su precio editable
-                prod.presentaciones.forEach(pres => {
-                    const precioTexto = pres.precio !== null
-                        ? `$${pres.precio.toFixed(2)}`
-                        : 'A confirmar';
-
-                    const editable = pres.precio !== null;
-
-                    html += `
-                        <div class="presentacion-row">
-                            <div class="presentacion-nombre">
-                                ${pres.nombre}
-                            </div>
-                            <div class="presentacion-precio">
-                                ${editable ? `
-                                    <span>$</span>
-                                    <input type="number"
-                                           class="input-precio"
-                                           data-producto="${prod.id}"
-                                           data-presentacion="${pres.id}"
-                                           value="${pres.precio.toFixed(2)}"
-                                           step="0.01"
-                                           min="0"
-                                           onchange="guardarPrecio(${prod.id}, '${pres.id}', this.value)">
-                                ` : `
-                                    <em>${precioTexto}</em>
-                                `}
-                            </div>
-                        </div>
-                    `;
+        function configurarFiltros() {
+            const botones = document.querySelectorAll('.filtro-admin');
+            botones.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    botones.forEach(function (b) { b.classList.remove('activo'); });
+                    btn.classList.add('activo');
+                    FILTRO_ACTUAL = btn.dataset.filtro;
+                    renderizarListaAdmin();
                 });
-
-                html += `</div>`;
-                card.innerHTML = html;
-                contenedor.appendChild(card);
             });
         }
 
-        // ============================================================
-        // OBTENER PRODUCTOS CON PRECIOS EDITADOS
-        // ============================================================
+        function configurarBuscador() {
+            const buscador = document.getElementById('admin-buscador');
+            if (!buscador) return;
+            buscador.addEventListener('input', function (e) {
+                BUSQUEDA_ACTUAL = e.target.value.trim().toLowerCase();
+                renderizarListaAdmin();
+            });
+        }
+
         function obtenerProductosConPreciosEditados() {
-            // Traer productos originales
             const productos = JSON.parse(JSON.stringify(PRODUCTOS_DEFAULT));
-
-            // Traer precios editados del localStorage
-            const preciosEditados = JSON.parse(
-                localStorage.getItem(PRECIOS_KEY) || '{}'
-            );
-
-            // Aplicar precios editados
-            productos.forEach(prod => {
-                prod.presentaciones.forEach(pres => {
+            const preciosEditados = JSON.parse(localStorage.getItem(PRECIOS_KEY) || '{}');
+            productos.forEach(function (prod) {
+                prod.presentaciones.forEach(function (pres) {
                     const clave = prod.id + '-' + pres.id;
                     if (preciosEditados[clave] !== undefined) {
                         pres.precio = preciosEditados[clave];
                     }
                 });
             });
-
             return productos;
         }
 
-        // ============================================================
-        // GUARDAR PRECIO INDIVIDUAL
-        // ============================================================
-        function guardarPrecio(idProducto, idPresentacion, nuevoPrecio) {
-            const precio = parseFloat(nuevoPrecio);
+        function renderizarListaAdmin() {
+            const contenedor = document.getElementById('lista-productos-admin');
+            if (!contenedor) return;
+            const productos = ordenarProductos(obtenerProductosConPreciosEditados());
+            const preciosEditados = JSON.parse(localStorage.getItem(PRECIOS_KEY) || '{}');
+            contenedor.innerHTML = '';
 
-            if (isNaN(precio) || precio < 0) {
-                alert('Por favor ingresa un precio válido.');
-                renderizarListaAdmin();
+            const filtrados = productos.filter(function (p) {
+                if (FILTRO_ACTUAL !== 'todos' && p.categoria !== FILTRO_ACTUAL) return false;
+                if (BUSQUEDA_ACTUAL && (p.nombre || '').toLowerCase().indexOf(BUSQUEDA_ACTUAL) === -1) return false;
+                return true;
+            });
+
+            let totalFilas = 0;
+            filtrados.forEach(function (p) { totalFilas += (p.presentaciones || []).length; });
+            const contador = document.getElementById('contador-filas');
+            if (contador) contador.textContent = totalFilas + ' presentaciones';
+
+            if (filtrados.length === 0) {
+                contenedor.innerHTML = '<p style="text-align:center;padding:24px;color:#888;">No hay productos que coincidan.</p>';
+                actualizarBotonGuardarTodo();
                 return;
             }
 
-            const preciosEditados = JSON.parse(
-                localStorage.getItem(PRECIOS_KEY) || '{}'
-            );
+            const grupos = {};
+            filtrados.forEach(function (p) {
+                if (!grupos[p.categoria]) grupos[p.categoria] = [];
+                grupos[p.categoria].push(p);
+            });
 
-            const clave = idProducto + '-' + idPresentacion;
-            preciosEditados[clave] = precio;
+            Object.keys(grupos)
+                .sort(function (a, b) { return (ORDEN_CATEGORIAS[a] || 99) - (ORDEN_CATEGORIAS[b] || 99); })
+                .forEach(function (cat) {
+                    const titulo = document.createElement('h3');
+                    titulo.className = 'grupo-categoria-titulo';
+                    titulo.textContent = ETIQUETAS_CATEGORIA[cat] || cat;
+                    contenedor.appendChild(titulo);
 
-            localStorage.setItem(PRECIOS_KEY, JSON.stringify(preciosEditados));
+                    grupos[cat].forEach(function (prod) {
+                        const disponibleProd = obtenerStockProducto(prod.id, prod.stock);
+                        const card = document.createElement('div');
+                        card.className = 'producto-admin-card' + (!disponibleProd ? ' producto-agotado' : '');
 
-            // Feedback visual
-            const input = document.querySelector(
-                `input[data-producto="${idProducto}"][data-presentacion="${idPresentacion}"]`
-            );
-            if (input) {
-                input.style.backgroundColor = '#dcfce7';
-                setTimeout(() => {
-                    input.style.backgroundColor = '';
-                }, 800);
-            }
+                        let html = `
+                            <div class="producto-admin-header">
+                                <h3>${prod.nombre}</h3>
+                                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                                    <span class="producto-categoria-badge">
+                                        ${ETIQUETAS_CATEGORIA[prod.categoria] || prod.categoria}
+                                    </span>
+                                    <button type="button"
+                                            class="toggle-stock ${disponibleProd ? 'disponible' : 'agotado'}"
+                                            onclick="toggleStockProducto(${prod.id})">
+                                        ${disponibleProd ? '✅ Disponible' : '❌ Agotado'}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="presentaciones-lista">`;
+
+                        (prod.presentaciones || []).forEach(function (pres) {
+                            const clave = prod.id + '-' + pres.id;
+                            const precioActual = pres.precio;
+                            const estaEditado = preciosEditados[clave] !== undefined && preciosEditados[clave] !== precioActual;
+                            const valorInput = CAMBIOS_PENDIENTES[clave] !== undefined
+                                ? CAMBIOS_PENDIENTES[clave]
+                                : (precioActual !== null ? precioActual.toFixed(2) : '');
+                            const disponiblePres = obtenerStockPresentacion(prod.id, pres.id, true);
+                            const editable = precioActual !== null || estaEditado;
+
+                            html += `
+                                <div class="presentacion-row ${!disponiblePres ? 'agotada' : ''}">
+                                    <div class="presentacion-nombre">
+                                        ${pres.nombre}
+                                        ${estaEditado ? '<span style="color:#f59e0b;font-size:11px;margin-left:6px;">✏️ editado</span>' : ''}
+                                    </div>
+                                    <div class="presentacion-precio">
+                                        ${editable ? `
+                                            <span>$</span>
+                                            <input type="number" data-clave="${clave}"
+                                                   value="${valorInput}" step="0.01" min="0" placeholder="—"
+                                                   oninput="marcarCambio(this)">
+                                        ` : `<em>${precioActual === null ? 'A confirmar' : '$' + precioActual.toFixed(2)}</em>`}
+                                    </div>
+                                    <button type="button"
+                                            class="toggle-stock ${disponiblePres ? 'disponible' : 'agotado'}"
+                                            onclick="toggleStockPresentacion(${prod.id}, '${pres.id}')">
+                                        ${disponiblePres ? '✅' : '❌'}
+                                    </button>
+                                </div>
+                            `;
+                        });
+
+                        html += `</div>`;
+                        card.innerHTML = html;
+                        contenedor.appendChild(card);
+                    });
+                });
+
+            actualizarBotonGuardarTodo();
         }
 
-        // ============================================================
-        // GENERAR CÓDIGO PARA COPIAR
-        // ============================================================
+        function toggleStockProducto(idProducto) {
+            const productos = getProductosRaw();
+            const prod = productos.find(p => p.id === idProducto);
+            if (!prod) return;
+            const actual = obtenerStockProducto(idProducto, prod.stock);
+            guardarStockProducto(idProducto, !actual);
+            renderizarListaAdmin();
+        }
+
+        function toggleStockPresentacion(idProducto, idPresentacion) {
+            const actual = obtenerStockPresentacion(idProducto, idPresentacion, true);
+            guardarStockPresentacion(idProducto, idPresentacion, !actual);
+            renderizarListaAdmin();
+        }
+
+        function getProductosRaw() {
+            if (typeof obtenerProductos === 'function') return obtenerProductos();
+            return JSON.parse(JSON.stringify(PRODUCTOS_DEFAULT));
+        }
+
+        function marcarCambio(input) {
+            const clave = input.dataset.clave;
+            const val = input.value.trim();
+            if (val === '') delete CAMBIOS_PENDIENTES[clave];
+            else CAMBIOS_PENDIENTES[clave] = parseFloat(val);
+            actualizarBotonGuardarTodo();
+        }
+
+        function actualizarBotonGuardarTodo() {
+            const btn = document.getElementById('btn-guardar-todo');
+            if (!btn) return;
+            const n = Object.keys(CAMBIOS_PENDIENTES).length;
+            btn.disabled = n === 0;
+            btn.textContent = n > 0 ? `💾 Guardar cambios (${n})` : '💾 Guardar cambios';
+        }
+
+        function guardarTodosLosCambios() {
+            const claves = Object.keys(CAMBIOS_PENDIENTES);
+            if (claves.length === 0) { alert('No hay cambios pendientes.'); return; }
+            const editados = JSON.parse(localStorage.getItem(PRECIOS_KEY) || '{}');
+            claves.forEach(function (clave) {
+                editados[clave] = CAMBIOS_PENDIENTES[clave];
+                delete CAMBIOS_PENDIENTES[clave];
+            });
+            localStorage.setItem(PRECIOS_KEY, JSON.stringify(editados));
+            renderizarListaAdmin();
+            alert(`✅ ${claves.length} precio(s) guardado(s)`);
+        }
+
+        function resetStockManual() {
+            if (!confirm('¿Resetear TODO el stock a "disponible"?\n\nSe perderán los agotados marcados manualmente.')) return;
+            localStorage.removeItem(STOCK_KEY_PRODUCTO);
+            localStorage.removeItem(STOCK_KEY_PRESENTACION);
+            renderizarListaAdmin();
+            alert('🔄 Stock reseteado. Todos los productos están disponibles.');
+        }
+
         function generarCodigo() {
             const productos = obtenerProductosConPreciosEditados();
+            const versionActual = (typeof VERSION_PRODUCTOS !== 'undefined') ? Number(VERSION_PRODUCTOS) : 10;
+            const proximaVersion = versionActual + 1;
 
-            // Armar el código de productos.js
+            // Guardar stock actual dentro del código generado
+            const stockProd = JSON.parse(localStorage.getItem(STOCK_KEY_PRODUCTO) || '{}');
+            const stockPres = JSON.parse(localStorage.getItem(STOCK_KEY_PRESENTACION) || '{}');
+
             let codigo = `/* ============================================================
    FRUTIMERCA — Base de datos de productos
-   Cada presentación tiene su propia imagen.
-   Las imágenes se guardan en: img/productos/
    ============================================================ */
 
 const PRODUCTOS_DEFAULT = [
 `;
 
-            productos.forEach((prod, index) => {
+            productos.forEach(function (prod, index) {
+                // Actualizar stock del producto según localStorage
+                const stockProdValor = stockProd[String(prod.id)] !== undefined
+                    ? stockProd[String(prod.id)]
+                    : (prod.stock !== false);
+
                 codigo += `    {
         id: ${prod.id},
         slug: "${prod.slug}",
         nombre: "${prod.nombre}",
         categoria: "${prod.categoria}",
-        descripcion: "${prod.descripcion}",
+        descripcion: "${prod.descripcion.replace(/"/g, '\\"')}",
         imagen: "${prod.imagen}",
-        stock: ${prod.stock},
-        empaque: "${prod.empaque || ''}",
+        stock: ${stockProdValor},
+        empaque: "${(prod.empaque || '').replace(/"/g, '\\"')}",
         presentaciones: [
 `;
-
-                prod.presentaciones.forEach((pres, pIndex) => {
+                prod.presentaciones.forEach(function (pres, pIndex) {
                     const precioValor = pres.precio !== null ? pres.precio : 'null';
                     const coma = pIndex < prod.presentaciones.length - 1 ? ',' : '';
-
                     codigo += `            { id: "${pres.id}", nombre: "${pres.nombre}", precio: ${precioValor}, imagen: "${pres.imagen}" }${coma}\n`;
                 });
-
                 codigo += `        ]
     }${index < productos.length - 1 ? ',' : ''}
 `;
@@ -417,44 +585,94 @@ const PRODUCTOS_DEFAULT = [
             codigo += `];
 
 /* ============================================================
-   FUNCIÓN PARA RESOLVER RUTAS DE IMÁGENES
+   RESOLVER RUTAS
    ============================================================ */
 function resolverRuta(ruta) {
     if (!ruta) return ruta;
-    if (ruta.startsWith('http://') ||
-        ruta.startsWith('https://') ||
-        ruta.startsWith('data:')) {
-        return ruta;
-    }
+    if (ruta.startsWith('http://') || ruta.startsWith('https://') || ruta.startsWith('data:')) return ruta;
     const enPage = window.location.pathname.includes('/page/');
     const limpia = ruta.replace(/^\\.\\.\\//, '').replace(/^\\.\\//, '');
     return enPage ? '../' + limpia : limpia;
 }
 
 /* ============================================================
-   localStorage — CON VERIFICACIÓN DE COMPATIBILIDAD
+   CONFIGURACIÓN
    ============================================================ */
-const VERSION_PRODUCTOS = 8;
+const VERSION_PRODUCTOS = ${proximaVersion};
+
+const HORARIO_PEDIDOS = { apertura: 22, cierre: 13 };
+const STOCK_KEY_PRODUCTO     = 'frutimerca_stock_producto';
+const STOCK_KEY_PRESENTACION = 'frutimerca_stock_presentacion';
+const RESET_KEY              = 'frutimerca_ultimo_reset';
+
+function estaAbiertoTienda() {
+    const hora = new Date().getHours();
+    return hora >= HORARIO_PEDIDOS.apertura || hora < HORARIO_PEDIDOS.cierre;
+}
+
+function verificarResetDiario() {
+    const ahora = new Date();
+    if (ahora.getHours() < HORARIO_PEDIDOS.apertura) return;
+    const diaDeVenta = ahora.toISOString().slice(0, 10);
+    const ultimoReset = localStorage.getItem(RESET_KEY);
+    if (ultimoReset !== diaDeVenta) {
+        localStorage.removeItem(STOCK_KEY_PRODUCTO);
+        localStorage.removeItem(STOCK_KEY_PRESENTACION);
+        localStorage.setItem(RESET_KEY, diaDeVenta);
+    }
+}
+
+function obtenerStockProducto(idProducto, stockDefault) {
+    try {
+        const mapa = JSON.parse(localStorage.getItem(STOCK_KEY_PRODUCTO) || '{}');
+        if (mapa[String(idProducto)] !== undefined) return mapa[String(idProducto)];
+    } catch (e) {}
+    return stockDefault !== false;
+}
+
+function guardarStockProducto(idProducto, disponible) {
+    let mapa = {};
+    try { mapa = JSON.parse(localStorage.getItem(STOCK_KEY_PRODUCTO) || '{}'); } catch (e) {}
+    mapa[String(idProducto)] = !!disponible;
+    localStorage.setItem(STOCK_KEY_PRODUCTO, JSON.stringify(mapa));
+}
+
+function obtenerStockPresentacion(idProducto, idPresentacion, stockDefault) {
+    try {
+        const mapa = JSON.parse(localStorage.getItem(STOCK_KEY_PRESENTACION) || '{}');
+        const key = idProducto + '-' + idPresentacion;
+        if (mapa[key] !== undefined) return mapa[key];
+    } catch (e) {}
+    return stockDefault !== false;
+}
+
+function guardarStockPresentacion(idProducto, idPresentacion, disponible) {
+    let mapa = {};
+    try { mapa = JSON.parse(localStorage.getItem(STOCK_KEY_PRESENTACION) || '{}'); } catch (e) {}
+    const key = idProducto + '-' + idPresentacion;
+    mapa[key] = !!disponible;
+    localStorage.setItem(STOCK_KEY_PRESENTACION, JSON.stringify(mapa));
+}
+
+function productoEstaDisponible(prod) {
+    if (!obtenerStockProducto(prod.id, prod.stock)) return false;
+    return prod.presentaciones.some(pres => obtenerStockPresentacion(prod.id, pres.id, true));
+}
 
 function obtenerProductos() {
     const versionGuardada = localStorage.getItem('frutimerca_version');
     const raw = localStorage.getItem('frutimerca_productos');
-
     if (versionGuardada !== String(VERSION_PRODUCTOS)) {
         localStorage.removeItem('frutimerca_productos');
         localStorage.setItem('frutimerca_version', String(VERSION_PRODUCTOS));
     }
-
     if (raw) {
         try {
             const lista = JSON.parse(raw);
-            const validos = Array.isArray(lista)
-                && lista.length > 0
-                && lista.every(p => Array.isArray(p.presentaciones) && p.slug);
-            if (validos) return lista;
+            if (Array.isArray(lista) && lista.length > 0 &&
+                lista.every(p => Array.isArray(p.presentaciones) && p.slug)) return lista;
         } catch (e) {}
     }
-
     localStorage.setItem('frutimerca_productos', JSON.stringify(PRODUCTOS_DEFAULT));
     return PRODUCTOS_DEFAULT;
 }
@@ -465,52 +683,43 @@ function guardarProductos(lista) {
 }
 
 /* ============================================================
-   Renderizar grid de productos (index)
+   RENDERIZAR PRODUCTOS
    ============================================================ */
 function renderizarProductos() {
     const contenedor = document.getElementById('lista-productos');
     if (!contenedor) return;
-
+    verificarResetDiario();
+    renderizarAvisoCerrado();
     const productos = obtenerProductos();
     contenedor.innerHTML = '';
-
     productos.forEach(prod => {
-        const sinStock = prod.stock === false;
+        const disponible = productoEstaDisponible(prod);
         const primera = prod.presentaciones[0];
         const tienePrecio = primera && primera.precio !== null;
-
         let precioHTML = '';
         if (tienePrecio) {
-            const precios = prod.presentaciones
-                .filter(p => p.precio !== null)
-                .map(p => p.precio);
+            const precios = prod.presentaciones.filter(p => p.precio !== null).map(p => p.precio);
             const min = Math.min(...precios);
-            precioHTML = \`
-                <span class="precio-principal">Desde $\${min.toFixed(2)}</span>
-                <span class="precio-secundario">\${prod.presentaciones.length} presentación(es)</span>
-            \`;
+            precioHTML = \`<span class="precio-principal">Desde $\${min.toFixed(2)}</span>
+                <span class="precio-secundario">\${prod.presentaciones.length} presentación(es)</span>\`;
         } else {
-            precioHTML = \`
-                <span class="precio-pendiente">Precio a confirmar</span>
-                <span class="precio-secundario">\${prod.presentaciones.length} calibres disponibles</span>
-            \`;
+            precioHTML = \`<span class="precio-pendiente">Precio a confirmar</span>
+                <span class="precio-secundario">\${prod.presentaciones.length} calibres disponibles</span>\`;
         }
-
-        const boton = sinStock
+        const boton = !disponible
             ? \`<button class="btn-comprar" disabled>❌ Agotado</button>\`
             : \`<button class="btn-comprar btn-agregar"
                        onclick="event.stopPropagation(); irAProducto('\${prod.slug}')">
                    👁️ Ver opciones
                </button>\`;
-
         const card = document.createElement('div');
-        card.className = 'card-producto';
+        card.className = 'card-producto' + (!disponible ? ' agotado' : '');
         card.dataset.categoria = prod.categoria;
         card.dataset.slug = prod.slug;
         card.style.cursor = 'pointer';
         card.addEventListener('click', () => irAProducto(prod.slug));
-
         card.innerHTML = \`
+            \${!disponible ? '<div class="marca-agua-agotado"><span>AGOTADO</span></div>' : ''}
             <span class="card-badge">\${prod.presentaciones.length} presentaciones</span>
             <img src="\${resolverRuta(prod.imagen)}" alt="\${prod.nombre}" loading="lazy"
                  onerror="this.src='https://via.placeholder.com/600x400/0f2b5b/ffffff?text=FrutiMerca'">
@@ -521,87 +730,72 @@ function renderizarProductos() {
                 <div class="botones-compra">\${boton}</div>
             </div>
         \`;
-
         contenedor.appendChild(card);
     });
 }
 
-/* ============================================================
-   Navegación a página de producto
-   ============================================================ */
+function renderizarAvisoCerrado() {
+    const contenedor = document.getElementById('lista-productos');
+    if (!contenedor) return;
+    const previo = document.getElementById('aviso-cerrado');
+    if (previo) previo.remove();
+    if (estaAbiertoTienda()) return;
+    const aviso = document.createElement('div');
+    aviso.id = 'aviso-cerrado';
+    aviso.className = 'aviso-cerrado';
+    aviso.innerHTML = \`
+        <div class="aviso-cerrado-icono">🌙</div>
+        <div class="aviso-cerrado-texto">
+            <strong>Pedidos cerrados por hoy</strong>
+            <p>Nuestro sistema de pedidos en línea abre nuevamente <strong>hoy a las 10:00 PM</strong>.</p>
+            <small>🕐 Pedidos online: 10:00 PM → 1:00 PM · Puesto físico: 4:00 AM → 1:00 PM</small>
+        </div>
+    \`;
+    contenedor.parentElement.insertBefore(aviso, contenedor);
+}
+
 function irAProducto(slug) {
     window.location.href = \`page/producto.html?slug=\${slug}\`;
 }
 
-/* ============================================================
-   Consultar precio (para productos sin precio)
-   ============================================================ */
 function consultarProducto(nombre) {
     const tel = '0993734939';
-    const msg = encodeURIComponent(
-        \`Hola FrutiMerca, quiero consultar el precio de: \${nombre}\`
-    );
+    const msg = encodeURIComponent(\`Hola FrutiMerca, quiero consultar el precio de: \${nombre}\`);
     window.open(\`https://wa.me/593\${tel.slice(1)}?text=\${msg}\`, '_blank');
 }
 `;
 
-            // Mostrar el código
+            const versionInfo = document.getElementById('version-info');
+            if (versionInfo) {
+                versionInfo.style.display = 'block';
+                versionInfo.innerHTML =
+                    '🔢 <strong>Versión:</strong> ' + versionActual + ' → ' + proximaVersion +
+                    '<br>📦 <strong>Stock guardado en el código:</strong> sí (los agotados se conservan al publicar)';
+            }
+
             document.getElementById('codigo-generado').style.display = 'block';
             document.getElementById('textarea-codigo').value = codigo;
-
-            // Scroll hasta el código
-            document.getElementById('codigo-generado').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            document.getElementById('codigo-generado').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // ============================================================
-        // COPIAR CÓDIGO AL PORTAPAPELES
-        // ============================================================
         function copiarCodigo() {
             const textarea = document.getElementById('textarea-codigo');
             textarea.select();
             textarea.setSelectionRange(0, 99999);
-
             try {
                 navigator.clipboard.writeText(textarea.value).then(() => {
-                    const feedback = document.getElementById('copy-feedback');
-                    feedback.style.display = 'block';
-                    setTimeout(() => {
-                        feedback.style.display = 'none';
-                    }, 2000);
+                    const fb = document.getElementById('copy-feedback');
+                    fb.style.display = 'block';
+                    setTimeout(() => { fb.style.display = 'none'; }, 2000);
                 });
             } catch (err) {
-                // Fallback para navegadores viejos
                 document.execCommand('copy');
-                const feedback = document.getElementById('copy-feedback');
-                feedback.style.display = 'block';
-                setTimeout(() => {
-                    feedback.style.display = 'none';
-                }, 2000);
+                const fb = document.getElementById('copy-feedback');
+                fb.style.display = 'block';
+                setTimeout(() => { fb.style.display = 'none'; }, 2000);
             }
         }
 
-        // ============================================================
-        // RESTAURAR PRECIOS ORIGINALES
-        // ============================================================
-        function restaurarPrecios() {
-            if (!confirm('¿Seguro que querés restaurar TODOS los precios a los originales?\n\nSe perderán todos tus cambios.')) {
-                return;
-            }
-
-            localStorage.removeItem(PRECIOS_KEY);
-            localStorage.removeItem(SESSION_KEY);
-
-            alert('✅ Precios restaurados. Volviendo a los valores originales.');
-            renderizarListaAdmin();
-            document.getElementById('codigo-generado').style.display = 'none';
-        }
-
-        // ============================================================
-        // MENÚ HAMBURGUESA
-        // ============================================================
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -611,6 +805,7 @@ function consultarProducto(nombre) {
             overlay.classList.toggle('activo');
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
+
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -620,30 +815,10 @@ function consultarProducto(nombre) {
             overlay.classList.remove('activo');
             document.body.style.overflow = '';
         }
+
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.nav-principal a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 900) cerrarMenu();
-                });
-            });
-        });
     </script>
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>

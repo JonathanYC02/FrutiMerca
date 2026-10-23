@@ -12,9 +12,6 @@
 </head>
 <body>
 
-    <!-- ============================================================
-         PANTALLA DE TRANSICIÓN (debe ir al inicio del body)
-         ============================================================ -->
     <div id="transicion-pantalla" class="transicion-pantalla">
         <div class="transicion-contenido">
             <img src="img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
@@ -27,9 +24,6 @@
         </div>
     </div>
 
-    <!-- ============================================================
-         HEADER STICKY
-         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
             <a href="index.html" class="logo">
@@ -68,9 +62,6 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
-    <!-- ============================================================
-         HERO
-         ============================================================ -->
     <section class="hero">
         <div class="hero-contenido">
             <p class="hero-subtitulo">TU MEJOR ALIADO EN FRUTAS</p>
@@ -86,9 +77,6 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         BENEFICIOS
-         ============================================================ -->
     <section class="beneficios">
         <div class="beneficio">
             <span>🍓</span>
@@ -112,31 +100,23 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         FILTROS
-         ============================================================ -->
     <section class="filtros" id="productos">
         <h2>Nuestros Productos</h2>
         <p class="filtros-subtitulo">
-            Selecciona la presentación que necesitas: baldes de 30 lbs, cajas de 15 lbs o cartones al granel.
+            Elige entre nuestras frutillas de Riobamba (calidad cebadeña) o ambateñas, y las demás frutas de temporada.
         </p>
         <div class="botones-filtro">
             <button class="btn-filtro activo" type="button" data-filtro="todos">Todos</button>
-            <button class="btn-filtro" type="button" data-filtro="frutillas">Frutillas</button>
-            <button class="btn-filtro" type="button" data-filtro="otros">Otras Frutas</button>
+            <button class="btn-filtro" type="button" data-filtro="frutillas-riobamba">🍓 Frutillas Riobamba</button>
+            <button class="btn-filtro" type="button" data-filtro="frutillas-ambatena">🍓 Frutillas Ambateñas</button>
+            <button class="btn-filtro" type="button" data-filtro="otros">🍇 Otras Frutas</button>
         </div>
     </section>
 
-    <!-- ============================================================
-         GRID DE PRODUCTOS (se llena con JS)
-         ============================================================ -->
     <section class="productos">
         <div id="lista-productos" class="grid-productos"></div>
     </section>
 
-    <!-- ============================================================
-         CÓMO COMPRAR
-         ============================================================ -->
     <section class="como-comprar" id="como-comprar">
         <h2>¿Cómo Comprar?</h2>
         <div class="pasos">
@@ -163,9 +143,6 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         NEWSLETTER
-         ============================================================ -->
     <section class="newsletter">
         <div class="newsletter-contenido">
             <h2>Recibe Ofertas y Disponibilidad</h2>
@@ -177,9 +154,6 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         FOOTER
-         ============================================================ -->
     <footer class="footer" id="contacto">
         <div class="footer-grid">
             <div>
@@ -217,20 +191,14 @@
         </div>
     </footer>
 
-    <!-- ============================================================
-         SCRIPTS
-         ============================================================ -->
     <script src="js/productos.js" onerror="console.error('No se pudo cargar js/productos.js');"></script>
     <script src="js/carrito.js" onerror="console.error('No se pudo cargar js/carrito.js');"></script>
     <script src="js/filtros.js" onerror="console.error('No se pudo cargar js/filtros.js');"></script>
-
+    <script src="js/animaciones.js"></script>
     <script>
     (function () {
         'use strict';
 
-        /* ============================================================
-           UTILIDADES
-           ============================================================ */
         function cuandoDOMListo(fn) {
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', fn, { once: true });
@@ -239,9 +207,6 @@
             }
         }
 
-        /* ============================================================
-           PANTALLA DE TRANSICIÓN
-           ============================================================ */
         var pantallaTransicion = document.getElementById('transicion-pantalla');
 
         function ocultarTransicion() {
@@ -255,12 +220,10 @@
         function mostrarTransicion() {
             if (!pantallaTransicion) return;
             pantallaTransicion.style.display = '';
-            // Forzar reflow para que la transición CSS se aplique correctamente
             void pantallaTransicion.offsetWidth;
             pantallaTransicion.classList.remove('oculta');
         }
 
-        // Ocultar al terminar la carga (con un mínimo visible de 0.6 s)
         if (document.readyState === 'complete') {
             setTimeout(ocultarTransicion, 600);
         } else {
@@ -268,15 +231,11 @@
                 setTimeout(ocultarTransicion, 600);
             });
         }
-
-        // Red de seguridad: si 'load' nunca dispara (imagen rota, red lenta, etc.)
         setTimeout(ocultarTransicion, 4000);
 
-        // Mostrar al navegar a otra página interna
         document.addEventListener('click', function (e) {
             var enlace = e.target.closest ? e.target.closest('a') : null;
             if (!enlace) return;
-
             var href = enlace.getAttribute('href') || '';
             if (
                 href === '' ||
@@ -285,46 +244,21 @@
                 /^(mailto:|tel:|whatsapp:)/i.test(href) ||
                 enlace.target === '_blank' ||
                 enlace.hasAttribute('download')
-            ) {
-                return;
-            }
-
+            ) return;
             mostrarTransicion();
         });
 
-        // Al volver con el botón "atrás" del navegador
         window.addEventListener('pageshow', function (event) {
             if (event.persisted) ocultarTransicion();
         });
 
-        /* ============================================================
-           INICIALIZACIÓN DE LA TIENDA
-           ============================================================ */
         cuandoDOMListo(function () {
             if (typeof actualizarContador === 'function') {
                 actualizarContador();
             }
-
-            // 1. Render inmediato (usa precios guardados en caché)
             if (typeof renderizarProductos === 'function') {
                 renderizarProductos();
             }
-
-            // 2. Carga de productos (asíncrona, no bloquea el render)
-            if (typeof inicializarProductos === 'function') {
-                Promise.resolve()
-                    .then(inicializarProductos)
-                    .then(function () {
-                        if (typeof renderizarProductos === 'function') {
-                            renderizarProductos();
-                        }
-                    })
-                    .catch(function (err) {
-                        console.error('Error al inicializar productos:', err);
-                    });
-            }
-
-            // 3. Aviso si la lista sigue vacía (script no cargado o sin datos)
             setTimeout(function () {
                 var cont = document.getElementById('lista-productos');
                 if (cont && cont.children.length === 0) {
@@ -335,25 +269,11 @@
             }, 4000);
         });
 
-        // Precios nuevos desde Google Sheets
-        window.addEventListener('preciosListos', function () {
-            if (
-                typeof renderizarProductos === 'function' &&
-                document.getElementById('lista-productos')
-            ) {
-                renderizarProductos();
-            }
-        });
-
-        /* ============================================================
-           MENÚ HAMBURGUESA
-           ============================================================ */
         window.toggleMenu = function () {
             var nav = document.getElementById('nav-principal');
             var btn = document.getElementById('btn-hamburguesa');
             var overlay = document.getElementById('menu-overlay');
             if (!nav || !btn || !overlay) return;
-
             var abierto = nav.classList.toggle('abierto');
             btn.classList.toggle('activo', abierto);
             overlay.classList.toggle('activo', abierto);
@@ -367,7 +287,6 @@
             var btn = document.getElementById('btn-hamburguesa');
             var overlay = document.getElementById('menu-overlay');
             if (!nav || !btn || !overlay) return;
-
             nav.classList.remove('abierto');
             btn.classList.remove('activo');
             overlay.classList.remove('activo');
@@ -376,7 +295,6 @@
             document.body.style.overflow = '';
         };
 
-        // Cerrar al agrandar la ventana
         var resizeTimer;
         window.addEventListener('resize', function () {
             clearTimeout(resizeTimer);
@@ -385,15 +303,12 @@
             }, 150);
         });
 
-        // Cerrar al pulsar una opción del menú (móvil)
         cuandoDOMListo(function () {
             document.querySelectorAll('.nav-principal a').forEach(function (link) {
                 link.addEventListener('click', function () {
                     if (window.innerWidth <= 900) window.cerrarMenu();
                 });
             });
-
-            // Cerrar con la tecla Escape
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') window.cerrarMenu();
             });

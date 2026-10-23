@@ -3570,3 +3570,230 @@ a { color: inherit; }
         font-size: 0.82rem;
     }
 }
+
+/* ============================================================
+   ESTILOS PREMIUM - VERSIÓN CORREGIDA
+   ============================================================ */
+
+/* 1. Animaciones de entrada (Scroll Reveal) */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delays escalonados para las tarjetas */
+.card-producto:nth-child(1) { transition-delay: 0.05s; }
+.card-producto:nth-child(2) { transition-delay: 0.1s; }
+.card-producto:nth-child(3) { transition-delay: 0.15s; }
+.card-producto:nth-child(4) { transition-delay: 0.2s; }
+
+/* 2. Header CORREGIDO (Sólido, sin glassmorphism) */
+.header {
+    background: linear-gradient(135deg, var(--azul-marino), var(--azul-oscuro)) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 3. Efecto Hover en Tarjetas (Levantarse, SIN rotación 3D) */
+.card-producto {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-producto:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(15, 43, 91, 0.2);
+}
+
+.card-producto img {
+    transition: transform 0.4s ease;
+}
+
+.card-producto:hover img {
+    transform: scale(1.05);
+}
+
+/* 4. Botones con Efecto de Brillo */
+.btn-primario, .btn-comprar, .btn-finalizar {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primario::before, .btn-comprar::before, .btn-finalizar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primario:hover::before, .btn-comprar:hover::before, .btn-finalizar:hover::before {
+    left: 100%;
+}
+
+/* 5. Texto con Gradiente en el Hero */
+.hero h1 {
+    background: linear-gradient(to right, #ffffff, #dbeafe, #bfdbfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+/* 6. Efecto en los Beneficios */
+.beneficio {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-bottom-color 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.beneficio:hover {
+    transform: translateY(-5px);
+    border-bottom-color: var(--vino);
+    box-shadow: 0 15px 30px rgba(15, 43, 91, 0.12);
+}
+
+.beneficio span {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.beneficio:hover span {
+    transform: scale(1.2) rotate(-8deg);
+}
+
+/* ============================================================
+   FIX CRÍTICO: MENÚ HAMBURGUESA EN MÓVIL
+   ============================================================ */
+@media (max-width: 900px) {
+    /* Asegurar que el overlay no tape el menú */
+    .menu-overlay {
+        background: rgba(15, 43, 91, 0.6);
+    }
+
+    /* El menú lateral debe estar por encima de todo */
+    .nav-principal {
+        background: linear-gradient(180deg, var(--azul-marino), var(--azul-oscuro)) !important;
+    }
+
+    /* Forzar que los enlaces del menú móvil se vean bien */
+    .nav-principal a {
+        color: var(--blanco) !important;
+        background: transparent;
+    }
+
+    .nav-principal a.activo {
+        background: var(--vino) !important;
+    }
+}
+
+/* ============================================================
+   STOCK: MARCA DE AGUA "AGOTADO"
+   ============================================================ */
+.card-producto.agotado {
+    position: relative;
+}
+.card-producto.agotado img {
+    filter: grayscale(0.7);
+    opacity: 0.65;
+}
+.card-producto.agotado:hover img {
+    transform: none;
+}
+.marca-agua-agotado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    z-index: 10;
+    pointer-events: none;
+}
+.marca-agua-agotado span {
+    display: inline-block;
+    background: rgba(220, 38, 38, 0.92);
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    padding: 12px 32px;
+    border-radius: 10px;
+    border: 4px solid #ffffff;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.45);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Marca de agua en la página de producto */
+.producto-imagen.agotado { position: relative; }
+.producto-imagen.agotado img { filter: grayscale(0.6); opacity: 0.7; }
+.producto-imagen .marca-agua-agotado span { font-size: 2.4rem; }
+
+/* Presentaciones agotadas */
+.opcion-presentacion.agotada {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.opcion-presentacion.agotada input { cursor: not-allowed; }
+.opcion-presentacion.agotada strong { color: #991b1b; }
+
+/* ============================================================
+   AVISO "PEDIDOS CERRADOS"
+   ============================================================ */
+.aviso-cerrado {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px solid #f59e0b;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 0 auto 30px;
+    max-width: 900px;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
+    animation: fadeInUp 0.5s ease-out;
+}
+.aviso-cerrado-icono {
+    font-size: 3rem;
+    flex-shrink: 0;
+    animation: flotar 3s ease-in-out infinite;
+}
+.aviso-cerrado-texto strong {
+    display: block;
+    color: #78350f;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+}
+.aviso-cerrado-texto p {
+    color: #78350f;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+.aviso-cerrado-texto small {
+    color: #92400e;
+    font-size: 0.82rem;
+    display: block;
+    padding-top: 8px;
+    border-top: 1px dashed #d97706;
+}
+
+/* Aviso en el detalle del producto */
+.aviso-horario-cerrado {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-left: 5px solid #f59e0b;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    color: #78350f;
+    font-size: 0.95rem;
+    animation: fadeInUp 0.4s ease-out;
+}

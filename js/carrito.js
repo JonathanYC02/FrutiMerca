@@ -3,7 +3,6 @@
    ============================================================ */
 
 const CLAVE_CARRITO = 'frutimerca_carrito';
-const UMBRAL_ENVIO = { retiro: 0, central: 3, extendida: 5 };
 
 function obtenerCarrito() {
     try {
@@ -76,9 +75,6 @@ function actualizarContador() {
     contador.textContent = total;
 }
 
-/* ------------------------------------------------------------
-   Guardar la zona de entrega elegida en el carrito (para pago)
-   ------------------------------------------------------------ */
 function guardarZonaEntrega(zona) {
     localStorage.setItem('frutimerca_zona_entrega', zona);
 }
@@ -87,9 +83,6 @@ function obtenerZonaEntrega() {
     return localStorage.getItem('frutimerca_zona_entrega') || 'retiro';
 }
 
-/* ------------------------------------------------------------
-   Toast
-   ------------------------------------------------------------ */
 function mostrarToast(mensaje) {
     let toast = document.getElementById('toast');
     if (!toast) {
@@ -103,9 +96,6 @@ function mostrarToast(mensaje) {
     toast._timer = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
 }
 
-/* ------------------------------------------------------------
-   Init
-   ------------------------------------------------------------ */
 document.addEventListener('DOMContentLoaded', () => {
     actualizarContador();
     if (typeof renderizarProductos === 'function'
