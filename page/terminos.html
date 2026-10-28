@@ -4,15 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos y Condiciones | FrutiMerca</title>
+    <meta name="description" content="Términos, condiciones, políticas de retiro y zonas de entrega de FrutiMerca.">
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        /* Estilos específicos para la página de términos y hacerla más profesional */
+        .terminos-wrapper {
+            background-color: #f8fafc;
+            padding: 40px 20px 60px;
+            min-height: calc(100vh - 200px);
+        }
+        .terminos-contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .terminos-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .terminos-header h1 {
+            color: var(--azul-marino);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .terminos-header p {
+            color: var(--gris-suave);
+            font-size: 0.95rem;
+        }
+        .terminos-card {
+            background: var(--blanco);
+            border-radius: 16px;
+            padding: 30px 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(15, 43, 91, 0.05);
+            border-left: 4px solid var(--vino);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .terminos-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15, 43, 91, 0.1);
+        }
+        .terminos-card h2 {
+            color: var(--azul-marino);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--azul-fondo);
+        }
+        .terminos-card p, 
+        .terminos-card li {
+            color: var(--gris-texto);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        .terminos-card ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .terminos-card li::marker {
+            color: var(--vino);
+        }
+        .terminos-card strong {
+            color: var(--azul-marino);
+        }
+        .datos-banco-terminos {
+            background: var(--azul-fondo);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 3px solid var(--azul-marino);
+        }
+        
+        @media (max-width: 640px) {
+            .terminos-card {
+                padding: 20px;
+                border-radius: 12px;
+            }
+            .terminos-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- ============================================================
+         PANTALLA DE TRANSICIÓN
+         ============================================================ -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
             <a href="../index.html" class="logo">
-                <img src="../img/logo.png" alt="FrutiMerca" onerror="this.style.display='none'">
+                <img src="../img/logo.png" alt="FrutiMerca Logo" onerror="this.style.display='none'">
                 <div class="logo-texto">
                     <strong>FrutiMerca</strong>
                     <small>Frutas Frescas</small>
@@ -33,9 +132,10 @@
             <nav class="nav-principal" id="nav-principal">
                 <ul>
                     <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="../index.html#productos">Productos</a></li>
+                    <li><a href="productos.html">Productos</a></li>
                     <li><a href="conocenos.html">Conócenos</a></li>
                     <li><a href="terminos.html" class="activo">Términos</a></li>
+                    <li><a href="admin.html">⚙️ Admin</a></li>
                 </ul>
             </nav>
         </div>
@@ -43,147 +143,171 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
+    <!-- ============================================================
+         CONTENIDO PRINCIPAL
+         ============================================================ -->
     <main class="terminos-wrapper">
-        <div class="terminos-card">
-            <h1>Términos y Condiciones</h1>
-            <p style="color:var(--gris-suave);">
-                Última actualización: 2026
-            </p>
+        <div class="terminos-contenedor">
+            
+            <div class="terminos-header">
+                <h1>📄 Términos y Condiciones</h1>
+                <p>Última actualización: 2026</p>
+            </div>
 
-            <h2>1. Horarios de Atención y Entrega en Puesto Físico</h2>
-            <ul>
-                <li><strong>Ubicación:</strong> Mercado José Mascote, Puesto #214, Segundo piso, sección de frutas.</li>
-                <li><strong>Horario principal:</strong> Lunes a Domingo de <strong>4:00 AM a 2:00 PM</strong>.</li>
-                <li><strong>Atención de dueños:</strong> 4:00 AM a 12:00 PM (mediodía).</li>
-                <li><strong>Atención de trabajadores:</strong> 12:00 PM a 1:30/2:00 PM (solo retiro de pedidos).</li>
-                <li><strong>Notificación recomendada:</strong> coordinar cualquier novedad del retiro antes de las <strong>12:00 PM</strong>.</li>
-                <li><strong>Cierre de despachos:</strong> máximo hasta las <strong>14:00 PM (2:00 PM)</strong>. Después de esa hora, el personal solo cumple funciones de resguardo e inventario.</li>
-            </ul>
+            <div class="terminos-card">
+                <h2>1. Horarios de Atención y Entrega en Puesto Físico</h2>
+                <ul>
+                    <li><strong>Ubicación:</strong> Mercado José Mascote, Puesto <strong>#243</strong>, Segundo piso, sección de frutas.</li>
+                    <li><strong>Horario principal:</strong> Lunes a Sábado de <strong>4:00 AM a 1:00 PM</strong>.</li>
+                    <li><strong>Atención de dueños:</strong> 4:00 AM a 12:00 PM (mediodía).</li>
+                    <li><strong>Atención de trabajadores:</strong> 12:00 PM a 1:00 PM (solo retiro de pedidos).</li>
+                    <li><strong>Notificación recomendada:</strong> coordinar cualquier novedad del retiro antes de las <strong>12:00 PM</strong>.</li>
+                    <li><strong>Cierre de despachos:</strong> máximo hasta las <strong>13:00 PM (1:00 PM)</strong>. Después de esa hora, el personal solo cumple funciones de resguardo e inventario.</li>
+                </ul>
+            </div>
 
-            <h2>2. Responsabilidad sobre Productos Perecederos</h2>
-            <p>Por la naturaleza altamente perecedera de la fruta fresca, el producto no puede conservarse de un día para otro sin perder su calidad comercial.</p>
-            <ul>
-                <li><strong>Inasistencia sin notificación:</strong> si el cliente no retira ni notifica antes de las 12:00 PM, asume la pérdida total del valor pagado. No se realizan reembolsos por negligencia en el retiro.</li>
-                <li><strong>Casos fortuitos con notificación previa:</strong> si el cliente comunica antes de las 12:00 PM que no podrá retirar antes de las 14:00, se podrá coordinar envío a domicilio expreso con tarifa fija de <strong>$5.00</strong> por flete y despacho urgente.</li>
-            </ul>
+            <div class="terminos-card">
+                <h2>2. Responsabilidad sobre Productos Perecederos</h2>
+                <p>Por la naturaleza altamente perecedera de la fruta fresca, el producto no puede conservarse de un día para otro sin perder su calidad comercial.</p>
+                <ul>
+                    <li><strong>Inasistencia sin notificación:</strong> si el cliente no retira ni notifica antes de las 12:00 PM, asume la pérdida total del valor pagado. No se realizan reembolsos por negligencia en el retiro.</li>
+                    <li><strong>Casos fortuitos con notificación previa:</strong> si el cliente comunica antes de las 12:00 PM que no podrá retirar antes de la 1:00 PM, se podrá coordinar envío a domicilio expreso con tarifa fija de <strong>$5.00</strong> por flete y despacho urgente.</li>
+                </ul>
+            </div>
 
-            <h2>3. Monto Mínimo de Pedido</h2>
-            <ul>
-                <li>El pedido mínimo es de <strong>1 unidad</strong> (1 balde de 30 lbs, 1 caja de 15 lbs o 1 cartón al granel).</li>
-                <li>Todos los pedidos generados por la web quedan sujetos a la modalidad de <strong>retiro en puesto físico (Mercado José Mascote #214)</strong>, salvo que el cliente coordine explícitamente envío a domicilio.</li>
-            </ul>
+            <div class="terminos-card">
+                <h2>3. Monto Mínimo de Pedido</h2>
+                <ul>
+                    <li>El pedido mínimo es de <strong>1 unidad</strong> (1 balde de 30 lbs, 1 caja de 15 lbs o 1 cartón al granel).</li>
+                    <li>Todos los pedidos generados por la web quedan sujetos a la modalidad de <strong>retiro en puesto físico (Mercado José Mascote #243)</strong>, salvo que el cliente coordine explícitamente envío a domicilio.</li>
+                </ul>
+            </div>
 
-            <h2>4. Políticas de Cancelación y Reembolsos</h2>
-            <p>Si el cliente cancela un pedido pagado y confirmado antes de la preparación o despacho:</p>
-            <ul>
-                <li><strong>Saldo a favor (recomendado):</strong> el cliente mantiene el 100% de su dinero como saldo para una compra futura.</li>
-                <li><strong>Devolución de dinero:</strong> se procesa mediante transferencia bancaria en un lapso de 24 a 48 horas laborables.</li>
-            </ul>
+            <div class="terminos-card">
+                <h2>4. Políticas de Cancelación y Reembolsos</h2>
+                <p>Si el cliente cancela un pedido pagado y confirmado antes de la preparación o despacho:</p>
+                <ul>
+                    <li><strong>Saldo a favor (recomendado):</strong> el cliente mantiene el 100% de su dinero como saldo para una compra futura.</li>
+                    <li><strong>Devolución de dinero:</strong> se procesa mediante transferencia bancaria en un lapso de 24 a 48 horas laborables.</li>
+                </ul>
+            </div>
 
-            <h2>5. Disponibilidad de Stock en Tiempo Real</h2>
-            <p>La plataforma web refleja la disponibilidad de productos. Si una categoría o calibre se agota, el sistema deshabilita la opción de compra mostrando el estado <strong>"Agotado"</strong>.</p>
+            <div class="terminos-card">
+                <h2>5. Disponibilidad de Stock en Tiempo Real</h2>
+                <p>La plataforma web refleja la disponibilidad de productos. Si una categoría o calibre se agota, el sistema deshabilita la opción de compra mostrando el estado <strong>"Agotado"</strong>.</p>
+            </div>
 
-            <h2>6. Verificación de Vouchers de Pago</h2>
-            <p>Ninguna orden se considera reservada ni lista para retiro sin la previa carga y verificación exitosa del comprobante de transferencia bancaria (voucher) a la cuenta autorizada del Banco Pichincha.</p>
+            <div class="terminos-card">
+                <h2>6. Verificación de Vouchers de Pago</h2>
+                <p>Ninguna orden se considera reservada ni lista para retiro sin la previa carga y verificación exitosa del comprobante de transferencia bancaria (voucher) a la cuenta autorizada del Banco Pichincha.</p>
+            </div>
 
-            <h2>7. Métodos de Pago Aceptados</h2>
-            <p>Por el momento no se procesan tarjetas de crédito ni débito directamente en el portal. Las compras se confirman mediante <strong>Transferencia Bancaria Directa</strong>:</p>
-            <ul>
-                <li><strong>Titular:</strong> JONATHAN YUMISACA</li>
-                <li><strong>Cédula:</strong> 0953749629</li>
-                <li><strong>Institución:</strong> Banco Pichincha</li>
-                <li><strong>Tipo de Cuenta:</strong> Cuenta de Ahorros</li>
-                <li><strong>Número de Cuenta:</strong> 2206795019</li>
-            </ul>
-            <p>El cliente debe cargar la captura del voucher dentro de la web para verificar y liberar la orden.</p>
+            <div class="terminos-card">
+                <h2>7. Métodos de Pago Aceptados</h2>
+                <p>Por el momento no se procesan tarjetas de crédito ni débito directamente en el portal. Las compras se confirman mediante <strong>Transferencia Bancaria Directa</strong>:</p>
+                <div class="datos-banco-terminos">
+                    <ul>
+                        <li><strong>Titular:</strong> JONATHAN YUMISACA</li>
+                        <li><strong>Cédula:</strong> 0953749629</li>
+                        <li><strong>Institución:</strong> Banco Pichincha</li>
+                        <li><strong>Tipo de Cuenta:</strong> Cuenta de Ahorros</li>
+                        <li><strong>Número de Cuenta:</strong> 2206795019</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 15px;">El cliente debe cargar la captura del voucher dentro de la web para verificar y liberar la orden.</p>
+            </div>
 
-            <h2>8. Zonas de Entrega y Tarifas</h2>
-            <ul>
-                <li><strong>Retiro en Puesto Físico ($0.00):</strong> Mercado José Mascote, Puesto #214, Segundo piso, sección de frutas.</li>
-                <li><strong>Envío Zona Central ($3.00):</strong> entregas dentro del radio céntrico entre el Mercado de las Flores y el Mercado José Mascote.</li>
-                <li><strong>Entrega en Durán ($1.00):</strong> en nuestra ruta diaria de regreso a casa. Sujeto a confirmación previa por WhatsApp.</li>
-            </ul>
+            <div class="terminos-card">
+                <h2>8. Zonas de Entrega y Tarifas</h2>
+                <ul>
+                    <li><strong>Retiro en Puesto Físico ($0.00):</strong> Mercado José Mascote, Puesto <strong>#243</strong>, Segundo piso, sección de frutas.</li>
+                    <li><strong>Envío Zona Central ($3.00):</strong> entregas dentro del radio céntrico entre el Mercado de las Flores y el Mercado José Mascote.</li>
+                    <li><strong>Entrega en Durán ($1.00):</strong> en nuestra ruta diaria de regreso a casa. Sujeto a confirmación previa por WhatsApp.</li>
+                </ul>
+            </div>
 
-            <h2>9. Inspección del Producto</h2>
-            <p>Es responsabilidad del cliente o de la persona autorizada (repartidor/tercero) inspeccionar el estado del producto al momento exacto de la entrega en el puesto. Una vez retirada la mercadería, no se aceptan reclamos por daños derivados del mal manejo o transporte externo.</p>
+            <div class="terminos-card">
+                <h2>9. Inspección del Producto</h2>
+                <p>Es responsabilidad del cliente o de la persona autorizada (repartidor/tercero) inspeccionar el estado del producto al momento exacto de la entrega en el puesto. Una vez retirada la mercadería, no se aceptan reclamos por daños derivados del mal manejo o transporte externo.</p>
+            </div>
 
-            <h2>10. Contacto</h2>
-            <ul>
-                <li><strong>Responsable:</strong> Familia Yumisaca</li>
-                <li><strong>Teléfono:</strong> 099-373-4939</li>
-                <li><strong>Correo:</strong> yumisacalorenzo@gmail.com</li>
-                <li><strong>Ubicación:</strong> Mercado José Mascote, Puesto #214, Segundo piso — Guayaquil, Ecuador</li>
-            </ul>
+            <div class="terminos-card">
+                <h2>10. Contacto</h2>
+                <ul>
+                    <li><strong>Responsable:</strong> Familia Yumisaca</li>
+                    <li><strong>Teléfono:</strong> <a href="tel:0993734939" style="color:var(--vino); font-weight:bold;">099-373-4939</a></li>
+                    <li><strong>Correo:</strong> <a href="mailto:yumisacalorenzo@gmail.com" style="color:var(--vino); font-weight:bold;">yumisacalorenzo@gmail.com</a></li>
+                    <li><strong>Ubicación:</strong> Mercado José Mascote, Puesto <strong>#243</strong>, Segundo piso — Guayaquil, Ecuador</li>
+                </ul>
+            </div>
+
         </div>
     </main>
 
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
     <footer class="footer">
         <div class="footer-copy">
             <p>© 2026 FrutiMerca — Tu mejor aliado en frutas</p>
         </div>
     </footer>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
+    
     <script>
-    // ============================================================
-    // PANTALLA DE TRANSICIÓN
-    // ============================================================
-    (function() {
-        // 1. Cuando la página termine de cargar, ocultar la pantalla
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    // Eliminar del DOM después de la transición
-                    setTimeout(function() {
-                        pantalla.style.display = 'none';
-                    }, 500);
-                }
-            }, 1200); // 0.3 segundos mínimo visible
-        });
-
-        // 2. Cuando el usuario haga clic en un enlace, mostrar la pantalla
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    const href = link.getAttribute('href');
-
-                    // No mostrar para enlaces internos (#) ni externos (_blank)
-                    if (!href ||
-                        href.startsWith('#') ||
-                        href.startsWith('http') ||
-                        href.startsWith('mailto:') ||
-                        href.startsWith('tel:') ||
-                        link.target === '_blank' ||
-                        link.getAttribute('target') === '_blank') {
-                        return;
-                    }
-
-                    // Mostrar pantalla de transición
+        // ============================================================
+        // PANTALLA DE TRANSICIÓN
+        // ============================================================
+        (function() {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
                     const pantalla = document.getElementById('transicion-pantalla');
                     if (pantalla) {
-                        pantalla.classList.remove('oculta');
-                        pantalla.style.display = 'flex';
+                        pantalla.classList.add('oculta');
+                        setTimeout(function() {
+                            pantalla.style.display = 'none';
+                        }, 500);
                     }
+                }, 800); // Reducido a 0.8s para que sea más ágil
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function(e) {
+                        const href = link.getAttribute('href');
+                        if (!href || href.startsWith('#') || href.startsWith('http') ||
+                            href.startsWith('mailto:') || href.startsWith('tel:') ||
+                            link.target === '_blank') {
+                            return;
+                        }
+                        const pantalla = document.getElementById('transicion-pantalla');
+                        if (pantalla) {
+                            pantalla.classList.remove('oculta');
+                            pantalla.style.display = 'flex';
+                        }
+                    });
                 });
             });
-        });
 
-        // 3. Cuando el usuario use el botón "atrás" del navegador,
-        //    ocultar la pantalla si quedó visible
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                const pantalla = document.getElementById('transicion-pantalla');
-                if (pantalla) {
-                    pantalla.classList.add('oculta');
-                    pantalla.style.display = 'none';
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    const pantalla = document.getElementById('transicion-pantalla');
+                    if (pantalla) {
+                        pantalla.classList.add('oculta');
+                        pantalla.style.display = 'none';
+                    }
                 }
-            }
-        });
-    })();
-</script>
+            });
+        })();
 
-    <script src="../js/carrito.js"></script>
-    <script>
+        // ============================================================
+        // MENÚ HAMBURGUESA
+        // ============================================================
         function toggleMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -193,6 +317,7 @@
             overlay.classList.toggle('activo');
             document.body.style.overflow = nav.classList.contains('abierto') ? 'hidden' : '';
         }
+        
         function cerrarMenu() {
             const nav = document.getElementById('nav-principal');
             const btn = document.getElementById('btn-hamburguesa');
@@ -202,9 +327,11 @@
             overlay.classList.remove('activo');
             document.body.style.overflow = '';
         }
+        
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
+        
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.nav-principal a').forEach(link => {
                 link.addEventListener('click', () => {
@@ -214,18 +341,4 @@
         });
     </script>
 </body>
-<!-- ============================================================
-     PANTALLA DE TRANSICIÓN
-     ============================================================ -->
-<div id="transicion-pantalla" class="transicion-pantalla">
-    <div class="transicion-contenido">
-        <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
-        <div class="transicion-nombre">FrutiMerca</div>
-        <div class="transicion-cargando">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
 </html>

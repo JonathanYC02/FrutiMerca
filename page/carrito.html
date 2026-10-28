@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🛒 Tus Pedidos | FrutiMerca</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/responsive.css">
 </head>
@@ -52,8 +53,7 @@
             <nav class="nav-principal" id="nav-principal">
                 <ul>
                     <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="../index.html#productos">Productos</a></li>
-                    <li><a href="../index.html#como-comprar">Cómo Comprar</a></li>
+                    <li><a href="productos.html">Productos</a></li>
                     <li><a href="conocenos.html">Conócenos</a></li>
                     <li><a href="terminos.html">Términos</a></li>
                 </ul>
@@ -107,7 +107,7 @@
                     <input type="radio" name="zona-envio" value="retiro" data-precio="0" checked>
                     <div class="opcion-envio-info">
                         <strong>🏪 Retiro en Puesto Físico</strong>
-                        <span>Mercado José Mascote #214</span>
+                        <span>Mercado José Mascote #243</span>
                     </div>
                     <span class="opcion-envio-precio">$0.00</span>
                 </label>
@@ -148,7 +148,7 @@
             </div>
 
             <!-- CHECKBOX DE TÉRMINOS -->
-            <label class="acepto-terminos">
+            <label class="acepto-terminos" id="label-terminos">
                 <input type="checkbox" id="acepto-terminos">
                 <span>
                     He leído y acepto los
@@ -164,11 +164,11 @@
                 Confirmar Pedido (Transferencia)
             </button>
 
-            <a href="../index.html" class="btn-seguir-comprando">
+            <a href="productos.html" class="btn-seguir-comprando">
                 ← Seguir comprando
             </a>
 
-            <div class="resumen-nota">
+            <div class="resumen-nota" id="resumen-nota">
                 🏦 Pago por <strong>transferencia bancaria</strong><br>
                 📸 Deberás subir el voucher en el siguiente paso
             </div>
@@ -204,7 +204,7 @@
                             pantalla.style.display = 'none';
                         }, 500);
                     }
-                }, 1200);
+                }, 800);
             });
 
             document.addEventListener('DOMContentLoaded', function() {
@@ -244,8 +244,6 @@
     <script>
         /* ============================================================
            RENDERIZAR CARRITO
-           Dibuja la lista de productos en el contenedor.
-           Si está vacío, muestra un mensaje bonito.
            ============================================================ */
         function renderizarCarrito() {
             const contenedor = document.getElementById('items-carrito-container');
@@ -263,7 +261,7 @@
                         <span class="emoji">🛒</span>
                         <h2>Tu carrito está vacío</h2>
                         <p>Agrega algunas frutas y vuelve por aquí 🍓</p>
-                        <a href="../index.html" class="btn btn-primario"
+                        <a href="productos.html" class="btn btn-primario"
                            style="background:var(--azul-marino); color:white; text-decoration:none;">
                             Ver productos
                         </a>
@@ -308,8 +306,6 @@
 
         /* ============================================================
            ACTUALIZAR TOTALES
-           Calcula el subtotal, envío y total. Guarda la zona de
-           envío en localStorage para usarla en pago.html.
            ============================================================ */
         function actualizarTotales() {
             const carrito = obtenerCarrito();
@@ -326,13 +322,11 @@
                 costoEnvio === 0 ? 'GRATIS' : '$' + costoEnvio.toFixed(2);
             document.getElementById('total-carrito').textContent = '$' + total.toFixed(2);
 
-            // Guardar zona para pago.html
             guardarZonaEntrega(zona);
         }
 
         /* ============================================================
            CONFIGURAR EVENTOS DEL CARRITO
-           Se llama al cargar Y al volver con el botón "atrás".
            ============================================================ */
         function configurarEventosCarrito() {
             const checkTerminos = document.getElementById('acepto-terminos');
@@ -340,7 +334,41 @@
 
             if (!checkTerminos || !btn) return;
 
-            // 🔧 Función para actualizar el estado del botón
+            // 🛑 BLOQUEO FUERA DE HORARIO
+            const abierto = (typeof estaAbiertoTienda === 'function') ? estaAbiertoTienda() : true;
+            
+            if (!abierto) {
+                // Deshabilitar el botón de pagar
+                btn.disabled = true;
+                btn.innerHTML = '🌙 Pedidos Cerrados (Abre a las 10 PM)';
+                btn.style.background = '#94a3b8';
+                
+                // Mostrar aviso en el resumen
+                const resumenNota = document.getElementById('resumen-nota');
+                if (resumenNota) {
+                    resumenNota.innerHTML = `
+                        <div style="background:#fee2e2; color:#991b1b; padding:15px; border-radius:8px; border:1px solid #fca5a5; font-weight:bold; margin-bottom:15px; text-align:left;">
+                            ⚠️ El sistema de pedidos está cerrado.<br>
+                            <span style="font-weight:normal; font-size:0.9rem;">Vuelve a partir de las 10:00 PM para finalizar tu compra.</span>
+                        </div>
+                        🏦 Pago por <strong>transferencia bancaria</strong><br>
+                        📸 Deberás subir el voucher en el siguiente paso
+                    `;
+                }
+
+                // Bloquear el checkbox
+                checkTerminos.disabled = true;
+                checkTerminos.checked = false;
+                const labelTerminos = document.getElementById('label-terminos');
+                if (labelTerminos) {
+                    labelTerminos.style.opacity = '0.5';
+                    labelTerminos.style.cursor = 'not-allowed';
+                }
+                
+                return; // Salir para que no se habiliten más cosas
+            }
+
+            // 🔧 Función para actualizar el estado del botón (si está abierto)
             function actualizarBotonConfirmar() {
                 btn.disabled = !checkTerminos.checked;
             }
@@ -348,7 +376,7 @@
             // Escuchar cambios en el checkbox
             checkTerminos.addEventListener('change', actualizarBotonConfirmar);
 
-            // Verificar estado INICIAL (importante cuando se restaura del bfcache)
+            // Verificar estado INICIAL
             actualizarBotonConfirmar();
 
             // Escuchar cambios de zona de envío → recalcular
@@ -373,25 +401,19 @@
         });
 
         /* ============================================================
-           🔧 SOLUCIÓN PARA EL BOTÓN "ATRÁS" (bfcache)
-           ------------------------------------------------------------
-           Cuando el usuario vuelve con el botón "atrás" del navegador,
-           la página NO se recarga desde cero: se restaura "congelada"
-           desde el bfcache. En ese caso, DOMContentLoaded NO se dispara.
-
-           El evento 'pageshow' SÍ se dispara siempre, tanto si la página
-           se carga normal como si se restaura desde bfcache.
+           SOLUCIÓN PARA EL BOTÓN "ATRÁS" (bfcache)
            ============================================================ */
         window.addEventListener('pageshow', function(event) {
-            // Re-verificar el estado del checkbox y habilitar el botón si corresponde
             const checkTerminos = document.getElementById('acepto-terminos');
             const btn = document.getElementById('btn-confirmar');
 
             if (checkTerminos && btn) {
-                btn.disabled = !checkTerminos.checked;
+                const abierto = (typeof estaAbiertoTienda === 'function') ? estaAbiertoTienda() : true;
+                if (abierto) {
+                    btn.disabled = !checkTerminos.checked;
+                }
             }
 
-            // Re-calcular totales por si algo cambió
             if (typeof actualizarTotales === 'function') {
                 actualizarTotales();
             }
@@ -401,6 +423,12 @@
            IR A PAGAR
            ============================================================ */
         function irAPagar() {
+            // Doble validación de seguridad
+            if (typeof estaAbiertoTienda === 'function' && !estaAbiertoTienda()) {
+                alert('🌙 Los pedidos en línea están cerrados.\nAbrimos hoy a las 10:00 PM.');
+                return;
+            }
+
             const carrito = obtenerCarrito();
             if (carrito.length === 0) {
                 alert('Tu carrito está vacío 🍓');

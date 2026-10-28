@@ -16,6 +16,12 @@ function guardarCarrito(carrito) {
 }
 
 function agregarAlCarrito(idProducto) {
+    // 🛑 VERIFICAR HORARIO
+    if (typeof estaAbiertoTienda === 'function' && !estaAbiertoTienda()) {
+        alert('🌙 Los pedidos en línea están cerrados.\n\nAbrimos nuevamente hoy a las 10:00 PM.');
+        return;
+    }
+
     const productos = obtenerProductos();
     const prod = productos.find(p => p.id === idProducto);
     if (!prod) return;
@@ -23,6 +29,12 @@ function agregarAlCarrito(idProducto) {
     const pres = prod.presentaciones[0];
     if (!pres || pres.precio === null) {
         consultarProducto(prod.nombre);
+        return;
+    }
+
+    // 🛑 VERIFICAR STOCK DE LA PRESENTACIÓN
+    if (typeof obtenerStockPresentacion === 'function' && !obtenerStockPresentacion(prod.id, pres.id, true)) {
+        alert('Este producto está agotado por el momento.');
         return;
     }
 

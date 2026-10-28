@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | FrutiMerca</title>
+    <meta name="description" content="Catálogo de frutas frescas de FrutiMerca. Frutillas de Riobamba y Ambateñas, mora, granadilla, claudia, durazno y aguacate. Pedidos con envío en Guayaquil y Durán.">
+    <!-- ✅ Rutas con ../ para salir de la carpeta page/ -->
+    <link rel="icon" href="../img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <!-- PANTALLA DE TRANSICIÓN -->
+    <div id="transicion-pantalla" class="transicion-pantalla">
+        <div class="transicion-contenido">
+            <img src="../img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
+            <div class="transicion-nombre">FrutiMerca</div>
+            <div class="transicion-cargando">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-contenedor">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo.png" alt="FrutiMerca Logo" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <strong>FrutiMerca</strong>
+                    <small>Frutas Frescas</small>
+                </div>
+            </a>
+
+            <a href="carrito.html" class="btn-carrito">
+                🛒 <span id="contador-carrito">0</span>
+                <span class="btn-carrito-texto">Tus pedidos</span>
+            </a>
+
+            <button class="btn-hamburguesa" id="btn-hamburguesa" type="button" onclick="toggleMenu()" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="nav-principal" id="nav-principal">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="productos.html" class="activo">Productos</a></li>
+                    <li><a href="conocenos.html">Conócenos</a></li>
+                    <li><a href="terminos.html">Términos</a></li>
+                    <li><a href="admin.html">⚙️ Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
+
+    <!-- HERO CATÁLOGO -->
+    <section class="hero-catalogo">
+        <div class="hero-catalogo-contenido">
+            <a href="../index.html" class="volver-inicio">← Volver al inicio</a>
+            <h1>Nuestro Catálogo</h1>
+            <p>
+                Elige entre nuestras frutillas de Riobamba (calidad cebadeña) o ambateñas,
+                y las demás frutas de temporada.
+            </p>
+        </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="filtros" id="productos">
+        <div class="botones-filtro">
+            <button class="btn-filtro activo" type="button" data-filtro="todos">Todos</button>
+            <button class="btn-filtro" type="button" data-filtro="frutillas-riobamba">🍓 Frutillas Riobamba</button>
+            <button class="btn-filtro" type="button" data-filtro="frutillas-ambatena">🍓 Frutillas Ambateñas</button>
+            <button class="btn-filtro" type="button" data-filtro="otros">🍇 Otras Frutas</button>
+        </div>
+    </section>
+
+    <!-- GRID DE PRODUCTOS -->
+    <section class="productos">
+        <div id="lista-productos" class="grid-productos"></div>
+    </section>
+
+    <!-- CTA AYUDA -->
+    <section class="ayuda-catalogo">
+        <div class="ayuda-contenedor">
+            <h2>¿Necesitas ayuda para elegir?</h2>
+            <p>Escríbenos por WhatsApp y te asesoramos personalmente.</p>
+            <a href="https://wa.me/593993734939?text=Hola%20FrutiMerca,%20necesito%20ayuda%20con%20mi%20pedido"
+               target="_blank"
+               class="btn btn-primario">
+                💬 Escribir por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h3>🍓 FrutiMerca</h3>
+                <p>
+                    Frutas frescas del Mercado José Mascote directo a tu negocio
+                    o domicilio en Guayaquil y Durán.
+                </p>
+                <p class="footer-slogan">"Tu mejor aliado en frutas"</p>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="conocenos.html">Conócenos</a></li>
+                    <li><a href="carrito.html">Tus Pedidos</a></li>
+                    <li><a href="terminos.html">Términos y Condiciones</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <ul>
+                    <li>👤 Familia Yumisaca</li>
+                    <li>📞 <a href="tel:0993734939">099-373-4939</a></li>
+                    <li>📧 <a href="mailto:yumisacalorenzo@gmail.com">yumisacalorenzo@gmail.com</a></li>
+                    <li>📍 Mercado José Mascote · Puesto #243</li>
+                    <li>🕐 Lunes a Sábado · 4:00 AM a 1:00 PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p>© 2026 FrutiMerca — Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- ✅ SCRIPTS CON RUTAS CORREGIDAS (../) -->
+    <script src="../js/productos.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script src="../js/filtros.js"></script>
+    <script src="../js/animaciones.js"></script>
+    <script>
+    (function () {
+        'use strict';
+        function cuandoDOMListo(fn) {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fn, { once: true });
+            } else { fn(); }
+        }
+        var pantallaTransicion = document.getElementById('transicion-pantalla');
+        function ocultarTransicion() {
+            if (!pantallaTransicion || pantallaTransicion.classList.contains('oculta')) return;
+            pantallaTransicion.classList.add('oculta');
+            setTimeout(function () { pantallaTransicion.style.display = 'none'; }, 500);
+        }
+        function mostrarTransicion() {
+            if (!pantallaTransicion) return;
+            pantallaTransicion.style.display = '';
+            void pantallaTransicion.offsetWidth;
+            pantallaTransicion.classList.remove('oculta');
+        }
+        if (document.readyState === 'complete') {
+            setTimeout(ocultarTransicion, 600);
+        } else {
+            window.addEventListener('load', function () { setTimeout(ocultarTransicion, 600); });
+        }
+        setTimeout(ocultarTransicion, 4000);
+        document.addEventListener('click', function (e) {
+            var enlace = e.target.closest ? e.target.closest('a') : null;
+            if (!enlace) return;
+            var href = enlace.getAttribute('href') || '';
+            if (href === '' || href.charAt(0) === '#' || /^(https?:)?\/\//i.test(href) || /^(mailto:|tel:|whatsapp:)/i.test(href) || enlace.target === '_blank' || enlace.hasAttribute('download')) return;
+            mostrarTransicion();
+        });
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) ocultarTransicion();
+        });
+        cuandoDOMListo(function () {
+            if (typeof actualizarContador === 'function') actualizarContador();
+            if (typeof renderizarProductos === 'function') renderizarProductos();
+            setTimeout(function () {
+                var cont = document.getElementById('lista-productos');
+                if (cont && cont.children.length === 0) {
+                    cont.innerHTML = '<p class="productos-vacio">No se pudieron cargar los productos. Revisa tu conexión y recarga la página.</p>';
+                }
+            }, 4000);
+        });
+        window.toggleMenu = function () {
+            var nav = document.getElementById('nav-principal');
+            var btn = document.getElementById('btn-hamburguesa');
+            var overlay = document.getElementById('menu-overlay');
+            if (!nav || !btn || !overlay) return;
+            var abierto = nav.classList.toggle('abierto');
+            btn.classList.toggle('activo', abierto);
+            overlay.classList.toggle('activo', abierto);
+            btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+            btn.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+            document.body.style.overflow = abierto ? 'hidden' : '';
+        };
+        window.cerrarMenu = function () {
+            var nav = document.getElementById('nav-principal');
+            var btn = document.getElementById('btn-hamburguesa');
+            var overlay = document.getElementById('menu-overlay');
+            if (!nav || !btn || !overlay) return;
+            nav.classList.remove('abierto');
+            btn.classList.remove('activo');
+            overlay.classList.remove('activo');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Abrir menú');
+            document.body.style.overflow = '';
+        };
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                if (window.innerWidth > 900) window.cerrarMenu();
+            }, 150);
+        });
+        cuandoDOMListo(function () {
+            document.querySelectorAll('.nav-principal a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (window.innerWidth <= 900) window.cerrarMenu();
+                });
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') window.cerrarMenu();
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

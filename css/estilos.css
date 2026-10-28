@@ -3797,3 +3797,508 @@ a { color: inherit; }
     font-size: 0.95rem;
     animation: fadeInUp 0.4s ease-out;
 }
+/* ============================================================
+   INDEX INFORMATIVO — LANDING PAGE
+   ============================================================ */
+
+/* ----- SECCIONES GENÉRICAS ----- */
+.info-seccion {
+    padding: 70px 30px;
+}
+.info-contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.info-seccion:nth-child(even) {
+    background: var(--blanco);
+}
+.info-seccion:nth-child(odd) {
+    background: var(--azul-fondo);
+}
+
+/* ----- HERO CATÁLOGO (productos.html) ----- */
+.hero-catalogo {
+    background: linear-gradient(135deg, var(--azul-marino), var(--vino));
+    color: var(--blanco);
+    text-align: center;
+    padding: 60px 30px 50px;
+    position: relative;
+    overflow: hidden;
+}
+.hero-catalogo::before {
+    content: "🍓";
+    position: absolute;
+    font-size: 250px;
+    opacity: 0.05;
+    top: -40px;
+    right: -40px;
+    transform: rotate(-15deg);
+}
+.hero-catalogo-contenido {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+}
+.hero-catalogo .volver-inicio {
+    display: inline-block;
+    color: #fbcfe8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    transition: color 0.3s;
+}
+.hero-catalogo .volver-inicio:hover {
+    color: var(--blanco);
+}
+.hero-catalogo h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--blanco);
+}
+.hero-catalogo p {
+    font-size: 1.05rem;
+    color: #e0e7ff;
+    line-height: 1.6;
+}
+
+/* ----- SOBRE NOSOTROS ----- */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+.info-texto h2 {
+    color: var(--azul-marino);
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+.info-texto p {
+    color: var(--gris-texto);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+.info-texto strong {
+    color: var(--azul-marino);
+}
+.frase-destacada {
+    margin-top: 25px;
+    padding: 18px 22px;
+    background: var(--vino-suave);
+    border-left: 4px solid var(--vino);
+    border-radius: 8px;
+    font-style: italic;
+    color: var(--vino);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+.btn-link-info {
+    display: inline-block;
+    color: var(--vino);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-top: 15px;
+    transition: color 0.3s;
+}
+.btn-link-info:hover {
+    color: var(--azul-marino);
+}
+
+/* ----- QUÉ VENDEMOS ----- */
+.grid-categorias {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.categoria-card {
+    background: var(--blanco);
+    border-radius: 18px;
+    padding: 35px 30px;
+    box-shadow: 0 8px 25px rgba(15, 43, 91, 0.08);
+    border-top: 5px solid var(--vino);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.categoria-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(15, 43, 91, 0.15);
+}
+.categoria-emoji {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+.categoria-card h3 {
+    color: var(--azul-marino);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+.categoria-desc {
+    color: var(--gris-texto);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+.categoria-lista {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+.categoria-lista li {
+    padding: 8px 0 8px 25px;
+    position: relative;
+    color: var(--gris-texto);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-bottom: 1px dashed var(--azul-suave);
+}
+.categoria-lista li:last-child {
+    border-bottom: none;
+}
+.categoria-lista li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--vino);
+    font-weight: 900;
+}
+.categoria-lista strong {
+    color: var(--azul-marino);
+}
+.categoria-extra {
+    color: var(--gris-suave);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 10px;
+}
+.cta-catalogo {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* ----- NUESTRA CALIDAD ----- */
+.calidad-detalle {
+    margin-top: 50px;
+    padding: 35px 30px;
+    background: var(--blanco);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(15, 43, 91, 0.08);
+}
+.calidad-detalle h3 {
+    color: var(--azul-marino);
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.porque-lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.porque-item {
+    display: flex;
+    gap: 15px;
+    padding: 18px;
+    background: var(--azul-fondo);
+    border-radius: 12px;
+    transition: transform 0.3s;
+}
+.porque-item:hover {
+    transform: translateX(5px);
+}
+.porque-check {
+    min-width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: var(--vino);
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+.porque-info h4 {
+    color: var(--azul-marino);
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+.porque-info p {
+    color: var(--gris-suave);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+/* ----- CÓMO COMPRAR ----- */
+.como-comprar {
+    background: linear-gradient(135deg, var(--azul-marino), var(--vino));
+    color: var(--blanco);
+    padding: 70px 30px;
+    text-align: center;
+}
+.como-comprar h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--blanco);
+}
+.como-comprar .pasos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.como-comprar .paso {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 25px 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    transition: all 0.3s;
+}
+.como-comprar .paso:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--blanco);
+    transform: translateY(-5px);
+}
+.como-comprar .paso-num {
+    display: inline-flex;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--blanco);
+    color: var(--vino);
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+.como-comprar .paso h3 {
+    color: var(--blanco);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+.como-comprar .paso p {
+    color: #e0e7ff;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.como-comprar-cta {
+    margin-top: 40px;
+}
+
+/* ----- HORARIOS Y UBICACIÓN ----- */
+.horarios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.horario-card, .ubicacion-card {
+    background: var(--blanco);
+    border-radius: 18px;
+    padding: 35px 30px;
+    box-shadow: 0 8px 25px rgba(15, 43, 91, 0.08);
+}
+.horario-card h2, .ubicacion-card h2 {
+    color: var(--azul-marino);
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--azul-fondo);
+}
+.horario-bloque {
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: var(--azul-fondo);
+    border-left: 4px solid var(--vino);
+    border-radius: 10px;
+}
+.horario-bloque h3 {
+    color: var(--vino);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+.horario-bloque p {
+    color: var(--gris-texto);
+    font-size: 0.9rem;
+}
+.horario-grande {
+    font-size: 1.2rem !important;
+    font-weight: 700;
+    color: var(--azul-marino) !important;
+    margin-top: 4px;
+}
+.horario-nota {
+    font-size: 0.8rem !important;
+    color: var(--gris-suave) !important;
+    font-style: italic;
+    margin-top: 6px;
+}
+.ubicacion-direccion {
+    color: var(--gris-texto);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+.ubicacion-direccion strong {
+    color: var(--azul-marino);
+}
+.ubicacion-nota {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed var(--azul-suave);
+}
+.ubicacion-nota p {
+    color: var(--azul-marino);
+    margin-bottom: 8px;
+}
+.ubicacion-nota ul {
+    list-style: none;
+    padding: 0;
+}
+.ubicacion-nota li {
+    padding: 6px 0;
+    color: var(--gris-texto);
+    font-size: 0.9rem;
+}
+.ubicacion-nota strong {
+    color: var(--vino);
+}
+
+/* ----- CONTACTO DIRECTO ----- */
+.contacto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+.contacto-card {
+    background: var(--blanco);
+    border-radius: 18px;
+    padding: 30px 25px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 8px 25px rgba(15, 43, 91, 0.08);
+    transition: all 0.3s;
+    border-top: 4px solid transparent;
+}
+.contacto-card:hover {
+    transform: translateY(-6px);
+    border-top-color: var(--vino);
+    box-shadow: 0 15px 35px rgba(15, 43, 91, 0.15);
+}
+.contacto-icono {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+.contacto-card h3 {
+    color: var(--azul-marino);
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+}
+.contacto-card p {
+    color: var(--gris-suave);
+    font-size: 0.92rem;
+    word-break: break-word;
+}
+
+/* ----- AYUDA CATÁLOGO ----- */
+.ayuda-catalogo {
+    background: var(--azul-fondo);
+    padding: 60px 30px;
+    text-align: center;
+}
+.ayuda-contenedor {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.ayuda-catalogo h2 {
+    color: var(--azul-marino);
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+.ayuda-catalogo p {
+    color: var(--gris-suave);
+    font-size: 1rem;
+    margin-bottom: 25px;
+}
+
+/* ----- RESPONSIVE DEL INDEX INFORMATIVO ----- */
+@media (max-width: 900px) {
+    .info-grid,
+    .grid-categorias,
+    .porque-lista,
+    .horarios-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    .info-texto h2,
+    .categoria-card h3 {
+        font-size: 1.6rem;
+    }
+    .hero-catalogo h1 {
+        font-size: 2rem;
+    }
+    .como-comprar h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .info-seccion {
+        padding: 50px 20px;
+    }
+    .info-texto h2,
+    .titulo-centrado {
+        font-size: 1.5rem;
+    }
+    .categoria-card {
+        padding: 25px 20px;
+    }
+    .categoria-card h3 {
+        font-size: 1.4rem;
+    }
+    .categoria-emoji {
+        font-size: 2.8rem;
+    }
+    .hero-catalogo {
+        padding: 45px 20px 40px;
+    }
+    .hero-catalogo h1 {
+        font-size: 1.6rem;
+    }
+    .hero-catalogo p {
+        font-size: 0.95rem;
+    }
+    .como-comprar {
+        padding: 50px 20px;
+    }
+    .como-comprar h2 {
+        font-size: 1.4rem;
+    }
+    .horario-card, .ubicacion-card {
+        padding: 25px 20px;
+    }
+    .calidad-detalle {
+        padding: 25px 20px;
+    }
+    .contacto-icono {
+        font-size: 2.5rem;
+    }
+    .ayuda-catalogo {
+        padding: 45px 20px;
+    }
+    .ayuda-catalogo h2 {
+        font-size: 1.4rem;
+    }
+}

@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="rCODcnM_6Szus8RJcnf-8vTEiFsSA8FBfN0894FTSGU" />
-    <title>FrutiMerca | Frutas Frescas Directo del Mercado</title>
-    <meta name="description" content="Frutas frescas directo del Mercado José Mascote. Frutillas, mora, granadilla, claudia, durazno y aguacate. Pedidos por transferencia bancaria en Guayaquil y Durán.">
+    <title>FrutiMerca | Frutas Frescas Directo del Mercado José Mascote</title>
+    <meta name="description" content="FrutiMerca: frutas frescas del Mercado José Mascote, Puesto #243. Frutillas de Riobamba y Ambateñas, mora, granadilla, claudia, durazno y aguacate. Envíos en Guayaquil y Durán.">
     <link rel="icon" href="img/logo.png" type="image/png">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
+    <!-- ============================================================
+         PANTALLA DE TRANSICIÓN
+         ============================================================ -->
     <div id="transicion-pantalla" class="transicion-pantalla">
         <div class="transicion-contenido">
             <img src="img/logo.png" alt="FrutiMerca" class="transicion-logo" onerror="this.style.display='none'">
@@ -24,6 +27,9 @@
         </div>
     </div>
 
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
     <header class="header">
         <div class="header-contenedor">
             <a href="index.html" class="logo">
@@ -50,8 +56,7 @@
             <nav class="nav-principal" id="nav-principal">
                 <ul>
                     <li><a href="index.html" class="activo">Inicio</a></li>
-                    <li><a href="#productos">Productos</a></li>
-                    <li><a href="#como-comprar">Cómo Comprar</a></li>
+                    <li><a href="page/productos.html">Productos</a></li>
                     <li><a href="page/conocenos.html">Conócenos</a></li>
                     <li><a href="page/terminos.html">Términos</a></li>
                     <li><a href="page/admin.html">⚙️ Admin</a></li>
@@ -62,26 +67,38 @@
 
     <div class="menu-overlay" id="menu-overlay" onclick="cerrarMenu()"></div>
 
+    <!-- ============================================================
+         HERO — PORTADA
+         ============================================================ -->
     <section class="hero">
         <div class="hero-contenido">
-            <p class="hero-subtitulo">TU MEJOR ALIADO EN FRUTAS</p>
+            <p class="hero-subtitulo">TU MEJOR ALIADO EN FRUTAS · DESDE HACE 24 AÑOS</p>
             <h1>Frutas Frescas del Mercado a tu Mesa</h1>
             <p class="hero-descripcion">
-                Frutillas, mora, granadilla, claudia, durazno y aguacate.
-                Directo del Mercado José Mascote a tu puesto o domicilio en Guayaquil y Durán.
+                Somos la familia Yumisaca. Desde el corazón del <strong>Mercado José Mascote</strong>
+                (Puesto <strong>#243</strong>, segundo piso) llevamos las mejores frutas a tu negocio
+                o domicilio en Guayaquil y Durán.
             </p>
             <div class="hero-botones">
-                <a href="#productos" class="btn btn-primario">Ver Productos</a>
+                <a href="page/productos.html" class="btn btn-primario">🛒 Ver Catálogo</a>
                 <a href="#como-comprar" class="btn btn-secundario">Cómo Comprar</a>
             </div>
         </div>
     </section>
 
+    <!-- ============================================================
+         BENEFICIOS RÁPIDOS
+         ============================================================ -->
     <section class="beneficios">
         <div class="beneficio">
             <span>🍓</span>
             <h3>Frescura Garantizada</h3>
-            <p>Directo del mercado el mismo día</p>
+            <p>Del mercado el mismo día</p>
+        </div>
+        <div class="beneficio">
+            <span>⭐</span>
+            <h3>Calidad Seleccionada</h3>
+            <p>Cada fruta revisada a mano</p>
         </div>
         <div class="beneficio">
             <span>🚚</span>
@@ -93,67 +110,328 @@
             <h3>Transferencia Bancaria</h3>
             <p>Banco Pichincha · Sube tu voucher</p>
         </div>
-        <div class="beneficio">
-            <span>📦</span>
-            <h3>Diferentes Presentaciones</h3>
-            <p>Baldes y cajas según producto</p>
+    </section>
+
+    <!-- ============================================================
+         SOBRE NOSOTROS
+         ============================================================ -->
+    <section class="info-seccion sobre-nosotros">
+        <div class="info-contenedor">
+            <div class="info-grid">
+                <div class="info-texto">
+                    <h2>¿Quiénes somos?</h2>
+                    <div class="linea-decorativa"></div>
+                    <p>
+                        <strong>FrutiMerca</strong> nació hace más de 24 años como un sueño familiar.
+                        Lo que empezó vendiendo frutas puerta a puerta, hoy es un puesto consolidado
+                        en el <strong>Mercado José Mascote, Puesto #243</strong>, segundo piso, sección de frutas.
+                    </p>
+                    <p>
+                        Detrás del puesto estamos <strong>papá Yumisaca</strong> (conocido cariñosamente
+                        como "Pequeñeque"), <strong>mamá Georgina Chicaza</strong>, y yo,
+                        <strong>Jonathan Yumisaca</strong>, encargado de llevar el negocio al mundo digital.
+                    </p>
+                    <p>
+                        A lo largo de los años nos hemos ganado la confianza de fruterías, heladerías,
+                        pastelerías, restaurantes y familias que valoran la frescura y el trato cercano.
+                    </p>
+                    <p class="frase-destacada">
+                        "Más de 24 años seleccionando las mejores frutas del mercado."
+                    </p>
+                    <a href="page/conocenos.html" class="btn-link-info">
+                        Conoce nuestra historia completa →
+                    </a>
+                </div>
+                <div class="info-imagen">
+                    <div class="marco-decorativo">
+                        <div class="placeholder-foto">
+                            <div class="placeholder-emoji">🏪</div>
+                            <p><strong>Nuestro puesto</strong></p>
+                            <p class="placeholder-direccion">
+                                Mercado José Mascote<br>
+                                Puesto #243 · Segundo piso<br>
+                                Sección de frutas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="filtros" id="productos">
-        <h2>Nuestros Productos</h2>
-        <p class="filtros-subtitulo">
-            Elige entre nuestras frutillas de Riobamba (calidad cebadeña) o ambateñas, y las demás frutas de temporada.
-        </p>
-        <div class="botones-filtro">
-            <button class="btn-filtro activo" type="button" data-filtro="todos">Todos</button>
-            <button class="btn-filtro" type="button" data-filtro="frutillas-riobamba">🍓 Frutillas Riobamba</button>
-            <button class="btn-filtro" type="button" data-filtro="frutillas-ambatena">🍓 Frutillas Ambateñas</button>
-            <button class="btn-filtro" type="button" data-filtro="otros">🍇 Otras Frutas</button>
+    <!-- ============================================================
+         QUÉ VENDEMOS
+         ============================================================ -->
+    <section class="info-seccion que-vendemos">
+        <div class="info-contenedor">
+            <h2 class="titulo-centrado">¿Qué encontrarás en FrutiMerca?</h2>
+            <p class="subtitulo-centrado">
+                Dos categorías principales, todas seleccionadas a mano
+            </p>
+
+            <div class="grid-categorias">
+                <div class="categoria-card">
+                    <div class="categoria-emoji">🍓</div>
+                    <h3>Frutillas</h3>
+                    <p class="categoria-desc">
+                        Manejamos dos calidades diferentes para que encuentres
+                        justo la que necesitas:
+                    </p>
+                    <ul class="categoria-lista">
+                        <li>
+                            <strong>Riobamba (cebadeña):</strong>
+                            desde la Primera hasta la Quinta.
+                        </li>
+                        <li>
+                            <strong>Ambateña:</strong>
+                            desde la Primera hasta la Sexta.
+                        </li>
+                    </ul>
+                    <p class="categoria-extra">
+                        Presentaciones en balde de 30 lbs o caja de cartón de 15 lbs.
+                    </p>
+                </div>
+
+                <div class="categoria-card">
+                    <div class="categoria-emoji">🍇</div>
+                    <h3>Otras Frutas</h3>
+                    <p class="categoria-desc">
+                        Frutas de temporada y de alta rotación:
+                    </p>
+                    <ul class="categoria-lista">
+                        <li>Mora ambateña</li>
+                        <li>Granadilla selecta</li>
+                        <li>Claudia (ciruela de temporada)</li>
+                        <li>Durazno</li>
+                        <li>Aguacate</li>
+                    </ul>
+                    <p class="categoria-extra">
+                        Presentaciones por balde, cartón al granel o caja de madera según producto.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cta-catalogo">
+                <a href="page/productos.html" class="btn btn-primario btn-grande">
+                    🛒 Ver Catálogo Completo
+                </a>
+            </div>
         </div>
     </section>
 
-    <section class="productos">
-        <div id="lista-productos" class="grid-productos"></div>
+    <!-- ============================================================
+         NUESTRA CALIDAD
+         ============================================================ -->
+    <section class="info-seccion nuestra-calidad">
+        <div class="info-contenedor">
+            <h2 class="titulo-centrado">Nuestra Calidad</h2>
+            <p class="subtitulo-centrado">
+                Lo que nos diferencia en cada entrega
+            </p>
+
+            <div class="grid-valores">
+                <div class="valor-card">
+                    <div class="valor-icono">🍓</div>
+                    <h3>Frescura</h3>
+                    <p>Fruta seleccionada del día. Sin almacenamiento prolongado.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icono">⭐</div>
+                    <h3>Calidad</h3>
+                    <p>Cada fruta revisada a mano por nuestra familia antes de vender.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icono">🤝</div>
+                    <h3>Servicio</h3>
+                    <p>Atención cercana, como si fueras parte de la familia.</p>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icono">💰</div>
+                    <h3>Precio Justo</h3>
+                    <p>Compra directa a productores, sin intermediarios.</p>
+                </div>
+            </div>
+
+            <div class="calidad-detalle">
+                <h3>¿Por qué elegirnos?</h3>
+                <div class="porque-lista">
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Compra directa a productores</h4>
+                            <p>Garantiza frescura y mejor precio, sin intermediarios.</p>
+                        </div>
+                    </div>
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Más de 24 años de experiencia</h4>
+                            <p>Conocemos cada detalle del negocio de las frutas.</p>
+                        </div>
+                    </div>
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Al por menor y por volumen</h4>
+                            <p>Atendemos desde una familia hasta empresas grandes.</p>
+                        </div>
+                    </div>
+                    <div class="porque-item">
+                        <div class="porque-check">✓</div>
+                        <div class="porque-info">
+                            <h4>Proveedores de confianza</h4>
+                            <p>Frutas para fruterías, heladerías, pastelerías y restaurantes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- ============================================================
+         CÓMO COMPRAR
+         ============================================================ -->
     <section class="como-comprar" id="como-comprar">
         <h2>¿Cómo Comprar?</h2>
+        <p class="subtitulo-centrado" style="color: #e0e7ff;">
+            Hacer tu pedido es muy fácil. Solo sigue estos 4 pasos.
+        </p>
         <div class="pasos">
             <div class="paso">
                 <span class="paso-num">1</span>
                 <h3>Elige tus frutas</h3>
-                <p>Agrega al carrito los baldes o cajas que necesitas.</p>
+                <p>Entra al catálogo y agrega al carrito los baldes o cajas que necesitas.</p>
             </div>
             <div class="paso">
                 <span class="paso-num">2</span>
                 <h3>Realiza la transferencia</h3>
-                <p>Banco Pichincha · Cta. Ahorros 2206795019</p>
+                <p>Banco Pichincha · Cta. Ahorros 2206795019 · Titular Jonathan Yumisaca.</p>
             </div>
             <div class="paso">
                 <span class="paso-num">3</span>
                 <h3>Sube tu voucher</h3>
-                <p>Carga la captura del comprobante en la web.</p>
+                <p>Carga la captura del comprobante en la web para verificar tu pago.</p>
             </div>
             <div class="paso">
                 <span class="paso-num">4</span>
                 <h3>Retira o recibe</h3>
-                <p>Puesto #214 Mercado José Mascote, envío Guayaquil o Durán.</p>
+                <p>Retira en el Puesto #243 o recibe en Guayaquil o Durán.</p>
+            </div>
+        </div>
+
+        <div class="como-comprar-cta">
+            <a href="page/productos.html" class="btn btn-primario">
+                🛒 Empezar a Comprar
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         HORARIOS Y UBICACIÓN
+         ============================================================ -->
+    <section class="info-seccion horarios-ubicacion">
+        <div class="info-contenedor">
+            <div class="horarios-grid">
+                <div class="horario-card">
+                    <h2>🕐 Horarios</h2>
+                    <div class="horario-bloque">
+                        <h3>Puesto Físico</h3>
+                        <p>Lunes a Sábado</p>
+                        <p class="horario-grande">4:00 AM – 1:00 PM</p>
+                    </div>
+                    <div class="horario-bloque">
+                        <h3>Pedidos en Línea</h3>
+                        <p>Todos los días</p>
+                        <p class="horario-grande">10:00 PM – 1:00 PM</p>
+                        <p class="horario-nota">
+                            Del día anterior hasta el mediodía siguiente.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="ubicacion-card">
+                    <h2>📍 Ubicación</h2>
+                    <p class="ubicacion-direccion">
+                        <strong>Mercado José Mascote</strong><br>
+                        Puesto <strong>#243</strong> · Segundo piso<br>
+                        Sección de frutas<br>
+                        Guayaquil, Ecuador
+                    </p>
+                    <a href="https://maps.google.com/?q=Mercado+José+Mascote+Guayaquil"
+                       target="_blank"
+                       class="btn btn-primario">
+                        📍 Ver en Google Maps
+                    </a>
+                    <div class="ubicacion-nota">
+                        <p>🚚 <strong>Envíos:</strong></p>
+                        <ul>
+                            <li>Retiro en puesto: <strong>Gratis</strong></li>
+                            <li>Zona Central (Guayaquil): <strong>$3.00</strong></li>
+                            <li>Entrega en Durán: <strong>$1.00</strong></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="newsletter">
-        <div class="newsletter-contenido">
-            <h2>Recibe Ofertas y Disponibilidad</h2>
-            <p>Te avisamos cuando lleguen frutillas frescas y promociones por volumen.</p>
-            <form class="form-newsletter" onsubmit="event.preventDefault(); alert('¡Suscrito!');">
-                <input type="email" placeholder="Tu correo electrónico" required>
-                <button type="submit">Suscribirme</button>
-            </form>
+    <!-- ============================================================
+         CONTACTO DIRECTO
+         ============================================================ -->
+    <section class="info-seccion contacto-directo">
+        <div class="info-contenedor">
+            <h2 class="titulo-centrado">¿Tienes alguna duda?</h2>
+            <p class="subtitulo-centrado">
+                Contáctanos directamente. Con gusto te atendemos.
+            </p>
+
+            <div class="contacto-grid">
+                <a href="tel:0993734939" class="contacto-card">
+                    <div class="contacto-icono">📞</div>
+                    <h3>Llámanos</h3>
+                    <p>099-373-4939</p>
+                </a>
+
+                <a href="https://wa.me/593993734939?text=Hola%20FrutiMerca,%20quiero%20hacer%20un%20pedido"
+                   target="_blank"
+                   class="contacto-card">
+                    <div class="contacto-icono">💬</div>
+                    <h3>WhatsApp</h3>
+                    <p>Escríbenos directamente</p>
+                </a>
+
+                <a href="mailto:yumisacalorenzo@gmail.com" class="contacto-card">
+                    <div class="contacto-icono">📧</div>
+                    <h3>Correo</h3>
+                    <p>yumisacalorenzo@gmail.com</p>
+                </a>
+            </div>
         </div>
     </section>
 
+    <!-- ============================================================
+         CTA FINAL
+         ============================================================ -->
+    <section class="cta-final">
+        <div class="cta-contenedor">
+            <h2>¿Listo para probar nuestras frutas?</h2>
+            <p>Hacé tu pedido ahora y te lo llevamos hasta tu puerta.</p>
+            <div class="cta-botones">
+                <a href="page/productos.html" class="btn btn-primario">
+                    🛒 Ver Catálogo
+                </a>
+                <a href="https://wa.me/593993734939?text=Hola%20FrutiMerca,%20quiero%20hacer%20un%20pedido"
+                   target="_blank"
+                   class="btn btn-secundario-claro">
+                    Escribir por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
     <footer class="footer" id="contacto">
         <div class="footer-grid">
             <div>
@@ -168,7 +446,7 @@
                 <h4>Enlaces</h4>
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="page/productos.html">Productos</a></li>
                     <li><a href="page/conocenos.html">Conócenos</a></li>
                     <li><a href="page/carrito.html">Tus Pedidos</a></li>
                     <li><a href="page/terminos.html">Términos y Condiciones</a></li>
@@ -181,8 +459,8 @@
                     <li>👤 Familia Yumisaca</li>
                     <li>📞 <a href="tel:0993734939">099-373-4939</a></li>
                     <li>📧 <a href="mailto:yumisacalorenzo@gmail.com">yumisacalorenzo@gmail.com</a></li>
-                    <li>📍 Mercado José Mascote · Puesto #214</li>
-                    <li>🕐 Lunes a Sábado · 4:00 AM a 2:00 PM</li>
+                    <li>📍 Mercado José Mascote · Puesto #243</li>
+                    <li>🕐 Lunes a Sábado · 4:00 AM a 1:00 PM</li>
                 </ul>
             </div>
         </div>
@@ -191,10 +469,11 @@
         </div>
     </footer>
 
-    <script src="js/productos.js" onerror="console.error('No se pudo cargar js/productos.js');"></script>
-    <script src="js/carrito.js" onerror="console.error('No se pudo cargar js/carrito.js');"></script>
-    <script src="js/filtros.js" onerror="console.error('No se pudo cargar js/filtros.js');"></script>
-    <script src="js/animaciones.js"></script>
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="js/productos.js"></script>
+    <script src="js/carrito.js"></script>
     <script>
     (function () {
         'use strict';
@@ -256,17 +535,6 @@
             if (typeof actualizarContador === 'function') {
                 actualizarContador();
             }
-            if (typeof renderizarProductos === 'function') {
-                renderizarProductos();
-            }
-            setTimeout(function () {
-                var cont = document.getElementById('lista-productos');
-                if (cont && cont.children.length === 0) {
-                    cont.innerHTML =
-                        '<p class="productos-vacio">No se pudieron cargar los productos. ' +
-                        'Revisa tu conexión y recarga la página.</p>';
-                }
-            }, 4000);
         });
 
         window.toggleMenu = function () {

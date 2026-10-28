@@ -1,8 +1,9 @@
 /* ============================================================
-   FRUTIMERCA — Base de datos de productos
+   FRUTIMERCA — Base de datos de productos + Stock + Horarios
    ============================================================ */
 
 const PRODUCTOS_DEFAULT = [
+    /* ===== FRUTILLAS RIOBAMBA (CEBADEÑA) ===== */
     {
         id: 1,
         slug: "frutilla-riobamba-primera",
@@ -73,6 +74,8 @@ const PRODUCTOS_DEFAULT = [
             { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 4, imagen: "img/productos/cuarta-caja.jpg" }
         ]
     },
+
+    /* ===== FRUTILLAS AMBATEÑAS (1ª a 6ª) ===== */
     {
         id: 6,
         slug: "frutilla-ambatena-primera",
@@ -157,6 +160,8 @@ const PRODUCTOS_DEFAULT = [
             { id: "15lbs", nombre: "Caja de cartón de 15 libras", precio: 3.5, imagen: "img/productos/cuarta-caja.jpg" }
         ]
     },
+
+    /* ===== OTRAS FRUTAS ===== */
     {
         id: 12,
         slug: "mora-ambateña",
@@ -402,8 +407,17 @@ function renderizarAvisoCerrado() {
     contenedor.parentElement.insertBefore(aviso, contenedor);
 }
 
+/* ============================================================
+   NAVEGACIÓN (CORREGIDA PARA page/)
+   ============================================================ */
 function irAProducto(slug) {
-    window.location.href = `page/producto.html?slug=${slug}`;
+    // Detecta si ya estamos dentro de la carpeta /page/
+    const enPage = window.location.pathname.includes('/page/');
+    const url = enPage 
+        ? `producto.html?slug=${slug}` 
+        : `page/producto.html?slug=${slug}`;
+        
+    window.location.href = url;
 }
 
 function consultarProducto(nombre) {
