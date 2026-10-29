@@ -179,6 +179,10 @@
                 <button onclick="resetStockManual()" class="btn-restaurar">
                     🔄 Reset manual de stock ahora
                 </button>
+                <!-- 👇 NUEVO BOTÓN -->
+    <button onclick="descargarReporteExcel()" class="btn-guardar" style="background: #0f7a2e;">
+        📊 Descargar Reporte Semanal (Excel)
+    </button>
             </div>
 
             <div id="codigo-generado" class="codigo-box" style="display:none;">
@@ -819,6 +823,14 @@ function consultarProducto(nombre) {
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) cerrarMenu();
         });
+
+        function descargarReporteExcel() {
+    // 1. Nueva URL de tu implementación
+    const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbzC-WyZmDbYidjXzlG2qGO2WBFXNSgK4yOUGWR24S7ScMSM8dliQ-8H72ANK1aaTCdeyA/exec';
+    
+    // 2. Abrir en pestaña nueva para descargar el Excel
+    window.open(URL_SCRIPT + '?action=reporte', '_blank');
+}
     </script>
 </body>
 </html>
